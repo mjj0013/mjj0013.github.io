@@ -31,7 +31,7 @@ var update = () => {
         triangles.value = Math.max(waveform1(step*phase), 25);
         
 
-        let saturationVal = Math.max(this.waveform1((this.step+3)*phase), 25);
+        let saturationVal = Math.max(waveform1((step+3)*phase), 25);
 
         for(let a=0; a < triangles.indices.length; ++a) {
             var Tri = coverTriangles[triangles.indices[a]];

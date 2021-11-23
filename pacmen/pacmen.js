@@ -5,7 +5,7 @@ const pacArray = [
 ];
 let direction = 0;
 
-export const pacMen = []; // This array holds all the pacmen
+const pacMen = []; // This array holds all the pacmen
 
 // This function returns an object with random values
 function setToRandom(scale) {
@@ -39,7 +39,7 @@ function makePac() {
   return {position, velocity, newimg};
 }
 
-export function update() {
+function update() {
   // loop over pacmen array and move each one and move image in DOM
     console.log("hasdfasdf");
   pacMen.forEach((item) => {
@@ -53,7 +53,7 @@ export function update() {
   setTimeout(update, 20);
 }
 
-export function checkCollisions(item) {
+function checkCollisions(item) {
   // TODO: detect collision with all walls and make pacman bounce
   //var game = document.getElementById("game");
   if(item.position.x+item.newimg.width+item.velocity.x  > window.innerWidth ) {
@@ -70,11 +70,11 @@ export function checkCollisions(item) {
   }
 }
 
-export function makeOne() {
+function makeOne() {
   pacMen.push(makePac()); // add a new PacMan
 }
 
 // don't change this line
-// if (typeof module !== 'undefined') {
-//   module.exports = { checkCollisions, update, pacMen };
-// }
+if (typeof module !== 'undefined') {
+  module.exports = { checkCollisions, update, pacMen, makeOne };
+}

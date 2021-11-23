@@ -1,13 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, Header, Container, Divider, Icon,Button, Dropdown } from 'semantic-ui-react';
-
-
 import './layout.css';
 
 
 
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 
 
 class Triangle {
@@ -21,7 +16,7 @@ class Triangle {
 
 
 
-class NavBar extends React.Component {
+class NavBar {
 	constructor(props) {
 		super(props);
 		this.toggleSettings = this.toggleSettings.bind(this);
@@ -203,29 +198,32 @@ class NavBar extends React.Component {
 		console.log("this.ySortedCoverTriangles",this.ySortedCoverTriangles);
 
     }
-
+    // <a href="#" class="nav-link" data-link>Home</a>
+    // <a href="#about" class="nav-link" data-link>About</a>
+    // <a href="./contact.html" class="nav-link" data-link>Contact</a>
+    // <a href="./image_gallery.html" class="nav-link" data-link>Image Gallery</a>
 	render() {
 		return (	
-			<Container id='navBarContainer'>
+          
+			<div id='navBarContainer'>
 				<canvas ref={this.canvasRef }id="coverCanvas" width="100%" />
-				<Menu id="navBar"  inverted className="nav-menu">
-					<Link to="/" className="nav-link item">Home</Link>
-					<Link to="/fileload" className="nav-link item">File Load</Link>
-					<Link to="/animation" className="nav-link item">Animation</Link>
-					<Link to="/game" className="nav-link item">Game</Link>
+				<nav id="navBar"  inverted className="nav-menu">
+					<a href="./Home.html" className="nav-link item">Home</a>
 					
-					<Dropdown item text="Tools">
-						<Dropdown.Menu>
-							<Dropdown.Item text="Calculator" onClick={this.toggleCalculator}/>
-						</Dropdown.Menu>
-					</Dropdown>
+					
+					<select item text="Tools">
+						<option value="calculator">Calculator</option>
+					</select>
+                    <button id="openSettings" onClick={this.toggleSettings}>
+                       
+                    </button>
 					<Menu.Item className="nav-item" position='right'>
 						<Button compact id='openSettings' onClick={this.toggleSettings}>
 							<i className="icon cog"/>
 						</Button> 
 					</Menu.Item>
-				</Menu>
-			</Container>
+				</nav>
+			</div>
 		  );
 	}
 

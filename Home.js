@@ -1,25 +1,11 @@
-import React from 'react';
+//import React from 'react';
 
 import Layout from './Layout';
-import {Header, Container, Divider } from 'semantic-ui-react';
+//import {Header, Container, Divider } from 'semantic-ui-react';
 
 import './layout.css';
 
-import PropTypes from 'prop-types';
-
-// import CalculatorModal from './CalculatorModal';
-
-
-// import bg_image1 from "../img/pine_tree.jpeg";
-// import bg_image2 from "../img/high_res_grass.jpeg";
-// import bg_image3 from "../img/IMG_2313.jpg";
-
-
-
-// import SettingsModal from './SettingsModal';
-
-
-class Home extends React.Component {
+class Home {
 	constructor(props) {
 		super(props);
 
@@ -73,26 +59,20 @@ class Home extends React.Component {
 	}
 	render() {
 		return (
-			<Container id="homeRoot">
+			<div id="homeRoot">
 				<Layout id="homeLayout" className="homeLayout" title="Home" description="asdfasfd">
 					<Header as="h2">This is the home page</Header>
 					<p>This is a description about the home page.</p>
 					
 				</Layout>
 				
-				<Divider />
 				
-			</Container>
+				
+			</div>
 			
 		  );
 	}
 }
-/*<img src="" height="200" alt="Image preview..."></img>*/
-
-/* <CalculatorModal id="cm" toggleSettings={this.toggleSettings}/>
-<SettingsModal id='calcSettingsModal'/> */
-
-//<button id="calculatorButton">Calculator</button>
 
 export default Home;
 

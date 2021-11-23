@@ -41,6 +41,9 @@ body {
 
 .nav-menu {
 	position:fixed;
+	list-style-type: none;
+	margin:0;
+	padding:0;
 	
 	top: 100px;
 	left: 0;

@@ -80,5 +80,5 @@ function makeOne() {
 
 //don't change this line
 if (typeof module !== 'undefined') {
-  module.exports = { checkCollisions, update, pacMen };
+  module.exports = { checkCollisions, update, makeOne,pacMen };
 }

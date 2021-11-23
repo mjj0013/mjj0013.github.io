@@ -6,6 +6,29 @@
         <!-- DO NOT CHANGE THIS LINE OF CODE -->
         <script src="./pacmen.js"></script>
     </head>
+    <div id='navBarContainer'>
+		<canvas id="coverCanvas" width="100%" />
+	</div>
+	<ul id="navBar" class="nav-menu">
+		<li >
+			<a href="#" class="nav-link">Home</a>
+		</li>
+		<li >
+			<a href="./pacmen/pacmen.html" class="nav-link" >Pacmen Game</a>
+		</li>
+		
+		<li class="nav-item">
+			<select id="openCalculator">Tools
+				<option value="calculator" onchange="toolSelected()">Calculator</option>
+			</select>
+		</li>
+		
+		<li class="nav-item">
+			<button id="openSettings" onclick={toggleSettings}>
+				<i class="icon cog" />
+			</button>
+		</li>
+	</ul>
 
     <body>
         

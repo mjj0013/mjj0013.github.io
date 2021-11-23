@@ -9,9 +9,6 @@ body {
 	font-variant: small-caps;
 	font-size:18px;
 	
-	--gradientColor:rgb(107, 76, 219);
-	
-	
 }
 #navBarContainer {
 	height:var(--nav-height);
@@ -25,11 +22,9 @@ body {
 	left:0px;
 	width:100vw;
 	height: 125px;
-	
 	border:1px solid black;
 }
 #coverCanvasContainer {
-	
 	top:0px;
 	left:0px;
 	width:100vw;
@@ -42,16 +37,16 @@ body {
 .nav-menu {
 	position:fixed;
 	list-style-type: none;
+
 	margin:0;
 	padding:0;
-	
-	top: 100px;
+
+	top: 125px;
 	left: 0;
-	/* width: var(--nav-width);
-	height: 100vh; */
 	height: var(--navLink-height);
 	width: 100vw;
-	background-color:#2222229d;
+
+	background-color: #333;
 	z-index:4;
 }
 
@@ -73,7 +68,7 @@ body {
 
 
 .nav-link:hover, .nav-link:focus {
-	background-position:left;
+	background-color: #111;
 }
 
 
@@ -127,47 +122,8 @@ a {
 select {
 	width: 100px;
 }
-#addOrbButton {
-	width: 55px;
-	height: 55px;
-	border-radius:25%;	
-	box-shadow: 0 0 0 1pt grey;
-
-	margin-bottom: 10px;
-	padding: 15px;
-	text-align: center;
-
-	z-index: 0;
-	background: radial-gradient(circle at 50%, rgba(20, 8, 230,1) 25%, rgba(74, 47, 197,1) 50% rgba(110, 110, 196,1) 80%, rgba(144, 184, 192,1) 100%);
-}
 
 
-#addOrbButton:hover {
-	
-	outline-width: 10px;
-	animation: 	colorChange infinite 300ms ;
-	animation-timing-function: linear;
-	
-	
-}
-@keyframes colorChange {
-	0% {
-		background: radial-gradient(circle at 50%, rgba(20, 8, 230,1) 25%, 		rgba(74, 47, 197,1) 50%  	rgba(110, 110, 196,1) 80%,rgba(144, 184, 192,1) 100%);
-	}
-	25% {
-		background: radial-gradient(circle at 50%, rgba(144, 184, 192,1) 25%, 	rgba(20, 8, 230,1) 50%  	rgba(74, 47, 197,1) 80,	rgba(110, 110, 196,1) 100%);
-	}	
-	50% {
-		background: radial-gradient(circle at 50%, rgba(110, 110, 196,1) 25%, 	rgba(144, 184, 192,1) 50% , rgba(20, 8, 230,1) 80%,	rgba(74, 47, 197,1) 100%);
-	}
-	75% {
-		background: radial-gradient(circle at 50%, rgba(74, 47, 197,1) 25%, 	rgba(110, 110, 196,1) 50% , rgba(144, 184, 192,1), 80%rgba(20, 8, 230,1) 100%);
-	}
-	100% {
-		
-		background: radial-gradient(circle at 50%, rgba(20, 8, 230,1) 25%, 		rgba(74, 47, 197,1) 50% , 	rgba(110, 110, 196,1) 80%, rgba(144, 184, 192,1) 100%);
-	}	
-}
 
 
 

@@ -19,7 +19,7 @@ window.onload = () => {
         canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
         startAnimation(coverCanvas);
     }
-    setInterval(update,1000/30);
+    setInterval(update,1000/60);
 }
 
 
@@ -30,7 +30,9 @@ var update = () => {
         var triangles = xSortedCoverTriangles[phase]
         triangles.value = Math.max(waveform1(step*phase), 25);
         
-        //let saturationVal = Math.max(this.waveform2(step*phase), 25);
+
+        let saturationVal = Math.max(this.waveform1((this.step+3)*phase), 25);
+
         for(let a=0; a < triangles.indices.length; ++a) {
             var Tri = coverTriangles[triangles.indices[a]];
             context.beginPath();
@@ -39,7 +41,7 @@ var update = () => {
             context.lineTo(Tri.pts[2].x,Tri.pts[2].y);
             context.lineTo(Tri.pts[0].x,Tri.pts[0].y);
             context.closePath();
-            context.fillStyle = `hsl(220, ${50}%, ${triangles.value}%)`;
+            context.fillStyle = `hsl(220, ${saturationVal}%, ${triangles.value}%)`;
             context.fill();
             context.stroke();
             
@@ -83,7 +85,7 @@ function startAnimation(canvas) {
     let hexPerRow = 13;
     let numRows = 2;
     let length = 40;
-    // var pt1 = {x:50,y:0};
+    
     var pt1 = {x:75,y:40};
     let xOrigin = pt1.x;
     

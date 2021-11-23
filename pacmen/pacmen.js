@@ -4,6 +4,7 @@ const pacArray = [
   ['./images/PacMan3.png', './images/PacMan4.png'],
 ];
 let direction = 0;
+
 const pacMen = []; // This array holds all the pacmen
 
 // This function returns an object with random values
@@ -35,11 +36,7 @@ function makePac() {
   game.appendChild(newimg);
 
   // return details in an object
-  return {
-    position,
-    velocity,
-    newimg,
-  };
+  return {position, velocity, newimg};
 }
 
 function update() {
@@ -74,11 +71,11 @@ function checkCollisions(item) {
 
 }
 
-function makeOne() {
+var makeOne = () => {
   pacMen.push(makePac()); // add a new PacMan
 }
 
 //don't change this line
-if (typeof module !== 'undefined') {
-  module.exports = { checkCollisions, update, makeOne,pacMen };
-}
+// if (typeof module !== 'undefined') {
+//   module.exports = { checkCollisions, update,pacMen };
+// }

@@ -1,0 +1,325 @@
+body {
+	--nav-width:100px;
+	--nav-height:150px;
+	--navLink-height:50px;
+	--navLink-width:50px;
+	/* margin: 0 0 0 var(--nav-width); */
+	margin: var(--nav-height) 0 0 0;
+	font-family: 'Quicksand', sans-serif;
+	font-variant: small-caps;
+	font-size:18px;
+	
+	--gradientColor:rgb(107, 76, 219);
+	
+	
+}
+#navBarContainer {
+	height:var(--nav-height);
+	width:100vw;
+	top: 0;
+	left: 0;
+}
+#coverCanvas {
+	position:fixed;
+	top:0px;
+	left:0px;
+	width:100vw;
+	height: 125px;
+	
+	border:1px solid black;
+}
+#coverCanvasContainer {
+	
+	top:0px;
+	left:0px;
+	width:100vw;
+	height:100px;
+	
+}
+
+
+#coverSVG {
+	animation: firstAnimation 2s linear forwards infinite;
+	
+}
+#coverSVGContainer {
+	
+	top:0px;
+	left:0px;
+	width:100vw;
+	height:150px;
+	
+}
+
+.nav-menu {
+	position:fixed;
+	
+	top: 100px;
+	left: 0;
+	/* width: var(--nav-width);
+	height: 100vh; */
+	height: var(--navLink-height);
+	width: 100vw;
+	background-color:#2222229d;
+	z-index:4;
+}
+
+.homeLayout {
+	z-index: 5;
+}
+
+.nav-link {
+	height: var(--navLink-height);
+	display: block;
+	padding: 12px 18px;
+	text-decoration: none;
+	color:#eeeeee;
+	
+	font-weight: 500;
+	background-image: linear-gradient(to right,#222222,25%,#61d444,50%,#222222);
+	background-size:300%; 
+	background-position: center;
+	transition: background-position 1s;
+}
+
+
+
+.nav-link:hover,
+.nav-link:focus {
+	background-position:left;
+	
+	/*background: rgba(255,255,255,0.05);*/
+}
+
+/* .navBarButton {
+	margin-right:5px;
+	display: inline-block;
+	width: fit-content;
+} */
+
+
+.pull-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.h1 {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+a {
+	color: #009579;
+}
+
+.backgroundCanvas {
+	position:absolute;
+	z-index:3;
+	top:0;
+	left:0;
+
+	width:100vw;
+	height:100vh;
+
+	filter:brightness(.5);
+	
+}
+
+.subCanvas {
+	position:absolute;
+	top:30%;
+
+	z-index:5;
+	
+}
+
+
+
+.mainHeader {
+	display:block;
+	
+	
+}
+
+
+
+.home-widget:hover{
+	transform:scale(1.1);
+}
+
+
+
+.home-widget:before {
+	
+	display: none;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(52, 73, 94, 0.75);
+}
+
+.home-widget {
+	display: none;
+	transition: all .5s;
+	position: absolute;
+	background-color: rgba(52, 73, 94, 0.75);
+}
+
+
+
+
+
+
+#fileText {
+	background-color: rgba(255,255,255,0.05);
+}
+
+#objectAttrTable {
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width:100%;
+
+}
+#objectAttrTable td,  #objectAttrTable th{
+	border: 1px solid #ddd;
+	padding: 8px;
+
+}
+#objectAttrTable tr:nth-child(even){background-color:#f2f2f2;}
+#objectAttrTable th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #04AA6D;
+	color: white;
+}
+
+
+
+
+/* #gameCanvas {
+	display:block;
+	visibility:hidden;
+
+} */
+
+
+
+
+
+select {
+	width: 100px;
+}
+#addOrbButton {
+	width: 55px;
+	height: 55px;
+	border-radius:25%;	
+	box-shadow: 0 0 0 1pt grey;
+
+	margin-bottom: 10px;
+	padding: 15px;
+	text-align: center;
+
+	z-index: 0;
+	background: radial-gradient(circle at 50%, rgba(20, 8, 230,1) 25%, rgba(74, 47, 197,1) 50% rgba(110, 110, 196,1) 80%, rgba(144, 184, 192,1) 100%);
+}
+
+
+#addOrbButton:hover {
+	
+	outline-width: 10px;
+	animation: 	colorChange infinite 300ms ;
+	animation-timing-function: linear;
+	
+	
+}
+@keyframes colorChange {
+	0% {
+		background: radial-gradient(circle at 50%, rgba(20, 8, 230,1) 25%, 		rgba(74, 47, 197,1) 50%  	rgba(110, 110, 196,1) 80%,rgba(144, 184, 192,1) 100%);
+	}
+	25% {
+		background: radial-gradient(circle at 50%, rgba(144, 184, 192,1) 25%, 	rgba(20, 8, 230,1) 50%  	rgba(74, 47, 197,1) 80,	rgba(110, 110, 196,1) 100%);
+	}	
+	50% {
+		background: radial-gradient(circle at 50%, rgba(110, 110, 196,1) 25%, 	rgba(144, 184, 192,1) 50% , rgba(20, 8, 230,1) 80%,	rgba(74, 47, 197,1) 100%);
+	}
+	75% {
+		background: radial-gradient(circle at 50%, rgba(74, 47, 197,1) 25%, 	rgba(110, 110, 196,1) 50% , rgba(144, 184, 192,1), 80%rgba(20, 8, 230,1) 100%);
+	}
+	100% {
+		
+		background: radial-gradient(circle at 50%, rgba(20, 8, 230,1) 25%, 		rgba(74, 47, 197,1) 50% , 	rgba(110, 110, 196,1) 80%, rgba(144, 184, 192,1) 100%);
+	}	
+}
+
+
+
+#gameSVG {
+	/* width:3000px;
+	height:2000px; */
+	position:absolute;
+	
+	top:200px;
+	left:100px;
+	overflow:hidden;
+}
+#gameSVG:hover {
+	cursor:grab;
+}
+
+
+
+
+#gameControlPanel {
+	/* box-shadow:10px 5px 5px black;  */
+	display: grid;
+	/* position: absolute; */
+
+
+	width:250px;
+	position:absolute;
+	grid-auto-flow: column;
+	/* grid-template-rows: repeat(7, 70px);  */
+	
+	/* grid-template-columns: 100px 100px; */
+	
+	top:200px;
+	left:100px;
+	/* width: 100px; */
+	
+	/* margin-right:25px; */
+	/* outline-style: inset;  */
+	fill: rgba(18, 25, 32, 0.75);
+	
+}
+
+
+#viewAndPanel {
+	position:absolute;
+	top:200px;
+	left:100px;
+	margin-left: 25px;
+	margin-top:25px;
+	margin-right:25px;
+	margin-bottom:100px;
+	/* left:15vw; */
+	/* overflow:hidden; */
+	
+}
+
+
+
+@keyframes firstAnimation {
+	to {
+		stroke:green;
+		d: path("M8,2 L2,8");
+	}
+}
+
+
+
+
+
+

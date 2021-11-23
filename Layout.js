@@ -1,17 +1,16 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Header, Container, Divider, Icon } from 'semantic-ui-react';
+
+
 
 import NavBar from './NavBar';
 
 import './layout.css';
-import CalculatorModal from './CalculatorModal';
-import SettingsModal from './SettingsModal';
+// import CalculatorModal from './CalculatorModal';
+// import SettingsModal from './SettingsModal';
 //import ExtractImageDataModal from './ExtractImageData/ExtractImageData';
 
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 
-class Layout extends React.Component {
+class Layout {
 
 	constructor(props, children) {
 		super(props);
@@ -22,7 +21,6 @@ class Layout extends React.Component {
 		
 		this.toggleSettings = this.toggleSettings.bind(this);
 		this.toggleCalculator = this.toggleCalculator.bind(this);
-		this.toggleDataExtractDialog = this.toggleDataExtractDialog.bind(this);
 		
 		this.currentFocusedElement = 'calc';
 		this.getChildContext = this.getChildContext.bind(this);
@@ -39,14 +37,6 @@ class Layout extends React.Component {
 			toggleSettings:		this.toggleSettings,
 			toggleCalculator:	this.toggleCalculator,
 			toggleDataExtractDialog: this.toggleDataExtractDialog}
-	}
-	toggleDataExtractDialog(e) {
-		let w = document.getElementById("imgDataModal");
-		
-        if(w.style.display=="none" || w.style.display=='') { w.style.display="block"; }
-        else  w.style.display="none";
-           
-    
 	}
 	
 
@@ -91,8 +81,7 @@ class Layout extends React.Component {
 				<Container> {this.props.children} </Container>
 					
 				
-				<CalculatorModal id='cw' className='calcWindow' toggleSettings={this.toggleSettings}/>
-				<SettingsModal id='sw' className='settingsWindow' />
+				
 				
 			</Container>
 			
@@ -100,13 +89,16 @@ class Layout extends React.Component {
 	}
 	
 }
+/* <CalculatorModal id='cw' className='calcWindow' toggleSettings={this.toggleSettings}/>
+				<SettingsModal id='sw' className='settingsWindow' /> */
 
 function TopSection({children}) {
 
 
-	const childrenWithProps = React.Children.map(children,child => {
-		if(React.isValidElement(child)) {
-			return React.cloneElement(child,{});
+	const childrenWithProps = document.children.map(children,child => {
+		if(document.isValidElement(child)) {
+           
+			return document.cloneElement(child,{});
 
 		}
 		return child;
@@ -148,4 +140,3 @@ Layout.childContextTypes = {
 // }
 
 export default Layout;
-

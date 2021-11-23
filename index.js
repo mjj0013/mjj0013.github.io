@@ -23,12 +23,12 @@ window.onload = () => {
 }
 
 
-function update() {
+var update = () => {
 	var context = coverCanvas.getContext("2d");
 		
     for(let phase=0; phase < xSortedCoverTriangles.length;++phase) {
         var triangles = xSortedCoverTriangles[phase]
-        triangles.value = Math.max(waveform1(this.step*phase), 25);
+        triangles.value = Math.max(waveform1(step*phase), 25);
         
         //let saturationVal = Math.max(this.waveform2(step*phase), 25);
         for(let a=0; a < triangles.indices.length; ++a) {
@@ -85,7 +85,6 @@ function startAnimation(canvas) {
     let length = 40;
     // var pt1 = {x:50,y:0};
     var pt1 = {x:75,y:40};
-    
     let xOrigin = pt1.x;
     
 
@@ -97,7 +96,6 @@ function startAnimation(canvas) {
             // 2*i+2		sub phase 2
 
             var peripheralPt = {x:pt1.x-2*length, y:pt1.y}
-
 
             coverTriangles.push(new Triangle(2*i+2,2*j, [{x:pt1.x, y:pt1.y}, {x:pt1.x+length, y:pt1.y-length}, {x:pt1.x-length, y:pt1.y-length}] ))
             coverTriangles.push(new Triangle(2*i+1,2*j+1, [{x:pt1.x, y:pt1.y}, {x:pt1.x-length, y:pt1.y+length}, {x:pt1.x+length, y:pt1.y+length}] ))

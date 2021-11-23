@@ -30,7 +30,7 @@ function update() {
         var triangles = xSortedCoverTriangles[phase]
         triangles.value = Math.max(waveform1(this.step*phase), 25);
         
-        //let saturationVal = Math.max(this.waveform2(this.step*phase), 25);
+        //let saturationVal = Math.max(this.waveform2(step*phase), 25);
         for(let a=0; a < triangles.indices.length; ++a) {
             var Tri = coverTriangles[triangles.indices[a]];
             context.beginPath();

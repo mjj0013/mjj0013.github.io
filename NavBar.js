@@ -1,9 +1,5 @@
 import './layout.css';
-
-
-
 //import PropTypes from 'prop-types';
-
 
 class Triangle {
 	constructor(xPhase, yPhase, pts) {
@@ -13,9 +9,6 @@ class Triangle {
 		this.brightnessValue = 50;
 	}
 }
-
-
-
 class NavBar {
 	constructor(props) {
 		super(props);
@@ -123,7 +116,6 @@ class NavBar {
 				this.contextRef.current.fillStyle = `hsl(220, ${50}%, ${triangles.value}%)`;
 				this.contextRef.current.fill();
 				this.contextRef.current.stroke();
-				
 			}	
 		}
 

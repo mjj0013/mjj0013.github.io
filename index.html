@@ -8,23 +8,26 @@
 
 	<div id='navBarContainer'>
 		<canvas id="coverCanvas" width="100%" />
-		<nav id="navBar" class="nav-menu">
-			<a href="#" class="nav-link" data-link>Home</a>
-			<a href="Home.html" class="nav-link" data-link>Home</a>
-		
+		<ul id="navBar" class="nav-menu">
+			<li>
+				<a href="#" class="nav-link" data-link>Home</a>
+			</li>
+			<li>
+				<a href="/Home.html" class="nav-link" data-link>Home</a>
+			</li>
 			
-			<div class="nav-item">
+			<li class="nav-item">
 				<select item text="Tools">
 					<option value="calculator" onchange="toolSelected()">Calculator</option>
 				</select>
-			</div>
+			</li>
 			
-			<div class="nav-item">
+			<li class="nav-item">
 				<button id="openSettings" onclick={toggleSettings}>
 					<i class="icon cog" />
 				</button>
-			</div>
-		</nav>
+			</li>
+		</ul>
 	</div>
 	<body>
 		<script type="module" src="index.js"> </script>

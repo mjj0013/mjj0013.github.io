@@ -3,12 +3,11 @@ body {
 	--nav-height:150px;
 	--navLink-height:50px;
 	--navLink-width:50px;
-	/* margin: 0 0 0 var(--nav-width); */
 	margin: var(--nav-height) 0 0 0;
 	font-family: 'Quicksand', sans-serif;
 	font-variant: small-caps;
 	font-size:18px;
-	
+
 }
 #navBarContainer {
 	height:var(--nav-height);
@@ -29,49 +28,45 @@ body {
 	left:0px;
 	width:100vw;
 	height:100px;
-	
 }
-
-
 
 .nav-menu {
 	position:fixed;
 	list-style-type: none;
-
 	margin:0;
 	padding:0;
-
-	top: 200px;
+	overflow:hidden;
+	top: 100px;
 	left: 0;
 	height: var(--navLink-height);
 	width: 100vw;
-
 	background-color: #333;
 	z-index:4;
 }
-
+li {
+	float:left;
+}
 
 .nav-link {
 	height: var(--navLink-height);
 	display: block;
 	padding: 12px 18px;
 	text-decoration: none;
-	color:#eeeeee;
-	
+	/* color:#eeeeee; */
 	font-weight: 500;
-	background-image: linear-gradient(to right,#222222,25%,#61d444,50%,#222222);
+	text-align: center;
+
+	
+
+	/* background-image: linear-gradient(to right,#222222,25%,#61d444,50%,#222222);
 	background-size:300%; 
-	background-position: center;
-	transition: background-position 1s;
+	background-position: center; */
+	/* transition: background-position 1s; */
 }
-
-
 
 .nav-link:hover, .nav-link:focus {
-	background-color: #111;
+	background-color: black;
 }
-
-
 
 .pull-right {
   display: flex;
@@ -83,21 +78,12 @@ body {
   margin-bottom: 20px;
 }
 
-a {
-	color: #009579;
-}
-
-
-
 
 .home-widget:hover {
 	transform:scale(1.1);
 }
 
-
-
 .home-widget:before {
-	
 	display: none;
 	height: 100%;
 	width: 100%;
@@ -114,7 +100,6 @@ a {
 	background-color: rgba(52, 73, 94, 0.75);
 }
 
-
 #fileText {
 	background-color: rgba(255,255,255,0.05);
 }
@@ -123,13 +108,7 @@ select {
 	width: 100px;
 }
 
-
-
-
-
 #gameSVG {
-	/* width:3000px;
-	height:2000px; */
 	position:absolute;
 	
 	top:200px;
@@ -141,24 +120,15 @@ select {
 }
 
 #gameControlPanel {
-	
 	display: grid;
-	
-
-
 	width:250px;
 	position:absolute;
 	grid-auto-flow: column;
-	
-	
 	top:200px;
 	left:100px;
-
 	fill: rgba(18, 25, 32, 0.75);
 	
 }
-
-
 #viewAndPanel {
 	position:absolute;
 	top:200px;
@@ -171,9 +141,6 @@ select {
 	/* overflow:hidden; */
 	
 }
-
-
-
 @keyframes firstAnimation {
 	to {
 		stroke:green;

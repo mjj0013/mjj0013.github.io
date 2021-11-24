@@ -2,8 +2,8 @@
 <html lang="en">
 	<head>
 		<link rel="stylesheet" href="Layout.css">
-		<script type="module" src="./pacmen/pacmen.js"></script>
-	
+		<!-- <script type="text/javascript" src="./pacmen/pacmen.js"></script> -->
+		<script src=https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.3.0/math.min.js></script>
 
 		<title>Portfolio Page</title>
 	</head>
@@ -23,12 +23,12 @@
 		
 		<li class="nav-item">
 			<select id="openCalculator">Tools
-				<option value="calculator" onchange="toolSelected()">Calculator</option>
+				<option value="calculator">Calculator</option>
 			</select>
 		</li>
 		
 		<li class="nav-item">
-			<button id="openSettings" onclick={toggleSettings}>
+			<button id="openSettings" onclick="toggleSettings()">
 				<i class="icon cog" />
 			</button>
 		</li>
@@ -36,7 +36,7 @@
 
 
 	<body>
-		<script type="module" src="index.js"> </script>
+		<script type="text/javascript" src="index.js"> </script>
 
 		<h2>Test Header</h2>
 		<p>This is a test header</p>

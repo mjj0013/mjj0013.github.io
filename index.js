@@ -21,9 +21,21 @@ window.onload = () => {
     }
     setInterval(update,1000/60);
 }
+function toggleSettings(e) {
+    let w = document.getElementById("sw");
+    
+    if(w.style.display=="none" || w.style.display=='') { w.style.display="block"; }
+    else w.style.display="none";
 
+    if(e.target.id=="calcSettingsButton") {		//settings request came from calculator
+        console.log("calculator button requested settings")
+        console.log(document.getElementById('elementSettingsPage'));
+    }
+    //settings request came from Home Page
+    if(e.target.id=="homeSettingsButton") {	console.log("home button requested settings"); }
+}
 
-var update = () => {
+function update() {
 	var context = coverCanvas.getContext("2d");
 		
     for(let phase=0; phase < xSortedCoverTriangles.length;++phase) {

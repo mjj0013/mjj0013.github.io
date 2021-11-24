@@ -1,14 +1,39 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- <link rel="stylesheet" href="../Layout.css"> -->
+        <link rel="stylesheet" href="../Layout.css">
+        
         <title>Pacmen</title>
         <!-- DO NOT CHANGE THIS LINE OF CODE -->
-        <script type="module" src="./pacmen.js"></script>
+        
     </head>
 
+    <div id='navBarContainer'>
+		<canvas id="coverCanvas" width="100%" />
+	</div>
+	<ul id="navBar" class="nav-menu">
+		<li>
+			<a href="../index.html" class="nav-link">Home</a>
+		</li>
+		<li >
+			<a href="./pacmen.html" class="nav-link" >Pacmen Game</a>
+		</li>
+		
+		<li class="nav-item">
+			<select id="openCalculator">Tools
+				<option value="calculator">Calculator</option>
+			</select>
+		</li>
+		
+		<li class="nav-item">
+			<button id="openSettings" onclick="toggleSettings()">
+				<i class="icon cog" />
+			</button>
+		</li>
+	</ul>
+
     <body>
-        
+        <script type="text/javascript" src="./pacmen.js"></script>
         <div id='game'>
             <button onclick='makeOne()' width='200' height='30'>Add PacMan</button>
             <button onclick='update()' width='200' height='30'>Start Game</button>

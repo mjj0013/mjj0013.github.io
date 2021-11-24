@@ -1,5 +1,6 @@
 var myHeaders = new Headers();
 myHeaders.set("Access-Control-Request-Headers", "*");
+myHeaders.set("Access-Control-Allow-Origin", "*");
 
 import {startAnimation, updateCover} from "../NavBar.js";
 
@@ -110,5 +111,7 @@ function makeOne() {
 
 // don't change this line
 // if (typeof module !== 'undefined') {
-//   module.exports = { checkCollisions, update, pacMen };
+//   module.exports = { checkCollisions, update, pacMen, makeOne };
 // }
+
+export {checkCollisions, update, pacMen, makeOne}

@@ -1,3 +1,8 @@
+var myHeaders = new Headers();
+
+myHeaders.set("Access-Control-Allow-Origin", "*");
+
+
 var coverCanvas = document.getElementById("coverCanvas");
 
 var coverTriangles = [];

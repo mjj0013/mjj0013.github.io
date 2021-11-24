@@ -73,7 +73,7 @@ function makePac() {
 
 function update() {
   // loop over pacmen array and move each one and move image in DOM
-  console.log("pacMen",pacMen);
+  
     pacMen.forEach((item) => {
       
       checkCollisions(item);

@@ -7,6 +7,7 @@ body {
 	font-family: 'Quicksand', sans-serif;
 	font-variant: small-caps;
 	font-size:18px;
+	/* background: hsl(197,84,21); */
 }
 #navBarContainer {
 	height:150px;
@@ -54,18 +55,28 @@ li {
 	display: block;
 	padding: 12px 18px;
 	text-decoration: none;
-	/* color:#eeeeee; */
+	color:#eeeeee;
 	font-weight: 500;
 	text-align: center;
-
-	/* background-image: linear-gradient(to right,#222222,25%,#61d444,50%,#222222);
-	background-size:300%; 
-	background-position: center; */
-	/* transition: background-position 1s; */
+	/* border-radius: 50%/100px 100px 0 0; */
+	/* background-image:url('navLinkBackground.png'); */
+	background-image: linear-gradient(to bottom right,#222222,25%,hsl(220, 50%, 50%),50%,#222222);
+	/* background-image: repeating-radial-gradient(#222222, hsl(220, 50%, 50%) 10%, #222222 75%); */
+	background-size:500%; 
+	transition: background-position 1s;
+	/* transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1); */
+	/* background-position: center; */
+	background-position-x: left;
+	background-position-y: top;
+	
+	
 }
 
 .nav-link:hover, .nav-link:focus {
-	background-color: black;
+	
+	background-position-x:right;
+	background-position-y: bottom;
+
 }
 
 
@@ -139,8 +150,9 @@ select {
 }
 @keyframes firstAnimation {
 	to {
-		stroke:green;
+		stroke:hsl(220, 50%, 50%);
 		d: path("M8,2 L2,8");
+		/* d: path("M8,2 L2,8"); */
 	}
 }
 

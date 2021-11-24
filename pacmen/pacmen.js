@@ -1,5 +1,5 @@
 
-import '../NavBar.js'
+
 
 window.onload = function() {
   console.log("game");

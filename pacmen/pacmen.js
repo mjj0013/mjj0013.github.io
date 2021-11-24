@@ -2,7 +2,7 @@ var myHeaders = new Headers();
 myHeaders.set("Access-Control-Request-Headers", "*");
 myHeaders.set("Access-Control-Allow-Origin", "*");
 
-import {startAnimation, updateCover} from "../NavBar.js";
+//import {startAnimation, updateCover} from "../NavBar.js";
 
 
 window.onload = function() {
@@ -10,16 +10,16 @@ window.onload = function() {
   game.width = window.innerWidth;
   game.height = window.innerHeight;
 
-  var canvas = document.getElementById("coverCanvas");
-  canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
-  startAnimation(coverCanvas);
-  window.onresize = () => {
-      canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
-      startAnimation(coverCanvas);
-  }
+  // var canvas = document.getElementById("coverCanvas");
+  // canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
+  // startAnimation(coverCanvas);
+  // window.onresize = () => {
+  //     canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
+  //     startAnimation(coverCanvas);
+  // }
 
 
-  setInterval(updateCover,1000/60);
+  // setInterval(updateCover,1000/60);
 }
 
 var pos = 0;

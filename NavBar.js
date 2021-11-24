@@ -10,6 +10,22 @@ var ySortedCoverTriangles = []
 var step = 0;
 
 
+window.onload = () =>{
+
+
+    var canvas = document.getElementById("coverCanvas");
+    canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
+    startAnimation(coverCanvas);
+    window.onresize = () => {
+        canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
+        startAnimation(coverCanvas);
+    }
+
+
+  setInterval(updateCover,1000/60);
+
+}
+
 function updateCover() {
 	var context = coverCanvas.getContext("2d");
 		
@@ -121,5 +137,5 @@ function startAnimation(canvas) {
 
 }
 
-export {startAnimation, loadTriangle, updateCover, Triangle};
+//export {startAnimation, loadTriangle, updateCover, Triangle};
 

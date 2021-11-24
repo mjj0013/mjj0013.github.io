@@ -11,7 +11,7 @@ var ySortedCoverTriangles = []
 var step = 0;
 
 
-function update() {
+function updateCover() {
 	var context = coverCanvas.getContext("2d");
 		
     for(let phase=0; phase < xSortedCoverTriangles.length;++phase) {
@@ -39,7 +39,7 @@ function update() {
 
     ++step;
 
-    // window.requestAnimationFrame(this.update);
+    // window.requestAnimationFrame(this.updateCover);
 
 }
 
@@ -122,5 +122,5 @@ function startAnimation(canvas) {
 
 }
 
-export {startAnimation, loadTriangle, update, Triangle};
+export {startAnimation, loadTriangle, updateCover, Triangle};
 

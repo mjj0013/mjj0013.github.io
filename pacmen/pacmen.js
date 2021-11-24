@@ -1,14 +1,23 @@
-let pos = 0;
-const pacArray = [
-  ['./images/PacMan1.png', './images/PacMan2.png'],
-  ['./images/PacMan3.png', './images/PacMan4.png'],
-];
-let direction = 0;
 
+window.onload = function() {
+
+  var game = document.getElementById("game");
+  game.width = window.innerWidth;
+  game.height = window.innerHeight;
+}
+
+var pos = 0;
+const pacArray = [
+    ['./images/PacMan1.png', './images/PacMan2.png'],
+    ['./images/PacMan3.png', './images/PacMan4.png'],
+  ];
+var direction = 0;
 const pacMen = []; // This array holds all the pacmen
+
 
 // This function returns an object with random values
 function setToRandom(scale) {
+  console.log("Math.random()",Math.random());
   return {
     x: Math.random() * scale,
     y: Math.random() * scale,
@@ -18,8 +27,8 @@ function setToRandom(scale) {
 // Factory to make a PacMan at a random position with random velocity
 function makePac() {
   // returns an object with random values scaled {x: 33, y: 21}
-  let velocity = setToRandom(10); // {x:?, y:?}
-  let position = setToRandom(200);
+  var velocity = setToRandom(10); // {x:?, y:?}
+  var position = setToRandom(200);
 
   // Add image to div id = game
   let game = document.getElementById('game');
@@ -29,28 +38,33 @@ function makePac() {
   newimg.width = 100;
 
   // TODO: set position here
-  newimg.style.left = position.x;
-  newimg.style.top = position.y;
+
+  
+  newimg.setAttribute("left",position.x+"px");
+  newimg.setAttribute("top",position.y+"px");
  
   // TODO add new Child image to game
   game.appendChild(newimg);
 
   // return details in an object
-  return {position, velocity, newimg};
+  return {"position":position, "velocity":velocity, "newimg":newimg};
 }
 
 function update() {
   // loop over pacmen array and move each one and move image in DOM
-    console.log("hasdfasdf");
-  pacMen.forEach((item) => {
-    checkCollisions(item);
-    item.position.x += item.velocity.x;
-    item.position.y += item.velocity.y;
+  console.log("pacMen",pacMen);
+    pacMen.forEach((item) => {
+      
+      checkCollisions(item);
+      item.position.x += item.velocity.x;
+      item.position.y += item.velocity.y;
 
-    item.newimg.style.left = item.position.x;
-    item.newimg.style.top = item.position.y;
-  });
-  setTimeout(update, 20);
+      item.newimg.style.left = item.position.x+"px";
+      item.newimg.style.top = item.position.y+"px";
+    });
+  
+  setTimeout(()=>{update();}, 20);
+  
 }
 
 function checkCollisions(item) {
@@ -75,6 +89,6 @@ function makeOne() {
 }
 
 // don't change this line
-if (typeof module !== 'undefined') {
-  module.exports = { checkCollisions, update, pacMen, makeOne };
-}
+// if (typeof module !== 'undefined') {
+//   module.exports = { checkCollisions, update, pacMen };
+// }

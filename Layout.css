@@ -10,7 +10,7 @@ body {
 
 }
 #navBarContainer {
-	height:var(--nav-height);
+	height:150px;
 	width:100vw;
 	top: 0;
 	left: 0;
@@ -41,7 +41,7 @@ body {
 
 	top: 100px;
 	left: 0;
-	height: var(--navLink-height);
+	height: 50px;
 	width: 100vw;
 	background-color: #333;
 	z-index:4;
@@ -51,7 +51,7 @@ li {
 }
 
 .nav-link {
-	height: var(--navLink-height);
+	height: 50px;
 	display: block;
 	padding: 12px 18px;
 	text-decoration: none;

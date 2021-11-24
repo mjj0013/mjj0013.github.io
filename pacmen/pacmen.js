@@ -6,23 +6,18 @@ import {startAnimation, updateCover} from "../NavBar.js";
 
 
 window.onload = function() {
-
-
   var game = document.getElementById("game");
   game.width = window.innerWidth;
   game.height = window.innerHeight;
 
-
-
-
   var canvas = document.getElementById("coverCanvas");
   canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
   startAnimation(coverCanvas);
-  
   window.onresize = () => {
       canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
       startAnimation(coverCanvas);
   }
+
 
   setInterval(updateCover,1000/60);
 }
@@ -110,8 +105,8 @@ function makeOne() {
 }
 
 // don't change this line
-// if (typeof module !== 'undefined') {
-//   module.exports = { checkCollisions, update, pacMen, makeOne };
-// }
+if (typeof module !== 'undefined') {
+  module.exports = { checkCollisions, update, pacMen, makeOne };
+}
 
 // export {checkCollisions, update, pacMen, makeOne}

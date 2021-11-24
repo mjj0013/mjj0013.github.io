@@ -1,5 +1,4 @@
 var myHeaders = new Headers();
-
 myHeaders.set("Access-Control-Allow-Origin", "*");
 
 

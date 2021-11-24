@@ -1,9 +1,24 @@
 
-window.onload = function() {
+import '../NavBar.js'
 
+window.onload = function() {
+  console.log("game");
   var game = document.getElementById("game");
   game.width = window.innerWidth;
   game.height = window.innerHeight;
+
+
+  var canvas = document.getElementById("coverCanvas");
+  console.log("home");
+  canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
+  startAnimation(coverCanvas);
+  
+  window.onresize = () => {
+      
+      canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
+      startAnimation(coverCanvas);
+  }
+  setInterval(update,1000/60);
 }
 
 var pos = 0;

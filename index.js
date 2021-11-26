@@ -15,9 +15,6 @@ import {SettingsModal} from "./SettingsWindow/SettingsWindow.js"
 window.onload = () => {
     var canvas = document.getElementById("coverCanvas");
     
-    
-   
-    
     canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
     startAnimation(canvas);
     

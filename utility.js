@@ -2,19 +2,17 @@
 
 
 
+function baseColorChanged() {
+    var newHue = document.getElementById("baseColor");
+    
+    console.log("iwjfiejwfiejf",newHue.value);
+    var navSegments = document.getElementsByClassName("nav-link")
+    for(let s=0; s < navSegments.length;++s) [
+        navSegments[s].setAttribute("fill",`hsl(${newHue.value}, 70%, 30%)`)
+        // navSegments[s].fill = `hsl(${newHue}, 70%, 30%)`
+    ]
 
-
-
-function toggleCalculator() {
-    let w = document.getElementById("cw");
-    if(w.style.display=="none" || w.style.display=='') {
-        
-        w.style.display="block";
-        window.setInterval(w.updateAnswer, 1000);
-    }
-    else { w.style.display="none"; }
 }
-
 
 function loadTextFile(e) {
     const txt_file=document.getElementById('paragraph');

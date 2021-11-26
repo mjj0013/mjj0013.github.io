@@ -11,30 +11,30 @@
     <div id='navBarContainer'>
 		<canvas id="coverCanvas" width="100%" />
 	</div>
-	<ul id="navBar" class="nav-menu">
-		<li>
-			<a href="../index.html" class="nav-link">Home</a>
-		</li>
-		<li >
-			<a href="../pacmen/pacmen.html" class="nav-link" >Pacmen</a>
-		</li>
-        <li >
-			<a href="../eyes/eyes.html" class="nav-link" >Eyes</a>
-		</li>
+	<svg id="navBar" class="nav-menu" xmlns="http://www.w3.org/2000/svg">
+		
+		<a href="../index.html" x="50" y="30" pointer-events="all">
+			<path id="homeNavButton" d="M0,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
 
-		
-		<li class="nav-item">
-			<select id="openCalculator">Tools
-				<option value="calculator">Calculator</option>
-			</select>
-		</li>
-		
-		<li class="nav-item">
-			<button id="openSettings" onclick="toggleSettings()">
-				<i class="icon cog" />
-			</button>
-		</li>
-	</ul>
+			</path>
+			<text x="50" y="30" fill="white" stroke="white" pointer-events="all">Home</text>
+		</a>
+
+		<a href="../pacmen/pacmen.html" x="200" y="30" pointer-events="all">
+			<path id="pacmenNavButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+			</path>
+			<text x="200" y="30" fill="white" stroke="white" pointer-events="all">Pacmen</text>
+		</a>
+
+		<a href="../eyes/eyes.html" x="350" y="30" pointer-events="all">
+			<path id="eyesNavButton" d="M300,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+			</path>
+			<text x="350" y="30" fill="white" stroke="white" pointer-events="all">Eyes</text>
+		</a>
+		<!-- add the remainder of the navbar using javascript -->
+		<!-- <path d="M450,0 L${},0 l0,50 l-150,0 l0,-50" fill="black" stroke="blue"></path> -->
+	</svg>
+
 
     <body>
         <script type="text/javascript" src="../NavBar.js"> </script>

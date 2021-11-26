@@ -49,8 +49,10 @@ window.onload = () =>{
     }
 
     settingsButton.onmouseover = (e) => {
+
         document.getElementById("gearRotate1").beginElement();
         document.getElementById("gearRotate2").beginElement();
+        settingsButton.setAttribute("cursor","pointer");
        
     }
     settingsButton.onmouseout = (e) => {

@@ -3,6 +3,7 @@ myHeaders.set("Access-Control-Request-Headers", "*");
 
 
 import {startAnimation, updateCover} from "./NavBar.js";
+import {SettingsModal} from "./SettingsWindow/SettingsWindow.js"
 // var coverCanvas = document.getElementById("coverCanvas");
 
 // var coverTriangles = [];
@@ -10,8 +11,12 @@ import {startAnimation, updateCover} from "./NavBar.js";
 // var ySortedCoverTriangles = [];
 // var step = 0;
 
+
 window.onload = () => {
     var canvas = document.getElementById("coverCanvas");
+    
+    
+   
     
     canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
     startAnimation(canvas);
@@ -21,4 +26,7 @@ window.onload = () => {
         startAnimation(canvas);
     }
     setInterval(updateCover,1000/60);
+
+
+    
 }

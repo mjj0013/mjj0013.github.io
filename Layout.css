@@ -32,19 +32,23 @@ body {
 
 .nav-menu {
 	position:fixed;
-	list-style-type: none;
+	
 
 	margin:0;
 	padding:0;
 
 	overflow:hidden;
 
-	top: 100px;
+	/* top: 100px; */
+	top: 115px;
 	left: 0;
 	height: 50px;
 	width: 100vw;
-	background-color: #333;
+	
 	z-index:4;
+
+	/* background-color: #333;
+	list-style-type: none; */
 }
 li {
 	float:left;
@@ -156,6 +160,68 @@ select {
 	}
 }
 
+
+
+.settingsWindow {
+    position: absolute;
+    font-family: system-ui;
+    top: 25%;
+    left:25%;
+    z-index: 9;
+    
+    background-color: #f1f1f1;
+    display:none;
+    border: 1px solid #d3d3d3;
+    width:200px;
+    height:200px;
+    
+    --button_hue: 180;
+    --button_saturation:75%;
+    --button_lightness:55%;
+    
+}
+
+#settingsApplyButton {
+   
+    float:right;
+    position:absolute;
+    right:5px;
+    bottom:5px;
+    top:5px;
+    
+    
+}
+.settingsWindowHeader {
+    cursor: move;
+    background-color: #2196F3;
+    padding: 10px;
+    z-index:10;
+    color: #fff;
+}
+
+.settingsWindowFooter {
+    background-color: #fff;
+    padding: 10px;
+    z-index:9;
+    position:absolute;
+    top:528px;
+    border: 1px solid #d3d3d3;
+    width:498px;
+    height:50px;
+    
+    
+}
+
+.exitButton {
+    
+    
+    background-color: inherit;
+    border-radius:15%;
+    width:40px;
+    height:30px;
+    float:right;
+
+}
 
 
 

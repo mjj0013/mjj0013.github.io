@@ -1,38 +1,176 @@
 var myHeaders = new Headers();
 myHeaders.set("Access-Control-Allow-Origin", "*");
 
-
 var coverCanvas = document.getElementById("coverCanvas");
-
 var coverTriangles = [];
 var xSortedCoverTriangles = []
 var ySortedCoverTriangles = []
 var step = 0;
 
 
-window.onload = () =>{
+var numOfNavElements = 3;
+var navElementSizes = {150:3, 50:1}     //keys are size, values are the quantities of each size
 
+
+window.onload = () =>{
+    
 
     var canvas = document.getElementById("coverCanvas");
     canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
     startAnimation(coverCanvas);
+
+
+    
+    
     window.onresize = () => {
         canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
         startAnimation(coverCanvas);
     }
+    addMenuAnimation();
+
+    setInterval(updateCover,1000/60);
+    // addRemainingSegment();
+
+    var sw = document.getElementById("sw");
+    
+
+    var settingsButton = document.getElementById("settingsButton");
+  
+    sw.setAttribute("right", settingsButton.getBoundingClientRect().left)
 
 
-  setInterval(updateCover,1000/60);
+    settingsButton.onclick = () => {
+        if(document.getElementById("sw").style.display=="block") {
+            document.getElementById("sw").style.display="none";
+        }
+        else {
+            document.getElementById("sw").style.display="block";
+        }
+    }
+
+    settingsButton.onmouseover = (e) => {
+        document.getElementById("gearRotate1").beginElement();
+        document.getElementById("gearRotate2").beginElement();
+       
+    }
+    settingsButton.onmouseout = (e) => {
+        document.getElementById("gearRotate1").endElement();
+        document.getElementById("gearRotate2").endElement();
+    }
+    
+    
+    
+}
+
+
+var sineWaveMenuEffect = (startX, endX, amp, freq, phase,restState=false) => {
+    let wave=``
+    let rarity = 1;
+    
+    for(let x=startX; x <endX; ++x) {
+        let x1 = (x-1+phase)*rarity + startX;
+        let x2 = (x+phase)*rarity + startX;
+        let y1 = 0;
+        let y2 = 0;
+        
+        if(!restState) {
+            //sawtooth
+            // y1 = (2*amp/Math.PI)*Math.atan(1/Math.tan(Math.PI*(x-1+phase)*freq));
+            // y2 = (2*amp/Math.PI)*Math.atan(1/Math.tan(Math.PI*(x+phase)*freq));
+            
+            
+            y1 = amp*Math.sin(freq*(x-1))/(x-1);
+            y2 = amp*Math.sin(freq*(x))/(x);
+           
+        }
+        
+        
+        wave += `l${x2-x1} ${y2-y1}`
+    }
+    return wave;
+}
+
+
+
+var navLinkAnimationFrames = (elementID, i) => {
+    let posX = i*150;
+    let nextPosX = (i+1)*150
+
+    var angFreq = .3;
+    var waveAmp = -10;
+    
+    //var rarity = 1;
+
+    var waveD0 = sineWaveMenuEffect(posX,nextPosX,waveAmp, angFreq, 0, true);       //at rest
+    var waveD1 = sineWaveMenuEffect(posX,nextPosX,waveAmp, angFreq, 0, false);
+    var waveD2 = sineWaveMenuEffect(posX,nextPosX,waveAmp, angFreq, 0, false);
+
+
+    
+    var valStr1 =   `M${posX},0 ${waveD0} L${nextPosX},50 L${posX},50 L${posX},0 `;
+    var valStr2 =   `M${posX},0 ${waveD1} L${nextPosX},50 L${posX},50 L${posX},0 `;
+    var valStr3 =   `M${posX},0 ${waveD2} L${nextPosX},50 L${posX},50 L${posX},0 `;
+    
+    
+
+   
+    var values = valStr1 + " ; "+ valStr2 + " ; " + valStr3;
+    var keySplines = "0 .95 .95 .23; 0 .45 .95 .23; 0 .45 .95 .23";
+    var keyTimes = "0 ; .50; 1";
+    var htmlStr = `<animate xlink:href="#${elementID}"
+        attributeName="d"
+        attributeType="XML"
+        values="${values}"
+        keyTimes="${keyTimes}"
+        repeatCount="indefinite"
+        keySplines="${keySplines}"
+        dur="4s"
+        begin="indefinite"
+        end="indefinite"
+        fill="remove"
+        id="${elementID+"Animation"}"
+    />`
+    console.log("elementID", elementID)
+    document.getElementById(elementID).insertAdjacentHTML('beforeend',htmlStr);
+    document.getElementById(elementID).onmouseover = (e) => {
+        document.getElementById(elementID+"Animation").beginElement();
+    }
+    document.getElementById(elementID).onmouseout = (e) => {
+        document.getElementById(elementID+"Animation").endElement();
+    }
 
 }
 
+
+function addMenuAnimation() {
+    navLinkAnimationFrames("homeNavButton",0);
+    navLinkAnimationFrames("pacmenNavButton",1);
+    navLinkAnimationFrames("eyesNavButton",2);
+   
+}
+
+
+function addRemainingSegment() {
+    let totalExistingLength = 0;
+    let sizes = Object.keys(navElementSizes);
+    for(let s=0; s < sizes.length;++s) {
+        totalExistingLength+=sizes[s]*navElementSizes[sizes[s]];
+    }
+
+    //var navLength = document.getElementById("navBar").width.baseVal.value;
+    var remSegmentLength = window.innerWidth - totalExistingLength;
+   
+    var htmlStr = `<path id="eyesNavButton" d="M${totalExistingLength},0 l${remSegmentLength},0 l0,50 l-${remSegmentLength},0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+	</path>`
+    document.getElementById("navBar").insertAdjacentHTML('beforeend',htmlStr)
+}
+
+
 function updateCover() {
 	var context = coverCanvas.getContext("2d");
-		
     for(let phase=0; phase < xSortedCoverTriangles.length;++phase) {
         var triangles = xSortedCoverTriangles[phase]
         triangles.value = Math.max(waveform1(step*phase), 25);
-
 
         let saturationVal = Math.max(waveform1((step+3)*phase), 25);
 
@@ -90,7 +228,7 @@ function startAnimation(canvas) {
     let numRows = 2;
     let length = 40;
     
-    var pt1 = {x:75,y:40};
+    var pt1 = {x:75,y:40};      //y previously 40
     let xOrigin = pt1.x;
     
 

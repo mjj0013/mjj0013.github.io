@@ -1,16 +1,24 @@
 body {
-    margin: 0;
-    padding: 0;
-  }
+	--nav-width:100px;
+	--nav-height:150px;
+	--navLink-height:50px;
+	--navLink-width:50px;
+	margin: var(--nav-height) 0 0 0;
+	font-family: 'Quicksand', sans-serif;
+	font-variant: small-caps;
+	font-size:18px;
+    margin:0;
+    padding:0;
+}
 #map {
-position: absolute;
-top: 0;
-bottom: 0;
-width: 100%;
+    position: absolute;
+    top: 150px;
+    bottom: 0;
+    width: 100%;
 }
   
 .map-overlay {
-position: absolute;
-left: 0;
-padding: 10px;
+    position: absolute;
+    left: 0;
+    padding: 10px;
 }

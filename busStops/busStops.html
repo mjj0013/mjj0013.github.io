@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Map Animation</title>
+    <title>Map Animation | Portfolio Page</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" rel="stylesheet" />
@@ -14,8 +14,20 @@
     <script type="text/javascript" src="../utility.js"></script>
         <link rel="stylesheet" href="../Layout.css">
 </head>
+<div id='navBarContainer'>
+		<canvas id="coverCanvas" width="100%" />
+	</div>
+	<svg id="navBar" class="nav-menu" xmlns="http://www.w3.org/2000/svg">
+
+	</svg>
+	<div id ="sw" class="settingsWindow">
+		<label for="baseColor">Base Hue: </label>
+		<input id="baseColor" type="range" min="0" max="360" value="220" onchange="baseColorChanged()">
+		
+</div>
 
 <body>
+    <script type="text/javascript" src="../NavBar.js"> </script>
     <div id="map"></div>
     <div class="map-overlay top">
         <button style="font-size: 2em" onclick="move()">

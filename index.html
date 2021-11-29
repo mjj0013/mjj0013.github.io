@@ -10,22 +10,44 @@
 	<div id='navBarContainer'>
 		<canvas id="coverCanvas" width="100%" />
 	</div>
+
 	<svg id="navBar" class="nav-menu" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+		<radialGradient id="homeNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
+			<stop class="gradientStop3" offset="40%"/>
+			<stop class="gradientStop2" offset="65%"/>
+			<stop class="gradientStop1" offset="85%"/>
+			<animate id="homeNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur="1s"  begin="indefinite" repeatCount="indefinite" />
+		</radialGradient>
+
+		<radialGradient id="pacmenNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
+			<stop class="gradientStop3" offset="40%"/>
+			<stop class="gradientStop2" offset="65%"/>
+			<stop class="gradientStop1" offset="85%"/>
+			<animate id="pacmenNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur="1s"  begin="indefinite" repeatCount="indefinite"/>
+		</radialGradient>
+
+		<radialGradient id="eyesNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
+			<stop class="gradientStop3" offset="40%"/>
+			<stop class="gradientStop2" offset="65%"/>
+			<stop class="gradientStop1" offset="85%"/>
+			<animate id="eyesNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur="1s"  begin="indefinite" repeatCount="indefinite" />
+		</radialGradient>
 		
 		<a href="#" x="50" y="30" pointer-events="all" >
-			<path class="nav-link" id="homeNavButton" d="M0,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" >
+			<path class="nav-link" id="homeNavButton" d="M0,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#homeNavLinkGradient)" stroke="black" >
+			
 			</path>
 			<text x="50" y="30" fill="white" stroke="white" pointer-events="all">Home</text>
 		</a>
 
 		<a href="./pacmen/pacmen.html" x="200" y="30" pointer-events="all">
-			<path class="nav-link" id="pacmenNavButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+			<path class="nav-link" id="pacmenNavButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#pacmenNavLinkGradient)" stroke="black" pointer-events="all">
 			</path>
 			<text x="200" y="30" fill="white" stroke="white" pointer-events="all">Pacmen</text>
 		</a>
 
 		<a href="./eyes/eyes.html" x="350" y="30" pointer-events="all">
-			<path class="nav-link" id="eyesNavButton" d="M300,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+			<path class="nav-link" id="eyesNavButton" d="M300,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#eyesNavLinkGradient)" stroke="black" pointer-events="all">
 			</path>
 			<text x="350" y="30" fill="white" stroke="white" pointer-events="all">Eyes</text>
 		</a>

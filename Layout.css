@@ -7,6 +7,7 @@ body {
 	font-family: 'Quicksand', sans-serif;
 	font-variant: small-caps;
 	font-size:18px;
+	
 	/* background: hsl(197,84,21); */
 }
 #navBarContainer {
@@ -54,18 +55,27 @@ li {
 	float:left;
 }
 
+.gradientStop1 { stop-color: hsl(220,70%,30%); }
+.gradientStop2 { stop-color: hsl(220,70%,50%); }
+.gradientStop3 { stop-color: hsl(220,70%,65%);  }	
+/* stop-opacity: 0;	 */
+
+
 .nav-link {
 	
 	color:white;
 	
-}
-
-.nav-link:hover, .nav-link:focus {
+	transition:filter 1s;
 	
-	background-position-x:right;
-	background-position-y: bottom;
-
+	
+	/* transition-timing-function: cubic-bezier(1.1, .001, 0.22, 1); */
 }
+
+
+/* .nav-link:hover, .nav-link:focus {
+	animation: url(#gradientAnimation);
+	
+} */
 
 
 .h1 {

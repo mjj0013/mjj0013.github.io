@@ -13,21 +13,18 @@ var numOfNavElements = 3;
 var navElementSizes = {150:3, 50:1}     //keys are size, values are the quantities of each size
 
 
+
 window.onload = () =>{
     
-
     var canvas = document.getElementById("coverCanvas");
     canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
     startAnimation(coverCanvas);
 
-
-    
-    
     window.onresize = () => {
         canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
         startAnimation(coverCanvas);
     }
-    addMenuAnimation();
+    //addMenuAnimation();
 
     setInterval(updateCover,1000/60);
     // addRemainingSegment();
@@ -44,12 +41,31 @@ window.onload = () =>{
 
     var sw = document.getElementById("sw");
     
+    var navLinks = document.getElementsByClassName("nav-link");
 
+    
+    document.getElementById("homeNavButton").onmouseover = (e) => {
+        document.getElementById("homeNavButtonAnimation").beginElement();
+    }
+    document.getElementById("homeNavButton").onmouseout = (e) => {
+        document.getElementById("homeNavButtonAnimation").endElement();
+    }
+
+    document.getElementById("pacmenNavButton").onmouseover = (e) => {
+        document.getElementById("pacmenNavButtonAnimation").beginElement();
+    }
+    document.getElementById("pacmenNavButton").onmouseout = (e) => {
+        document.getElementById("pacmenNavButtonAnimation").endElement();
+    }
+
+    document.getElementById("eyesNavButton").onmouseover = (e) => {
+        document.getElementById("eyesNavButtonAnimation").beginElement();
+    }
+    document.getElementById("eyesNavButton").onmouseout = (e) => {
+        document.getElementById("eyesNavButtonAnimation").endElement();
+    }
     var settingsButton = document.getElementById("settingsButton");
-  
-    //sw.setAttribute("right", settingsButton.getBoundingClientRect().left)
-
-
+    
     settingsButton.onclick = () => {
         console.log("clicked");
         if(document.getElementById("sw").style.display=="block") {
@@ -61,16 +77,48 @@ window.onload = () =>{
     }
 
     settingsButton.onmouseover = (e) => {
-
+        //document.getElementById("gradientAnimation").beginElement()
         document.getElementById("gearRotate1").beginElement();
         document.getElementById("gearRotate2").beginElement();
         settingsButton.setAttribute("cursor","pointer");
-       
+        
     }
     settingsButton.onmouseout = (e) => {
         document.getElementById("gearRotate1").endElement();
         document.getElementById("gearRotate2").endElement();
     }
+    
+        
+        
+    
+
+
+    // var settingsButton = document.getElementById("settingsButton");
+  
+    // //sw.setAttribute("right", settingsButton.getBoundingClientRect().left)
+
+
+    // settingsButton.onclick = () => {
+    //     console.log("clicked");
+    //     if(document.getElementById("sw").style.display=="block") {
+    //         document.getElementById("sw").style.display="none";
+    //     }
+    //     else {
+    //         document.getElementById("sw").style.display="block";
+    //     }
+    // }
+
+    // settingsButton.onmouseover = (e) => {
+
+    //     document.getElementById("gearRotate1").beginElement();
+    //     document.getElementById("gearRotate2").beginElement();
+    //     settingsButton.setAttribute("cursor","pointer");
+       
+    // }
+    // settingsButton.onmouseout = (e) => {
+    //     document.getElementById("gearRotate1").endElement();
+    //     document.getElementById("gearRotate2").endElement();
+    // }
     
     
     
@@ -97,8 +145,6 @@ var sineWaveMenuEffect = (startX, endX, amp, freq, phase,restState=false) => {
             y2 = amp*Math.sin(freq*(x))/(x);
            
         }
-        
-        
         wave += `l${x2-x1} ${y2-y1}`
     }
     return wave;
@@ -119,15 +165,11 @@ var navLinkAnimationFrames = (elementID, i) => {
     var waveD1 = sineWaveMenuEffect(posX,nextPosX,waveAmp, angFreq, 0, false);
     var waveD2 = sineWaveMenuEffect(posX,nextPosX,waveAmp, angFreq, 0, false);
 
-
-    
     var valStr1 =   `M${posX},0 ${waveD0} L${nextPosX},50 L${posX},50 L${posX},0 `;
     var valStr2 =   `M${posX},0 ${waveD1} L${nextPosX},50 L${posX},50 L${posX},0 `;
     var valStr3 =   `M${posX},0 ${waveD2} L${nextPosX},50 L${posX},50 L${posX},0 `;
     
-    
 
-   
     var values = valStr1 + " ; "+ valStr2 + " ; " + valStr3;
     var keySplines = "0 .95 .95 .23; 0 .45 .95 .23; 0 .45 .95 .23";
     var keyTimes = "0 ; .50; 1";
@@ -162,8 +204,8 @@ function addMenuAnimation() {
     navLinkAnimationFrames("homeNavButton",0);
     navLinkAnimationFrames("pacmenNavButton",1);
     navLinkAnimationFrames("eyesNavButton",2);
-   
 }
+
 function addSettingsSegment(rootPath) {
     var navBar = document.getElementById("navBar");
     navBar.insertAdjacentHTML("beforeend", `<path class="nav-link" id="settingsButton" d="M450,0 l50,0 l0,50 l-50,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
@@ -179,7 +221,6 @@ function addSettingsSegment(rootPath) {
                       begin="indefinite"
                       repeatCount="indefinite">
         </animateTransform>
-        
     </image>`
     );
     navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon2" href="${rootPath}icons/settings_white_24dp.svg" x="450" y="0" height="30" width="30" pointer-events="none"></image>
@@ -229,7 +270,7 @@ function updateCover() {
             context.lineTo(Tri.pts[2].x,Tri.pts[2].y);
             context.lineTo(Tri.pts[0].x,Tri.pts[0].y);
             context.closePath();
-            context.fillStyle = `hsl(${selectedHue}, ${saturationVal}%, ${triangles.value}%)`;
+            context.fillStyle = `hsla(${selectedHue}, ${saturationVal}%, ${triangles.value}%, .5)`;
             context.fill();
             context.stroke();
             

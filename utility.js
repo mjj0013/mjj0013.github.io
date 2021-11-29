@@ -4,13 +4,39 @@
 
 function baseColorChanged() {
     var newHue = document.getElementById("baseColor");
+
+    var gradientStops1 = document.getElementsByClassName("gradientStop1");
+    for(let i=0; i < gradientStops1.length; ++i) {
+        gradientStops1[i].setAttribute("stop-color", `hsl(${newHue.value}, 70%, 30%)`)
+    }
+
+    var gradientStops2 = document.getElementsByClassName("gradientStop2");
+    for(let i=0; i < gradientStops2.length; ++i) {
+        gradientStops2[i].setAttribute("stop-color", `hsl(${newHue.value}, 70%, 50%)`)
+        //gradientStops2[i].stopColor = `hsl(${newHue.value}, 70%, 50%)`
+    }
+
+    var gradientStops3 = document.getElementsByClassName("gradientStop3");
+    for(let i=0; i < gradientStops3.length; ++i) {
+        gradientStops3[i].setAttribute("stop-color", `hsl(${newHue.value}, 70%, 65%)`)
+    }
+
+
     
-    console.log("iwjfiejwfiejf",newHue.value);
-    var navSegments = document.getElementsByClassName("nav-link")
-    for(let s=0; s < navSegments.length;++s) [
-        navSegments[s].setAttribute("fill",`hsl(${newHue.value}, 70%, 30%)`)
-        // navSegments[s].fill = `hsl(${newHue}, 70%, 30%)`
-    ]
+
+
+
+    
+    
+    
+    // console.log("iwjfiejwfiejf",newHue.value);
+    // var navSegments = document.getElementsByClassName("nav-link")
+    // for(let s=0; s < navSegments.length;++s) {
+    //     navSegments[s].setAttribute("fill",`hsl(${newHue.value}, 70%, 30%)`)
+    // }
+        
+   
+    
 
 }
 

@@ -7,39 +7,67 @@ var xSortedCoverTriangles = []
 var ySortedCoverTriangles = []
 var step = 0;
 
+var selectedHue = 220;
 
 var numOfNavElements = 3;
 var navElementSizes = {150:3, 50:1}     //keys are size, values are the quantities of each size
 
 
+
 window.onload = () =>{
     
-
     var canvas = document.getElementById("coverCanvas");
     canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
     startAnimation(coverCanvas);
 
-
-    
-    
     window.onresize = () => {
         canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
         startAnimation(coverCanvas);
     }
-    addMenuAnimation();
+    //addMenuAnimation();
 
     setInterval(updateCover,1000/60);
     // addRemainingSegment();
+    
+    var pathName = window.location.pathname;
+    var pathFileName = pathName.substr(pathName.lastIndexOf("/")+1)
+    pathFileName = pathFileName.replace("#","");
+    pathFileName = pathFileName.replace(".html","");
+    
+    if(pathFileName=="index") addSettingsSegment('');
+    else if(pathFileName=="pacmen") addSettingsSegment('../');
+    else if(pathFileName=="eyes") addSettingsSegment('../');
+    
 
     var sw = document.getElementById("sw");
     
+    var navLinks = document.getElementsByClassName("nav-link");
 
+    
+    document.getElementById("homeNavButton").onmouseover = (e) => {
+        document.getElementById("homeNavButtonAnimation").beginElement();
+    }
+    document.getElementById("homeNavButton").onmouseout = (e) => {
+        document.getElementById("homeNavButtonAnimation").endElement();
+    }
+
+    document.getElementById("pacmenNavButton").onmouseover = (e) => {
+        document.getElementById("pacmenNavButtonAnimation").beginElement();
+    }
+    document.getElementById("pacmenNavButton").onmouseout = (e) => {
+        document.getElementById("pacmenNavButtonAnimation").endElement();
+    }
+
+    document.getElementById("eyesNavButton").onmouseover = (e) => {
+        document.getElementById("eyesNavButtonAnimation").beginElement();
+    }
+    document.getElementById("eyesNavButton").onmouseout = (e) => {
+        document.getElementById("eyesNavButtonAnimation").endElement();
+    }
     var settingsButton = document.getElementById("settingsButton");
-  
-    sw.setAttribute("right", settingsButton.getBoundingClientRect().left)
-
-
+    
     settingsButton.onclick = () => {
+        console.log("clicked");
         if(document.getElementById("sw").style.display=="block") {
             document.getElementById("sw").style.display="none";
         }
@@ -49,14 +77,48 @@ window.onload = () =>{
     }
 
     settingsButton.onmouseover = (e) => {
+        //document.getElementById("gradientAnimation").beginElement()
         document.getElementById("gearRotate1").beginElement();
         document.getElementById("gearRotate2").beginElement();
-       
+        settingsButton.setAttribute("cursor","pointer");
+        
     }
     settingsButton.onmouseout = (e) => {
         document.getElementById("gearRotate1").endElement();
         document.getElementById("gearRotate2").endElement();
     }
+    
+        
+        
+    
+
+
+    // var settingsButton = document.getElementById("settingsButton");
+  
+    // //sw.setAttribute("right", settingsButton.getBoundingClientRect().left)
+
+
+    // settingsButton.onclick = () => {
+    //     console.log("clicked");
+    //     if(document.getElementById("sw").style.display=="block") {
+    //         document.getElementById("sw").style.display="none";
+    //     }
+    //     else {
+    //         document.getElementById("sw").style.display="block";
+    //     }
+    // }
+
+    // settingsButton.onmouseover = (e) => {
+
+    //     document.getElementById("gearRotate1").beginElement();
+    //     document.getElementById("gearRotate2").beginElement();
+    //     settingsButton.setAttribute("cursor","pointer");
+       
+    // }
+    // settingsButton.onmouseout = (e) => {
+    //     document.getElementById("gearRotate1").endElement();
+    //     document.getElementById("gearRotate2").endElement();
+    // }
     
     
     
@@ -83,8 +145,6 @@ var sineWaveMenuEffect = (startX, endX, amp, freq, phase,restState=false) => {
             y2 = amp*Math.sin(freq*(x))/(x);
            
         }
-        
-        
         wave += `l${x2-x1} ${y2-y1}`
     }
     return wave;
@@ -105,15 +165,11 @@ var navLinkAnimationFrames = (elementID, i) => {
     var waveD1 = sineWaveMenuEffect(posX,nextPosX,waveAmp, angFreq, 0, false);
     var waveD2 = sineWaveMenuEffect(posX,nextPosX,waveAmp, angFreq, 0, false);
 
-
-    
     var valStr1 =   `M${posX},0 ${waveD0} L${nextPosX},50 L${posX},50 L${posX},0 `;
     var valStr2 =   `M${posX},0 ${waveD1} L${nextPosX},50 L${posX},50 L${posX},0 `;
     var valStr3 =   `M${posX},0 ${waveD2} L${nextPosX},50 L${posX},50 L${posX},0 `;
     
-    
 
-   
     var values = valStr1 + " ; "+ valStr2 + " ; " + valStr3;
     var keySplines = "0 .95 .95 .23; 0 .45 .95 .23; 0 .45 .95 .23";
     var keyTimes = "0 ; .50; 1";
@@ -142,13 +198,43 @@ var navLinkAnimationFrames = (elementID, i) => {
 }
 
 
+
+
 function addMenuAnimation() {
     navLinkAnimationFrames("homeNavButton",0);
     navLinkAnimationFrames("pacmenNavButton",1);
     navLinkAnimationFrames("eyesNavButton",2);
-   
 }
 
+function addSettingsSegment(rootPath) {
+    var navBar = document.getElementById("navBar");
+    navBar.insertAdjacentHTML("beforeend", `<path class="nav-link" id="settingsButton" d="M450,0 l50,0 l0,50 l-50,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+    </path>`);
+
+    navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon1" href="${rootPath}icons/settings_white_24dp.svg" x="470" y="20" height="30" width="30" pointer-events="none">
+        <animateTransform xlink:href="#gearIcon1" id="gearRotate1" attributeName="transform"
+                      attributeType="XML"
+                      type="rotate"
+                      from="0 485 35"
+                      to="360 485 35"
+                      dur="1s"
+                      begin="indefinite"
+                      repeatCount="indefinite">
+        </animateTransform>
+    </image>`
+    );
+    navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon2" href="${rootPath}icons/settings_white_24dp.svg" x="450" y="0" height="30" width="30" pointer-events="none"></image>
+        <animateTransform xlink:href="#gearIcon2" id="gearRotate2" attributeName="transform"
+                        attributeType="XML"
+                        type="rotate"
+                        from="360 465 15"
+                        to="0 465 15"
+                        dur="1s"
+                        begin="indefinite"
+                        repeatCount="indefinite">
+        </animateTransform>
+    </image>`);
+}
 
 function addRemainingSegment() {
     let totalExistingLength = 0;
@@ -160,13 +246,14 @@ function addRemainingSegment() {
     //var navLength = document.getElementById("navBar").width.baseVal.value;
     var remSegmentLength = window.innerWidth - totalExistingLength;
    
-    var htmlStr = `<path id="eyesNavButton" d="M${totalExistingLength},0 l${remSegmentLength},0 l0,50 l-${remSegmentLength},0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+    var htmlStr = `<path d="M${totalExistingLength},0 l${remSegmentLength},0 l0,50 l-${remSegmentLength},0 l0,-50" fill="hsl(${selectedHue},70%,30%)" stroke="black" pointer-events="all">
 	</path>`
     document.getElementById("navBar").insertAdjacentHTML('beforeend',htmlStr)
 }
 
 
 function updateCover() {
+    
 	var context = coverCanvas.getContext("2d");
     for(let phase=0; phase < xSortedCoverTriangles.length;++phase) {
         var triangles = xSortedCoverTriangles[phase]
@@ -183,7 +270,7 @@ function updateCover() {
             context.lineTo(Tri.pts[2].x,Tri.pts[2].y);
             context.lineTo(Tri.pts[0].x,Tri.pts[0].y);
             context.closePath();
-            context.fillStyle = `hsl(220, ${saturationVal}%, ${triangles.value}%)`;
+            context.fillStyle = `hsla(${selectedHue}, ${saturationVal}%, ${triangles.value}%, .5)`;
             context.fill();
             context.stroke();
             
@@ -197,6 +284,7 @@ function updateCover() {
 }
 
 function loadTriangle(canvas, t) {
+   
     if(t.pts == undefined) return;
     canvas.getContext("2d").beginPath();
     canvas.getContext("2d").moveTo(t.pts[0].x, t.pts[0].y);
@@ -204,7 +292,7 @@ function loadTriangle(canvas, t) {
     canvas.getContext("2d").lineTo(t.pts[2].x, t.pts[2].y);
     canvas.getContext("2d").lineTo(t.pts[0].x, t.pts[0].y);
     canvas.getContext("2d").closePath();
-    canvas.getContext("2d").fillStyle = `hsl(220, 50%, 50%)`;
+    canvas.getContext("2d").fillStyle = `hsl(${selectedHue}, 50%, 50%)`;
     canvas.getContext("2d").fill();
     canvas.getContext("2d").stroke();
 
@@ -277,3 +365,33 @@ function startAnimation(canvas) {
 
 //export {startAnimation, loadTriangle, updateCover, Triangle};
 
+
+
+// function addHomeSegment() {
+//     document.getElementById("coverSVG").insertAdjacentHTML("beforeend", 
+//         `<a href="#" x="50" y="30" pointer-events="all" >
+//             <path id="homeNavButton" d="M0,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" >
+//             </path>
+//             <text x="50" y="30" fill="white" stroke="white" pointer-events="all">Home</text>
+//         </a>`
+//     );
+// }
+
+// function addPacmenSegment(HREF) {
+//     document.getElementById("coverSVG").insertAdjacentHTML("beforeend", 
+//         `<a href="${HREF}" x="200" y="30" pointer-events="all">
+//             <path id="pacmenNavButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+//             </path>
+//             <text x="200" y="30" fill="white" stroke="white" pointer-events="all">Pacmen</text>
+//         </a>`
+//     );
+// }
+// function addEyesSegment() {
+//     document.getElementById("coverSVG").insertAdjacentHTML("beforeend", 
+//     `<a href="./eyes/eyes.html" x="350" y="30" pointer-events="all">
+//         <path id="eyesNavButton" d="M300,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+//         </path>
+//         <text x="350" y="30" fill="white" stroke="white" pointer-events="all">Eyes</text>
+//     </a>`
+//     );
+// }

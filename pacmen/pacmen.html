@@ -3,7 +3,9 @@
     <head>
         <link rel="stylesheet" href="../Layout.css">
         <title>Pacmen</title>
+
         <script type="text/javascript" src="./pacmen.js" ></script>
+		<script type="text/javascript" src="../utility.js"></script>
     </head>
     <div id='navBarContainer'>
 		<canvas id="coverCanvas" width="100%" />
@@ -11,20 +13,20 @@
 	<svg id="navBar" class="nav-menu" xmlns="http://www.w3.org/2000/svg">
 		
 		<a href="../index.html" x="50" y="30" pointer-events="all">
-			<path id="homeNavButton" d="M0,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+			<path class="nav-link" id="homeNavButton" d="M0,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
 
 			</path>
 			<text x="50" y="30" fill="white" stroke="white" pointer-events="all">Home</text>
 		</a>
 
 		<a href="./pacmen.html" x="200" y="30" pointer-events="all">
-			<path id="pacmenNavButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+			<path class="nav-link" id="pacmenNavButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
 			</path>
 			<text x="200" y="30" fill="white" stroke="white" pointer-events="all">Pacmen</text>
 		</a>
 
 		<a href="../eyes/eyes.html" x="350" y="30" pointer-events="all">
-			<path id="eyesNavButton" d="M300,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+			<path class="nav-link" id="eyesNavButton" d="M300,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
 			</path>
 			<text x="350" y="30" fill="white" stroke="white" pointer-events="all">Eyes</text>
 		</a>
@@ -33,7 +35,11 @@
 		<!-- add the remainder of the navbar using javascript -->
 		<!-- <path d="M450,0 L${},0 l0,50 l-150,0 l0,-50" fill="black" stroke="blue"></path> -->
 	</svg>
-
+	<div id ="sw" class="settingsWindow">
+		<label for="baseColor">Base Hue: </label>
+		<input id="baseColor" type="range" min="0" max="360" value="220" onchange="baseColorChanged()">
+		
+	</div>
 
     <body>
         <script type="text/javascript" src="../NavBar.js"> </script>

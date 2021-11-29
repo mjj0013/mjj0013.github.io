@@ -7,7 +7,7 @@ window.onload = () =>{
     
 
     var sw = new SettingsModal();
-    // sw.insertSelf();
+  
     sw.makeDraggable("swh");
     
     console.log("iqiq");
@@ -42,28 +42,9 @@ class SettingsModal {
         this.applySettings = this.applySettings.bind(this);
         this.settingsChanged = this.settingsChanged.bind(this);
 
-        this.insertSelf = this.insertSelf.bind(this);
     }
 
-    insertSelf() {
-        document.body.insertAdjacentHTML('beforeend',`
-        <div id ="sw" class="settingsWindow">
-            <div id="swh" class="settingsWindowHeader">Settings
 
-                
-                <button id="settingsExitButton" class="exitButton" 
-                    onclick={() =>{document.getElementById('sw').style.display="none";}}>
-                    &#x58;
-                </button>
-            </div>
-            
-            <div class="settingsWindowFooter" >
-                        <Button id="settingsApplyButton" onClick={(e)=>this.applySettings(e)} >Apply</Button>
-            </div>
-        </div>
-        
-        `);
-    }
     settingsChanged = (e) => {
 
 

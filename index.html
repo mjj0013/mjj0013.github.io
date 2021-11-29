@@ -3,65 +3,60 @@
 	<head>
 		<link rel="stylesheet" href="Layout.css">
 		<!-- <script type="text/javascript" src="./SettingsWindow/SettingsWindow.js"> </script> -->
-		
+		<script type="text/javascript" src="utility.js"></script>
 		<title>Portfolio Page</title>
 	</head>
 
 	<div id='navBarContainer'>
 		<canvas id="coverCanvas" width="100%" />
 	</div>
+
 	<svg id="navBar" class="nav-menu" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+		<radialGradient id="homeNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
+			<stop class="gradientStop3" offset="40%"/>
+			<stop class="gradientStop2" offset="65%"/>
+			<stop class="gradientStop1" offset="85%"/>
+			<animate id="homeNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur="1s"  begin="indefinite" repeatCount="indefinite" />
+		</radialGradient>
+
+		<radialGradient id="pacmenNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
+			<stop class="gradientStop3" offset="40%"/>
+			<stop class="gradientStop2" offset="65%"/>
+			<stop class="gradientStop1" offset="85%"/>
+			<animate id="pacmenNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur="1s"  begin="indefinite" repeatCount="indefinite"/>
+		</radialGradient>
+
+		<radialGradient id="eyesNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
+			<stop class="gradientStop3" offset="40%"/>
+			<stop class="gradientStop2" offset="65%"/>
+			<stop class="gradientStop1" offset="85%"/>
+			<animate id="eyesNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur="1s"  begin="indefinite" repeatCount="indefinite" />
+		</radialGradient>
 		
 		<a href="#" x="50" y="30" pointer-events="all" >
-			<path id="homeNavButton" d="M0,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" >
+			<path class="nav-link" id="homeNavButton" d="M0,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#homeNavLinkGradient)" stroke="black" >
+			
 			</path>
 			<text x="50" y="30" fill="white" stroke="white" pointer-events="all">Home</text>
 		</a>
 
 		<a href="./pacmen/pacmen.html" x="200" y="30" pointer-events="all">
-			<path id="pacmenNavButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+			<path class="nav-link" id="pacmenNavButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#pacmenNavLinkGradient)" stroke="black" pointer-events="all">
 			</path>
 			<text x="200" y="30" fill="white" stroke="white" pointer-events="all">Pacmen</text>
 		</a>
 
 		<a href="./eyes/eyes.html" x="350" y="30" pointer-events="all">
-			<path id="eyesNavButton" d="M300,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+			<path class="nav-link" id="eyesNavButton" d="M300,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#eyesNavLinkGradient)" stroke="black" pointer-events="all">
 			</path>
 			<text x="350" y="30" fill="white" stroke="white" pointer-events="all">Eyes</text>
 		</a>
-		
-		<path id="settingsButton" d="M450,0 l50,0 l0,50 l-50,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
-		</path>
-
-		<image id="gearIcon1" href="icons/settings_white_24dp.svg" x="470" y="20" height="30" width="30" pointer-events="none">
-			<animateTransform xlink:href="#gearIcon1" id="gearRotate1" attributeName="transform"
-                          attributeType="XML"
-                          type="rotate"
-                          from="0 485 35"
-                          to="360 485 35"
-                          dur="1s"
-						  begin="indefinite"
-                          repeatCount="indefinite">
-			</animateTransform>
-			
-		</image>
-		<image id="gearIcon2" href="icons/settings_white_24dp.svg" x="450" y="0" height="30" width="30" pointer-events="none"></image>
-			<animateTransform xlink:href="#gearIcon2" id="gearRotate2" attributeName="transform"
-							attributeType="XML"
-							type="rotate"
-							from="360 465 15"
-							to="0 465 15"
-							dur="1s"
-							begin="indefinite"
-							repeatCount="indefinite">
-			</animateTransform>
-		</image>
 		
 	</svg>
 
 	<div id ="sw" class="settingsWindow">
 		<label for="baseColor">Base Hue: </label>
-		<input id="baseColor" type="range" min="0" max="360" value="220">
+		<input id="baseColor" type="range" min="0" max="360" value="220" onchange="baseColorChanged()">
 		
 	</div>
 

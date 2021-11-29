@@ -70,6 +70,9 @@ li {
 	
 	/* transition-timing-function: cubic-bezier(1.1, .001, 0.22, 1); */
 }
+.mapNavLinkText {
+	font-size:medium;
+}
 
 
 /* .nav-link:hover, .nav-link:focus {

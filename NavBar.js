@@ -10,7 +10,7 @@ var step = 0;
 var selectedHue = 220;
 
 var numOfNavElements = 3;
-var navElementSizes = {150:3, 50:1}     //keys are size, values are the quantities of each size
+var navElementSizes = {150:4}     //keys are size, values are the quantities of each size
 
 
 
@@ -23,27 +23,146 @@ window.onload = () =>{
     window.onresize = () => {
         canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
         startAnimation(coverCanvas);
+
+        var pathName = window.location.pathname;
+        var pathFileName = pathName.substr(pathName.lastIndexOf("/")+1)
+        pathFileName = pathFileName.replace("#","");
+        pathFileName = pathFileName.replace(".html","");
+    
+        
+
+        insertNavLinks(pathFileName, true);
+        addRemainingSegment();
+
     }
     //addMenuAnimation();
 
     setInterval(updateCover,1000/60);
-    // addRemainingSegment();
+    
     
     var pathName = window.location.pathname;
     var pathFileName = pathName.substr(pathName.lastIndexOf("/")+1)
     pathFileName = pathFileName.replace("#","");
     pathFileName = pathFileName.replace(".html","");
+    insertNavLinks(pathFileName);
     
-    if(pathFileName=="index") addSettingsSegment('');
-    else if(pathFileName=="pacmen") addSettingsSegment('../');
-    else if(pathFileName=="eyes") addSettingsSegment('../');
-    
+   
+    addRemainingSegment();
 
-    var sw = document.getElementById("sw");
-    
-    var navLinks = document.getElementsByClassName("nav-link");
+
 
     
+    
+ 
+    
+}
+
+function createElementFromString(str) {
+    var element = document.createElement('div');
+    element.innerHTML = str.trim();
+
+  
+  return element.firstChild; 
+}
+
+
+function insertNavLinks(currentDir, replace=false) {
+    var homeHref = "./index.html";
+    var pacmenHref = "./pacmen/pacmen.html"
+    var eyesHref = "./eyes/eyes.html"
+    var busStopsHref = "./busStops/busStops.html"
+    if(currentDir=="index") homeHref="#";
+    else if(currentDir=="pacmen"){ 
+        pacmenHref="#";
+        homeHref = "."+homeHref;
+        eyesHref = "."+eyesHref;
+        busStopsHref = "."+busStopsHref;
+    }
+    else if(currentDir=="eyes") {
+        eyesHref = "#";
+        homeHref = "."+homeHref;
+        pacmenHref = "."+pacmenHref;
+        busStopsHref = "."+busStopsHref;
+    }
+    else if(currentDir=="busStops") {
+        busStopsHref = "#";
+        homeHref = "."+homeHref;
+        pacmenHref = "."+pacmenHref;
+        eyesHref = "."+eyesHref;
+    }
+    console.log("currentDir", currentDir);
+    var navBar = document.getElementById("navBar");
+    var homeLinkHTML = `<a href="${homeHref}" x="50" y="30" pointer-events="all">
+    <path class="nav-link" id="homeNavButton" d="M0,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#homeNavLinkGradient)" stroke="black" />
+    <text x="50" y="30" fill="white" stroke="white" pointer-events="all">Home</text> </a>`
+    var homeLinkGradientHTML =  `<radialGradient id="homeNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
+        <stop class="gradientStop3" offset="40%"/>
+        <stop class="gradientStop2" offset="65%"/>
+        <stop class="gradientStop1" offset="85%"/>
+    <animate id="homeNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur="1s"  begin="indefinite" repeatCount="indefinite" />
+    </radialGradient>`
+
+    var pacmenLinkHTML = `<a href="${pacmenHref}" x="200" y="30" pointer-events="all">
+    <path class="nav-link" id="pacmenNavButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#pacmenNavLinkGradient)" stroke="black" pointer-events="all"/>
+    <text x="200" y="30" fill="white" stroke="white" pointer-events="all">Pacmen</text> </a>`
+    var pacmenLinkGradientHTML = `<radialGradient id="pacmenNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
+    <stop class="gradientStop3" offset="40%"/>
+    <stop class="gradientStop2" offset="65%"/>
+    <stop class="gradientStop1" offset="85%"/>
+    <animate id="pacmenNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur="1s"  begin="indefinite" repeatCount="indefinite"/>
+</radialGradient>`
+    var eyesLinkHTML = `<a href="${eyesHref}" x="350" y="30" pointer-events="all">
+    <path class="nav-link" id="eyesNavButton" d="M300,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#eyesNavLinkGradient)" stroke="black" pointer-events="all"/>
+    <text x="350" y="30" fill="white" stroke="white" pointer-events="all">Eyes</text> </a>`
+    var eyesLinkGradientHTML = `<radialGradient id="eyesNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
+    <stop class="gradientStop3" offset="40%"/>
+    <stop class="gradientStop2" offset="65%"/>
+    <stop class="gradientStop1" offset="85%"/>
+    <animate id="eyesNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur="1s"  begin="indefinite" repeatCount="indefinite" />
+</radialGradient>`
+
+    var busStopsLinkHTML = `<a href="${busStopsHref}" x="500" y="30" pointer-events="all">
+    <path class="nav-link" id="busStopsNavButton" d="M450,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#busStopsNavLinkGradient)" stroke="black" pointer-events="all"/>
+    <text x="500" y="30" fill="white" dx="-25" stroke="white" pointer-events="all" class="mapNavLinkText">Map Animation</text> </a>`
+    var busStopsGradientHTML = `<radialGradient id="busStopsNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
+    <stop class="gradientStop3" offset="40%"/>
+    <stop class="gradientStop2" offset="65%"/>
+    <stop class="gradientStop1" offset="85%"/>
+    <animate id="busStopsNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur="1s"  begin="indefinite" repeatCount="indefinite" />
+</radialGradient>`
+    if(!replace) {
+        navBar.insertAdjacentHTML('beforeend', homeLinkHTML);
+        navBar.insertAdjacentHTML('beforeend', homeLinkGradientHTML);
+
+
+        navBar.insertAdjacentHTML('beforeend', pacmenLinkHTML);
+        navBar.insertAdjacentHTML('beforeend', pacmenLinkGradientHTML);
+
+
+        navBar.insertAdjacentHTML('beforeend', eyesLinkHTML);
+        navBar.insertAdjacentHTML('beforeend', eyesLinkGradientHTML);
+
+        navBar.insertAdjacentHTML('beforeend', busStopsLinkHTML);
+        navBar.insertAdjacentHTML('beforeend', busStopsGradientHTML);
+    }
+    else {
+        navBar.insertAdjacentHTML('beforeend', createElementFromString(homeLinkHTML));
+        navBar.insertAdjacentHTML('beforeend', createElementFromString(homeLinkGradientHTML));
+
+
+        navBar.insertAdjacentHTML('beforeend', createElementFromString(pacmenLinkHTML));
+        navBar.insertAdjacentHTML('beforeend', createElementFromString(pacmenLinkGradientHTML));
+
+
+        navBar.insertAdjacentHTML('beforeend', createElementFromString(eyesLinkHTML));
+        navBar.insertAdjacentHTML('beforeend', createElementFromString(eyesLinkGradientHTML));
+
+        navBar.insertAdjacentHTML('beforeend', createElementFromString(busStopsLinkHTML));
+        navBar.insertAdjacentHTML('beforeend', createElementFromString(busStopsGradientHTML));
+    }
+    
+
+
     document.getElementById("homeNavButton").onmouseover = (e) => {
         document.getElementById("homeNavButtonAnimation").beginElement();
     }
@@ -64,64 +183,21 @@ window.onload = () =>{
     document.getElementById("eyesNavButton").onmouseout = (e) => {
         document.getElementById("eyesNavButtonAnimation").endElement();
     }
-    var settingsButton = document.getElementById("settingsButton");
-    
-    settingsButton.onclick = () => {
-        console.log("clicked");
-        if(document.getElementById("sw").style.display=="block") {
-            document.getElementById("sw").style.display="none";
-        }
-        else {
-            document.getElementById("sw").style.display="block";
-        }
+
+    document.getElementById("busStopsNavButton").onmouseover = (e) => {
+        document.getElementById("busStopsNavButtonAnimation").beginElement();
+    }
+    document.getElementById("busStopsNavButton").onmouseout = (e) => {
+        document.getElementById("busStopsNavButtonAnimation").endElement();
     }
 
-    settingsButton.onmouseover = (e) => {
-        //document.getElementById("gradientAnimation").beginElement()
-        document.getElementById("gearRotate1").beginElement();
-        document.getElementById("gearRotate2").beginElement();
-        settingsButton.setAttribute("cursor","pointer");
-        
-    }
-    settingsButton.onmouseout = (e) => {
-        document.getElementById("gearRotate1").endElement();
-        document.getElementById("gearRotate2").endElement();
-    }
-    
-        
-        
+
+
+
     
 
 
-    // var settingsButton = document.getElementById("settingsButton");
-  
-    // //sw.setAttribute("right", settingsButton.getBoundingClientRect().left)
 
-
-    // settingsButton.onclick = () => {
-    //     console.log("clicked");
-    //     if(document.getElementById("sw").style.display=="block") {
-    //         document.getElementById("sw").style.display="none";
-    //     }
-    //     else {
-    //         document.getElementById("sw").style.display="block";
-    //     }
-    // }
-
-    // settingsButton.onmouseover = (e) => {
-
-    //     document.getElementById("gearRotate1").beginElement();
-    //     document.getElementById("gearRotate2").beginElement();
-    //     settingsButton.setAttribute("cursor","pointer");
-       
-    // }
-    // settingsButton.onmouseout = (e) => {
-    //     document.getElementById("gearRotate1").endElement();
-    //     document.getElementById("gearRotate2").endElement();
-    // }
-    
-    
-    
 }
 
 
@@ -206,49 +282,82 @@ function addMenuAnimation() {
     navLinkAnimationFrames("eyesNavButton",2);
 }
 
-function addSettingsSegment(rootPath) {
-    var navBar = document.getElementById("navBar");
-    navBar.insertAdjacentHTML("beforeend", `<path class="nav-link" id="settingsButton" d="M450,0 l50,0 l0,50 l-50,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
-    </path>`);
 
-    navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon1" href="${rootPath}icons/settings_white_24dp.svg" x="470" y="20" height="30" width="30" pointer-events="none">
-        <animateTransform xlink:href="#gearIcon1" id="gearRotate1" attributeName="transform"
-                      attributeType="XML"
-                      type="rotate"
-                      from="0 485 35"
-                      to="360 485 35"
-                      dur="1s"
-                      begin="indefinite"
-                      repeatCount="indefinite">
-        </animateTransform>
-    </image>`
-    );
-    navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon2" href="${rootPath}icons/settings_white_24dp.svg" x="450" y="0" height="30" width="30" pointer-events="none"></image>
-        <animateTransform xlink:href="#gearIcon2" id="gearRotate2" attributeName="transform"
-                        attributeType="XML"
-                        type="rotate"
-                        from="360 465 15"
-                        to="0 465 15"
-                        dur="1s"
-                        begin="indefinite"
-                        repeatCount="indefinite">
-        </animateTransform>
-    </image>`);
-}
 
 function addRemainingSegment() {
+    var navBar = document.getElementById("navBar");
     let totalExistingLength = 0;
     let sizes = Object.keys(navElementSizes);
     for(let s=0; s < sizes.length;++s) {
         totalExistingLength+=sizes[s]*navElementSizes[sizes[s]];
     }
 
-    //var navLength = document.getElementById("navBar").width.baseVal.value;
-    var remSegmentLength = window.innerWidth - totalExistingLength;
+    
+    var remSegmentLength = window.innerWidth - totalExistingLength - 50;
+    var settingsPos = window.innerWidth-50;
    
     var htmlStr = `<path d="M${totalExistingLength},0 l${remSegmentLength},0 l0,50 l-${remSegmentLength},0 l0,-50" fill="hsl(${selectedHue},70%,30%)" stroke="black" pointer-events="all">
 	</path>`
-    document.getElementById("navBar").insertAdjacentHTML('beforeend',htmlStr)
+    navBar.insertAdjacentHTML('beforeend',htmlStr)
+
+    var pathName = window.location.pathname;
+    var rootDir = pathName.substr(pathName.lastIndexOf("/")+1)
+    rootDir = rootDir.replace("#","");
+    rootDir = rootDir.replace(".html","");
+    if(rootDir=="index") rootDir="";
+    else rootDir="../"
+
+    navBar.insertAdjacentHTML("beforeend", `<path class="nav-link" id="settingsButton" d="M${settingsPos},0 l50,0 l0,50 l-50,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+    </path>`);
+
+    let gear1Pos = settingsPos+20;
+    let gear2Pos = settingsPos;
+    navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon1" href="${rootDir}icons/settings_white_24dp.svg" x="${gear1Pos}" y="20" height="30" width="30" pointer-events="none">
+        <animateTransform xlink:href="#gearIcon1" id="gearRotate1" attributeName="transform"
+                      attributeType="XML"
+                      type="rotate"
+                      from="0 ${gear1Pos+15} 35"
+                      to="360 ${gear1Pos+15} 35"
+                      dur="1s"
+                      begin="indefinite"
+                      repeatCount="indefinite">
+        </animateTransform>
+    </image>`
+    );
+    navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon2" href="${rootDir}icons/settings_white_24dp.svg" x="${gear2Pos}" y="0" height="30" width="30" pointer-events="none"></image>
+        <animateTransform xlink:href="#gearIcon2" id="gearRotate2" attributeName="transform"
+                        attributeType="XML"
+                        type="rotate"
+                        from="360 ${gear2Pos+15} 15"
+                        to="0  ${gear2Pos+15} 15"
+                        dur="1s"
+                        begin="indefinite"
+                        repeatCount="indefinite">
+        </animateTransform>
+    </image>`);
+
+    var settingsButton = document.getElementById("settingsButton");
+    settingsButton.onclick = () => {
+        console.log("clicked");
+        if(document.getElementById("sw").style.display=="block") {
+            document.getElementById("sw").style.display="none";
+        }
+        else {
+            document.getElementById("sw").style.display="block";
+        }
+    }
+
+    settingsButton.onmouseover = (e) => {
+        //document.getElementById("gradientAnimation").beginElement()
+        document.getElementById("gearRotate1").beginElement();
+        document.getElementById("gearRotate2").beginElement();
+        settingsButton.setAttribute("cursor","pointer");
+        
+    }
+    settingsButton.onmouseout = (e) => {
+        document.getElementById("gearRotate1").endElement();
+        document.getElementById("gearRotate2").endElement();
+    }
 }
 
 

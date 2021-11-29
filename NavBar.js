@@ -1,4 +1,7 @@
+// const { generateRandomMesh } = require("./Mesh");
+
 var myHeaders = new Headers();
+
 myHeaders.set("Access-Control-Allow-Origin", "*");
 
 var coverCanvas = document.getElementById("coverCanvas");
@@ -14,9 +17,8 @@ var navElementSizes = {150:4}     //keys are size, values are the quantities of 
 
 
 
-
 window.onload = () =>{
-    
+    //generateRandomMesh();
     var canvas = document.getElementById("coverCanvas");
     canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
     startAnimation(coverCanvas);
@@ -30,39 +32,44 @@ window.onload = () =>{
         pathFileName = pathFileName.replace("#","");
         pathFileName = pathFileName.replace(".html","");
     
-        
-
-        insertNavLinks(pathFileName, true);
-        addRemainingSegment();
-
+        insertNavLinks(pathFileName, true, selectedHue);
+        addRemainingSegment(selectedHue, true);
     }
-    //addMenuAnimation();
-
     setInterval(updateCover,1000/60);
-
     
     var pathName = window.location.pathname;
     var pathFileName = pathName.substr(pathName.lastIndexOf("/")+1)
     pathFileName = pathFileName.replace("#","");
     pathFileName = pathFileName.replace(".html","");
-
     insertNavLinks(pathFileName);
-    
-   
     addRemainingSegment();
-    
+    document.getElementById("sw").setAttribute("right", window.innerWidth);
+
+    console.log("navBar", document.getElementById("navBar"));
+}
+
+
+function baseColorChanged() {
+    var newHue = document.getElementById("baseColor");
+
+    var pathName = window.location.pathname;
+    var pathFileName = pathName.substr(pathName.lastIndexOf("/")+1)
+    pathFileName = pathFileName.replace("#","");
+    pathFileName = pathFileName.replace(".html","");
+    selectedHue = newHue.value;
+    insertNavLinks(pathFileName, true, newHue.value);
+    addRemainingSegment(newHue.value, true);
+
 }
 
 function createElementFromString(str) {
-    var element = document.createElement('div');
-    element.innerHTML = str.trim();
 
-  
-  return element.firstChild; 
+    var element = new DOMParser().parseFromString(str, 'text/html').body.firstElementChild;
+    return element;
 }
 
 
-function insertNavLinks(currentDir, replace=false) {
+function insertNavLinks(currentDir, replace=false, hue=220) {
     var homeHref = "./index.html";
     var pacmenHref = "./pacmen/pacmen.html"
     var eyesHref = "./eyes/eyes.html"
@@ -79,7 +86,6 @@ function insertNavLinks(currentDir, replace=false) {
         homeHref = "."+homeHref;
         pacmenHref = "."+pacmenHref;
         busStopsHref = "."+busStopsHref;
-
     }
     else if(currentDir=="busStops") {
         busStopsHref = "#";
@@ -87,54 +93,57 @@ function insertNavLinks(currentDir, replace=false) {
         pacmenHref = "."+pacmenHref;
         eyesHref = "."+eyesHref;
     }
-    console.log("currentDir", currentDir);
+
     var navBar = document.getElementById("navBar");
-    var homeLinkHTML = `<a href="${homeHref}" x="50" y="30" pointer-events="all">
-    <path class="nav-link" id="homeNavButton" d="M0,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#homeNavLinkGradient)" stroke="black" />
-    <text x="50" y="30" fill="white" stroke="white" pointer-events="all">Home</text> </a>`
+    var homeLinkHTML = `<a id="homeNavLink" href="${homeHref}" x="50" y="30" pointer-events="all">
+        <path class="nav-link" id="homeNavButton" d="M0,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#homeNavLinkGradient)" stroke="black" />
+        <text x="50" y="30" fill="white" stroke="white" pointer-events="none">Home</text> </a>`
     var homeLinkGradientHTML =  `<radialGradient id="homeNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
-        <stop class="gradientStop3" offset="40%"/>
-        <stop class="gradientStop2" offset="65%"/>
-        <stop class="gradientStop1" offset="85%"/>
-    <animate id="homeNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur="1s"  begin="indefinite" repeatCount="indefinite" />
+            <stop stop-color="hsl(${hue},70%,65%)" offset="40%"/>
+            <stop stop-color="hsl(${hue},70%,50%)" offset="65%"/>
+            <stop stop-color="hsl(${hue},70%,30%)" offset="85%"/>
+        <animate id="homeNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
+        </radialGradient>`
+
+    var pacmenLinkHTML = `<a id="pacmenNavLink" href="${pacmenHref}" x="200" y="30" pointer-events="all">
+        <path class="nav-link" id="pacmenNavButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#pacmenNavLinkGradient)" stroke="black" pointer-events="all"/>
+        <text x="200" y="30" fill="white" stroke="white" pointer-events="none">Pacmen</text> </a>`
+
+    var pacmenLinkGradientHTML = `<radialGradient id="pacmenNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
+        <stop stop-color="hsl(${hue},70%,65%)" offset="40%"/>
+        <stop stop-color="hsl(${hue},70%,50%)" offset="65%"/>
+        <stop stop-color="hsl(${hue},70%,30%)" offset="85%"/>
+        <animate id="pacmenNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="indefinite"/>
     </radialGradient>`
 
-    var pacmenLinkHTML = `<a href="${pacmenHref}" x="200" y="30" pointer-events="all">
-    <path class="nav-link" id="pacmenNavButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#pacmenNavLinkGradient)" stroke="black" pointer-events="all"/>
-    <text x="200" y="30" fill="white" stroke="white" pointer-events="all">Pacmen</text> </a>`
-    var pacmenLinkGradientHTML = `<radialGradient id="pacmenNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
-    <stop class="gradientStop3" offset="40%"/>
-    <stop class="gradientStop2" offset="65%"/>
-    <stop class="gradientStop1" offset="85%"/>
-    <animate id="pacmenNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur="1s"  begin="indefinite" repeatCount="indefinite"/>
-</radialGradient>`
-    var eyesLinkHTML = `<a href="${eyesHref}" x="350" y="30" pointer-events="all">
+    var eyesLinkHTML = `<a  id="eyesNavLink" href="${eyesHref}" x="350" y="30" pointer-events="all">
     <path class="nav-link" id="eyesNavButton" d="M300,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#eyesNavLinkGradient)" stroke="black" pointer-events="all"/>
-    <text x="350" y="30" fill="white" stroke="white" pointer-events="all">Eyes</text> </a>`
-    var eyesLinkGradientHTML = `<radialGradient id="eyesNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
-    <stop class="gradientStop3" offset="40%"/>
-    <stop class="gradientStop2" offset="65%"/>
-    <stop class="gradientStop1" offset="85%"/>
-    <animate id="eyesNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur="1s"  begin="indefinite" repeatCount="indefinite" />
-</radialGradient>`
+    <text x="350" y="30" fill="white" stroke="white" pointer-events="none">Eyes</text> </a>`
 
-    var busStopsLinkHTML = `<a href="${busStopsHref}" x="500" y="30" pointer-events="all">
-    <path class="nav-link" id="busStopsNavButton" d="M450,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#busStopsNavLinkGradient)" stroke="black" pointer-events="all"/>
-    <text x="500" y="30" fill="white" dx="-25" stroke="white" pointer-events="all" class="mapNavLinkText">Map Animation</text> </a>`
+    var eyesLinkGradientHTML = `<radialGradient id="eyesNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
+        <stop stop-color="hsl(${hue},70%,65%)" offset="40%"/>
+        <stop stop-color="hsl(${hue},70%,50%)" offset="65%"/>
+        <stop stop-color="hsl(${hue},70%,30%)" offset="85%"/>
+        <animate id="eyesNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
+    </radialGradient>`
+
+    var busStopsLinkHTML = `<a id="busStopsNavLink" href="${busStopsHref}" x="500" y="30" pointer-events="all">
+        <path class="nav-link" id="busStopsNavButton" d="M450,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#busStopsNavLinkGradient)" stroke="black" pointer-events="all"/>
+        <text x="500" y="30" fill="white" dx="-25" stroke="white" pointer-events="none" class="mapNavLinkText">Map Animation</text> </a>`
+
     var busStopsGradientHTML = `<radialGradient id="busStopsNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
-    <stop class="gradientStop3" offset="40%"/>
-    <stop class="gradientStop2" offset="65%"/>
-    <stop class="gradientStop1" offset="85%"/>
-    <animate id="busStopsNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur="1s"  begin="indefinite" repeatCount="indefinite" />
-</radialGradient>`
+            <stop stop-color="hsl(${hue},70%,65%)" offset="40%"/>
+            <stop stop-color="hsl(${hue},70%,50%)" offset="65%"/>
+            <stop stop-color="hsl(${hue},70%,30%)" offset="85%"/>
+            <animate id="busStopsNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
+        </radialGradient>`
+
     if(!replace) {
         navBar.insertAdjacentHTML('beforeend', homeLinkHTML);
         navBar.insertAdjacentHTML('beforeend', homeLinkGradientHTML);
 
-
         navBar.insertAdjacentHTML('beforeend', pacmenLinkHTML);
         navBar.insertAdjacentHTML('beforeend', pacmenLinkGradientHTML);
-
 
         navBar.insertAdjacentHTML('beforeend', eyesLinkHTML);
         navBar.insertAdjacentHTML('beforeend', eyesLinkGradientHTML);
@@ -143,23 +152,34 @@ function insertNavLinks(currentDir, replace=false) {
         navBar.insertAdjacentHTML('beforeend', busStopsGradientHTML);
     }
     else {
-        navBar.insertAdjacentHTML('beforeend', createElementFromString(homeLinkHTML));
-        navBar.insertAdjacentHTML('beforeend', createElementFromString(homeLinkGradientHTML));
+        navBar.removeChild(document.getElementById("homeNavLink"));
+        navBar.removeChild(document.getElementById("homeNavLinkGradient"));
+        navBar.removeChild(document.getElementById("pacmenNavLink"));
+        navBar.removeChild(document.getElementById("pacmenNavLinkGradient"));
+        navBar.removeChild(document.getElementById("eyesNavLink"));
+        navBar.removeChild(document.getElementById("eyesNavLinkGradient"));
+        navBar.removeChild(document.getElementById("busStopsNavLink"));
+        navBar.removeChild(document.getElementById("busStopsNavLinkGradient"));
 
 
-        navBar.insertAdjacentHTML('beforeend', createElementFromString(pacmenLinkHTML));
-        navBar.insertAdjacentHTML('beforeend', createElementFromString(pacmenLinkGradientHTML));
 
 
-        navBar.insertAdjacentHTML('beforeend', createElementFromString(eyesLinkHTML));
-        navBar.insertAdjacentHTML('beforeend', createElementFromString(eyesLinkGradientHTML));
+        navBar.insertAdjacentHTML('beforeend', homeLinkHTML);
+        navBar.insertAdjacentHTML('beforeend', homeLinkGradientHTML);
 
-        navBar.insertAdjacentHTML('beforeend', createElementFromString(busStopsLinkHTML));
-        navBar.insertAdjacentHTML('beforeend', createElementFromString(busStopsGradientHTML));
+        navBar.insertAdjacentHTML('beforeend', pacmenLinkHTML);
+        navBar.insertAdjacentHTML('beforeend', pacmenLinkGradientHTML);
+
+        navBar.insertAdjacentHTML('beforeend', eyesLinkHTML);
+        navBar.insertAdjacentHTML('beforeend', eyesLinkGradientHTML);
+
+        navBar.insertAdjacentHTML('beforeend', busStopsLinkHTML);
+        navBar.insertAdjacentHTML('beforeend', busStopsGradientHTML);
+
+
     }
     
-
-
+   
 
     document.getElementById("homeNavButton").onmouseover = (e) => {
         document.getElementById("homeNavButtonAnimation").beginElement();
@@ -189,6 +209,7 @@ function insertNavLinks(currentDir, replace=false) {
         document.getElementById("busStopsNavButtonAnimation").endElement();
     }
 
+
 }
 
 
@@ -206,8 +227,6 @@ var sineWaveMenuEffect = (startX, endX, amp, freq, phase,restState=false) => {
             //sawtooth
             // y1 = (2*amp/Math.PI)*Math.atan(1/Math.tan(Math.PI*(x-1+phase)*freq));
             // y2 = (2*amp/Math.PI)*Math.atan(1/Math.tan(Math.PI*(x+phase)*freq));
-            
-            
             y1 = amp*Math.sin(freq*(x-1))/(x-1);
             y2 = amp*Math.sin(freq*(x))/(x);
            
@@ -263,49 +282,23 @@ var navLinkAnimationFrames = (elementID, i) => {
     }
 
 }
-
-
-
-
 function addMenuAnimation() {
     navLinkAnimationFrames("homeNavButton",0);
     navLinkAnimationFrames("pacmenNavButton",1);
     navLinkAnimationFrames("eyesNavButton",2);
 }
 
-function addSettingsSegment(rootPath) {
+
+
+function addRemainingSegment(currentHue=220, replace=false) {
+    
+
     var navBar = document.getElementById("navBar");
-    navBar.insertAdjacentHTML("beforeend", `<path class="nav-link" id="settingsButton" d="M450,0 l50,0 l0,50 l-50,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
-    </path>`);
 
-    navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon1" href="${rootPath}icons/settings_white_24dp.svg" x="470" y="20" height="30" width="30" pointer-events="none">
-        <animateTransform xlink:href="#gearIcon1" id="gearRotate1" attributeName="transform"
-                      attributeType="XML"
-                      type="rotate"
-                      from="0 485 35"
-                      to="360 485 35"
-                      dur="1s"
-                      begin="indefinite"
-                      repeatCount="indefinite">
-        </animateTransform>
-    </image>`
-    );
-    navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon2" href="${rootPath}icons/settings_white_24dp.svg" x="450" y="0" height="30" width="30" pointer-events="none"></image>
-        <animateTransform xlink:href="#gearIcon2" id="gearRotate2" attributeName="transform"
-                        attributeType="XML"
-                        type="rotate"
-                        from="360 465 15"
-                        to="0 465 15"
-                        dur="1s"
-                        begin="indefinite"
-                        repeatCount="indefinite">
-        </animateTransform>
-    </image>`);
-}
-
-
-function addRemainingSegment() {
-    var navBar = document.getElementById("navBar");
+    if(replace) {
+        navBar.removeChild(document.getElementById("voidSegment"))
+        navBar.removeChild(document.getElementById("settingsButton"))
+    }
     let totalExistingLength = 0;
     let sizes = Object.keys(navElementSizes);
     for(let s=0; s < sizes.length;++s) {
@@ -314,10 +307,10 @@ function addRemainingSegment() {
 
     
     var remSegmentLength = window.innerWidth - totalExistingLength - 50;
-    var settingsPos = window.innerWidth-50;
+    var settingsPos = window.innerWidth - 50;
    
-    var htmlStr = `<path d="M${totalExistingLength},0 l${remSegmentLength},0 l0,50 l-${remSegmentLength},0 l0,-50" fill="hsl(${selectedHue},70%,30%)" stroke="black" pointer-events="all">
-	</path>`
+    // var htmlStr = `<path d="M${totalExistingLength},0 l${remSegmentLength},0 l0,50 l-${Math.abs(remSegmentLength)},0 l0,-50" fill="hsl(${selectedHue},70%,30%)" stroke="black" pointer-events="all"></path>`
+    var htmlStr = `<path id="voidSegment" d="M${totalExistingLength},0 l${remSegmentLength},0 l0,50 l-${Math.abs(remSegmentLength)},0 l0,-50" fill="hsl(${currentHue},70%,30%)" stroke="black" pointer-events="all"></path>`
     navBar.insertAdjacentHTML('beforeend',htmlStr)
 
     var pathName = window.location.pathname;
@@ -327,38 +320,28 @@ function addRemainingSegment() {
     if(rootDir=="index") rootDir="";
     else rootDir="../"
 
-    navBar.insertAdjacentHTML("beforeend", `<path class="nav-link" id="settingsButton" d="M${settingsPos},0 l50,0 l0,50 l-50,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
-    </path>`);
+    navBar.insertAdjacentHTML("beforeend", `<path class="nav-link" id="settingsButton" d="M${settingsPos},0 l50,0 l0,50 l-50,0 l0,-50" fill="hsl(${currentHue},70%,30%)" stroke="black" pointer-events="all"></path>`);
 
     let gear1Pos = settingsPos+20;
     let gear2Pos = settingsPos;
     navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon1" href="${rootDir}icons/settings_white_24dp.svg" x="${gear1Pos}" y="20" height="30" width="30" pointer-events="none">
-        <animateTransform xlink:href="#gearIcon1" id="gearRotate1" attributeName="transform"
-                      attributeType="XML"
-                      type="rotate"
-                      from="0 ${gear1Pos+15} 35"
-                      to="360 ${gear1Pos+15} 35"
-                      dur="1s"
-                      begin="indefinite"
-                      repeatCount="indefinite">
+        <animateTransform xlink:href="#gearIcon1" id="gearRotate1" attributeName="transform" attributeType="XML" type="rotate" dur="1s" begin="indefinite"  repeatCount="indefinite"
+            from="0 ${gear1Pos+15} 35" to="360 ${gear1Pos+15} 35" >
         </animateTransform>
     </image>`
     );
     navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon2" href="${rootDir}icons/settings_white_24dp.svg" x="${gear2Pos}" y="0" height="30" width="30" pointer-events="none"></image>
-        <animateTransform xlink:href="#gearIcon2" id="gearRotate2" attributeName="transform"
-                        attributeType="XML"
-                        type="rotate"
-                        from="360 ${gear2Pos+15} 15"
-                        to="0  ${gear2Pos+15} 15"
-                        dur="1s"
-                        begin="indefinite"
-                        repeatCount="indefinite">
+        <animateTransform xlink:href="#gearIcon2" id="gearRotate2" attributeName="transform" attributeType="XML" type="rotate" dur="1s" begin="indefinite" repeatCount="indefinite"
+            from="360 ${gear2Pos+15} 15" to="0 ${gear2Pos+15} 15" >
         </animateTransform>
     </image>`);
 
+    
+
+    document.getElementById("sw").setAttribute("right", window.innerWidth);
+
     var settingsButton = document.getElementById("settingsButton");
     settingsButton.onclick = () => {
-        console.log("clicked");
         if(document.getElementById("sw").style.display=="block") {
             document.getElementById("sw").style.display="none";
         }
@@ -368,6 +351,7 @@ function addRemainingSegment() {
     }
 
     settingsButton.onmouseover = (e) => {
+      
         //document.getElementById("gradientAnimation").beginElement()
         document.getElementById("gearRotate1").beginElement();
         document.getElementById("gearRotate2").beginElement();
@@ -378,10 +362,13 @@ function addRemainingSegment() {
         document.getElementById("gearRotate1").endElement();
         document.getElementById("gearRotate2").endElement();
     }
+
+
+    console.log("settingsButton", settingsButton);
 }
 
 
-function updateCover() {
+function updateCover(currentHue=220) {
     
 	var context = coverCanvas.getContext("2d");
     for(let phase=0; phase < xSortedCoverTriangles.length;++phase) {
@@ -402,7 +389,6 @@ function updateCover() {
             context.fillStyle = `hsla(${selectedHue}, ${saturationVal}%, ${triangles.value}%, .5)`;
             context.fill();
             context.stroke();
-            
         }	
     }
 
@@ -421,7 +407,7 @@ function loadTriangle(canvas, t) {
     canvas.getContext("2d").lineTo(t.pts[2].x, t.pts[2].y);
     canvas.getContext("2d").lineTo(t.pts[0].x, t.pts[0].y);
     canvas.getContext("2d").closePath();
-    canvas.getContext("2d").fillStyle = `hsl(${selectedHue}, 50%, 50%)`;
+    canvas.getContext("2d").fillStyle = `hsla(${selectedHue}, 50%, 50%, .5)`;
     canvas.getContext("2d").fill();
     canvas.getContext("2d").stroke();
 
@@ -441,10 +427,10 @@ class Triangle {
 	}
 }
 function startAnimation(canvas) {
-    let hexPerRow = 13;
+    coverTriangles = []
     let numRows = 2;
     let length = 40;
-    
+    let hexPerRow = Math.ceil(window.innerWidth/length);
     var pt1 = {x:75,y:40};      //y previously 40
     let xOrigin = pt1.x;
     
@@ -485,42 +471,7 @@ function startAnimation(canvas) {
             ySortedCoverTriangles[triangle.yPhase] = {indices:[i], value:50}
         }
         else if(typeof ySortedCoverTriangles[triangle.yPhase]=='object') ySortedCoverTriangles[triangle.yPhase].indices.push(i);
-        
         loadTriangle(canvas,triangle);
     }
-    console.log("ySortedCoverTriangles",ySortedCoverTriangles);
 
 }
-
-//export {startAnimation, loadTriangle, updateCover, Triangle};
-
-
-
-// function addHomeSegment() {
-//     document.getElementById("coverSVG").insertAdjacentHTML("beforeend", 
-//         `<a href="#" x="50" y="30" pointer-events="all" >
-//             <path id="homeNavButton" d="M0,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" >
-//             </path>
-//             <text x="50" y="30" fill="white" stroke="white" pointer-events="all">Home</text>
-//         </a>`
-//     );
-// }
-
-// function addPacmenSegment(HREF) {
-//     document.getElementById("coverSVG").insertAdjacentHTML("beforeend", 
-//         `<a href="${HREF}" x="200" y="30" pointer-events="all">
-//             <path id="pacmenNavButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
-//             </path>
-//             <text x="200" y="30" fill="white" stroke="white" pointer-events="all">Pacmen</text>
-//         </a>`
-//     );
-// }
-// function addEyesSegment() {
-//     document.getElementById("coverSVG").insertAdjacentHTML("beforeend", 
-//     `<a href="./eyes/eyes.html" x="350" y="30" pointer-events="all">
-//         <path id="eyesNavButton" d="M300,0 l150,0 l0,50 l-150,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
-//         </path>
-//         <text x="350" y="30" fill="white" stroke="white" pointer-events="all">Eyes</text>
-//     </a>`
-//     );
-// }

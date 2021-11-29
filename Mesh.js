@@ -1,5 +1,101 @@
-import { det, getRandomInt } from "./utility.js";
+var myHeaders = new Headers();
+myHeaders.set("Access-Control-Allow-Origin", "*");
+myHeaders.set("Access-Control-Request-Headers", "*");
+function det(a,b,c,d) {
+    return a*d - b*c;
+}
 
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+  }
+function generateRandomMesh() {
+    var M = new Mesh();
+    
+    //generate random points
+    var numPts = 15;
+    M.build(numPts);
+    //M.renderAllEdges = true;
+    //connect points
+    M.generateEdges();
+    M.depthFirstSearch();
+    
+    for(let p=0; p < M.pts.length;++p) {
+        let newPt = document.createElementNS("http://www.w3.org/2000/svg",'circle');
+        //let newPt = regionGroupRef.current.createElementNS("http://www.w3.org/2000/svg",'circle');
+        newPt.setAttribute('id','pt'+p);
+        newPt.setAttribute("class","meshNode")
+        newPt.setAttribute('cx', M.pts[p].x);
+        newPt.setAttribute('cy', M.pts[p].y);
+        newPt.setAttribute('r', 3);
+        
+        document.getElementById("meshSVG").appendChild(newPt);
+    }
+
+    var edgeCounter = [];
+    for(let e=0; e < M.edges.length;++e) {
+        if(!edgeCounter.includes(M.edges[e].id)) edgeCounter.push(M.edges[e].id);
+        else continue;
+        let a = M.pts[M.edges[e].data[0]]
+        let b = M.pts[M.edges[e].data[1]]
+        let d  = ``;
+        d += `M ${a.x}, ${a.y}`;
+        d += `L ${b.x}, ${b.y}`;
+    
+        let newPolygon = document.createElementNS("http://www.w3.org/2000/svg",'path');
+        
+        newPolygon.setAttribute('id',M.edges[e].id);
+        newPolygon.setAttribute('d',d);
+        newPolygon.setAttribute('class','meshRegionBorder')
+        if(M.renderAllEdges) document.getElementById("meshSVG").appendChild(newPolygon);
+        
+    }
+    console.log('M.edges', M.edges)
+    for(let m =0; m < M.cyclesDFS.length; ++m) {
+        var newPolygon = new Polygon(`polygon${m}`,M.cyclesDFS[m], M);
+        var polygonElement = document.createElementNS("http://www.w3.org/2000/svg",'path');
+        polygonElement.setAttributeNS(null,'id',`polygon${m}`);
+        
+        let d = ``;
+        for(let c=0; c < M.cyclesDFS[m].length; ++c) {
+            if(c==0) {
+                d += `M ${M.pts[M.cyclesDFS[m][c]].x},${M.pts[M.cyclesDFS[m][c]].y}`
+            }
+            else if(c==M.cyclesDFS[m].length-1) {
+                M.getEdge(M.cyclesDFS[m][c],M.cyclesDFS[m][0]).associatedPolygons.push(`polygon${m}`);
+            
+            }
+            else {
+                console.log("M.getEdge(M.cyclesDFS[m][c],M.cyclesDFS[m][c+1])",M.getEdge(M.cyclesDFS[m][c],M.cyclesDFS[m][c+1]))
+                M.getEdge(M.cyclesDFS[m][c],M.cyclesDFS[m][c+1]).associatedPolygons.push(`polygon${m}`);
+            }
+
+            if(c==0) d += `M ${M.pts[M.cyclesDFS[m][c]].x},${M.pts[M.cyclesDFS[m][c]].y}`
+            else d += `L ${M.pts[M.cyclesDFS[m][c]].x},${M.pts[M.cyclesDFS[m][c]].y}`
+            
+        }
+        d += `L ${M.pts[M.cyclesDFS[m][0]].x},${M.pts[M.cyclesDFS[m][0]].y}`
+        
+        polygonElement.setAttribute('d',d);
+        M.polygons[`polygon${m}`] = newPolygon;
+        polygonElement.onmousedown = (e) => {console.log('vertices: ', M.polygons[`polygon${m}`].vertices)}
+        polygonElement.setAttribute("stroke", "black");
+        polygonElement.setAttribute("stroke-width","1");
+        polygonElement.setAttribute("stroke-linecap","round");
+
+        //stroke="black" stroke-width="20" stroke-linecap="round"
+        
+        let sat = getRandomInt(0,100);
+        let light = getRandomInt(0,100);
+        polygonElement.setAttributeNS(null,'fill',`hsl(${220},${sat}%,${light}%)`);
+        
+        document.getElementById("polyGroup").appendChild(polygonElement);
+       
+      
+    }
+
+}
 class Mesh {
     constructor(parent, pts=null) {
         this.parent = parent;
@@ -49,8 +145,8 @@ class Mesh {
                 let x,y;
                 while(!isNewPt) {  
                     let ptExists = false;
-                    x = getRandomInt(0, this.parent.canvasWidth);
-                    y = getRandomInt(0, this.parent.canvasHeight);
+                    x = getRandomInt(0, 200);
+                    y = getRandomInt(0, 200);
                     for(let i=0; i < this.pts.length;++i) {
                         if(this.pts[i].x==x && this.pts[i].y==y) {
                             ptExists = true;
@@ -668,6 +764,8 @@ class Polygon {
         
     }
 }
+if (typeof module !== 'undefined') {
+    module.exports = { generateRandomMesh, Mesh };
+  }
 
-
-export {Mesh, Polygon};
+// export {generateRandomMesh, Mesh};

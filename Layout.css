@@ -23,6 +23,8 @@ body {
 	width:100vw;
 	height: 125px;
 	border:1px solid black;
+	transform: translate3d(0);
+	/* z-index:10; */
 }
 #coverCanvasContainer {
 	top:0px;
@@ -31,10 +33,11 @@ body {
 	height:100px;
 }
 
+
 .nav-menu {
 	position:fixed;
 	
-
+	z-index: 5;
 	margin:0;
 	padding:0;
 
@@ -46,7 +49,7 @@ body {
 	height: 50px;
 	width: 100vw;
 	
-	z-index:4;
+	/* z-index:4; */
 
 	/* background-color: #333;
 	list-style-type: none; */
@@ -57,24 +60,21 @@ li {
 
 .gradientStop1 { stop-color: hsl(220,70%,30%); }
 .gradientStop2 { stop-color: hsl(220,70%,50%); }
-.gradientStop3 { stop-color: hsl(220,70%,65%);  }	
+.gradientStop3 { stop-color: rgb(154, 173, 209);  }	
 /* stop-opacity: 0;	 */
 
 
 .nav-link {
-	
+	/* z-index:5; */
 	color:white;
 	
 	transition:filter 1s;
 	
 	
 	/* transition-timing-function: cubic-bezier(1.1, .001, 0.22, 1); */
-
 }
 .mapNavLinkText {
 	font-size:medium;
-
-
 }
 
 
@@ -110,6 +110,18 @@ li {
 	position: absolute;
 	background-color: rgba(52, 73, 94, 0.75);
 }
+
+#meshSVG {
+	position:fixed;
+	width:100vw;
+	height:125px;
+	top:0px;
+	left:0px;
+	/* z-index:1; */
+}
+
+
+
 
 #fileText {
 	background-color: rgba(255,255,255,0.05);
@@ -165,21 +177,34 @@ select {
 .settingsWindow {
     position: absolute;
     font-family: system-ui;
-    top: 25%;
-    left:25%;
+    top: 175px;
+    right:5px;
     z-index: 9;
+	
     
     background-color: #f1f1f1;
     display:none;
     border: 1px solid #d3d3d3;
-    width:200px;
+	/* box-shadow:3px 3px black, 0em .4em grey; */
+	border-radius: 15px;
+    width:170px;
     height:200px;
     
     --button_hue: 180;
     --button_saturation:75%;
     --button_lightness:55%;
+
+	
+	
+	
     
 }
+.settingsWindow > *{
+	margin-left:1em;
+}
+
+
+
 
 #settingsApplyButton {
    

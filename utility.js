@@ -6,6 +6,7 @@ myHeaders.set("Access-Control-Allow-Origin", "*");
 
 function baseColorChanged() {
     var newHue = document.getElementById("baseColor");
+
     var gradientStops1 = document.getElementsByClassName("gradientStop1");
     for(let i=0; i < gradientStops1.length; ++i) {
         gradientStops1[i].setAttribute("stop-color", `hsl(${newHue.value}, 70%, 30%)`)
@@ -20,12 +21,11 @@ function baseColorChanged() {
     var gradientStops3 = document.getElementsByClassName("gradientStop3");
     for(let i=0; i < gradientStops3.length; ++i) {
         gradientStops3[i].setAttribute("stop-color", `hsl(${newHue.value}, 70%, 65%)`)
-    }   
-}
+    }
 
-        
-   
-  
+
+
+}
 
 function loadTextFile(e) {
     const txt_file=document.getElementById('paragraph');

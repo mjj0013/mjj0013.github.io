@@ -14,6 +14,7 @@ var navElementSizes = {150:4}     //keys are size, values are the quantities of 
 
 
 
+
 window.onload = () =>{
     
     var canvas = document.getElementById("coverCanvas");
@@ -38,22 +39,17 @@ window.onload = () =>{
     //addMenuAnimation();
 
     setInterval(updateCover,1000/60);
-    
+
     
     var pathName = window.location.pathname;
     var pathFileName = pathName.substr(pathName.lastIndexOf("/")+1)
     pathFileName = pathFileName.replace("#","");
     pathFileName = pathFileName.replace(".html","");
+
     insertNavLinks(pathFileName);
     
    
     addRemainingSegment();
-
-
-
-    
-    
- 
     
 }
 
@@ -83,6 +79,7 @@ function insertNavLinks(currentDir, replace=false) {
         homeHref = "."+homeHref;
         pacmenHref = "."+pacmenHref;
         busStopsHref = "."+busStopsHref;
+
     }
     else if(currentDir=="busStops") {
         busStopsHref = "#";
@@ -163,6 +160,7 @@ function insertNavLinks(currentDir, replace=false) {
     
 
 
+
     document.getElementById("homeNavButton").onmouseover = (e) => {
         document.getElementById("homeNavButtonAnimation").beginElement();
     }
@@ -190,13 +188,6 @@ function insertNavLinks(currentDir, replace=false) {
     document.getElementById("busStopsNavButton").onmouseout = (e) => {
         document.getElementById("busStopsNavButtonAnimation").endElement();
     }
-
-
-
-
-    
-
-
 
 }
 
@@ -282,6 +273,35 @@ function addMenuAnimation() {
     navLinkAnimationFrames("eyesNavButton",2);
 }
 
+function addSettingsSegment(rootPath) {
+    var navBar = document.getElementById("navBar");
+    navBar.insertAdjacentHTML("beforeend", `<path class="nav-link" id="settingsButton" d="M450,0 l50,0 l0,50 l-50,0 l0,-50" fill="hsl(220,70%,30%)" stroke="black" pointer-events="all">
+    </path>`);
+
+    navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon1" href="${rootPath}icons/settings_white_24dp.svg" x="470" y="20" height="30" width="30" pointer-events="none">
+        <animateTransform xlink:href="#gearIcon1" id="gearRotate1" attributeName="transform"
+                      attributeType="XML"
+                      type="rotate"
+                      from="0 485 35"
+                      to="360 485 35"
+                      dur="1s"
+                      begin="indefinite"
+                      repeatCount="indefinite">
+        </animateTransform>
+    </image>`
+    );
+    navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon2" href="${rootPath}icons/settings_white_24dp.svg" x="450" y="0" height="30" width="30" pointer-events="none"></image>
+        <animateTransform xlink:href="#gearIcon2" id="gearRotate2" attributeName="transform"
+                        attributeType="XML"
+                        type="rotate"
+                        from="360 465 15"
+                        to="0 465 15"
+                        dur="1s"
+                        begin="indefinite"
+                        repeatCount="indefinite">
+        </animateTransform>
+    </image>`);
+}
 
 
 function addRemainingSegment() {

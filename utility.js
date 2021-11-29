@@ -1,10 +1,11 @@
-
+var myHeaders = new Headers();
+myHeaders.set("Access-Control-Request-Headers", "*");
+myHeaders.set("Access-Control-Allow-Origin", "*");
 
 
 
 function baseColorChanged() {
     var newHue = document.getElementById("baseColor");
-
     var gradientStops1 = document.getElementsByClassName("gradientStop1");
     for(let i=0; i < gradientStops1.length; ++i) {
         gradientStops1[i].setAttribute("stop-color", `hsl(${newHue.value}, 70%, 30%)`)
@@ -19,26 +20,12 @@ function baseColorChanged() {
     var gradientStops3 = document.getElementsByClassName("gradientStop3");
     for(let i=0; i < gradientStops3.length; ++i) {
         gradientStops3[i].setAttribute("stop-color", `hsl(${newHue.value}, 70%, 65%)`)
-    }
+    }   
+}
 
-
-    
-
-
-
-    
-    
-    
-    // console.log("iwjfiejwfiejf",newHue.value);
-    // var navSegments = document.getElementsByClassName("nav-link")
-    // for(let s=0; s < navSegments.length;++s) {
-    //     navSegments[s].setAttribute("fill",`hsl(${newHue.value}, 70%, 30%)`)
-    // }
         
    
-    
-
-}
+  
 
 function loadTextFile(e) {
     const txt_file=document.getElementById('paragraph');

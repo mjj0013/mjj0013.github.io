@@ -20,6 +20,8 @@ function generateRandomMesh() {
     //connect points
     M.generateEdges();
     M.depthFirstSearch();
+
+    console.log("genreated")
     
     for(let p=0; p < M.pts.length;++p) {
         let newPt = document.createElementNS("http://www.w3.org/2000/svg",'circle');
@@ -30,7 +32,7 @@ function generateRandomMesh() {
         newPt.setAttribute('cy', M.pts[p].y);
         newPt.setAttribute('r', 3);
         
-        document.getElementById("meshSVG").appendChild(newPt);
+        document.getElementById("backgroundSVG").appendChild(newPt);
     }
 
     var edgeCounter = [];
@@ -48,7 +50,7 @@ function generateRandomMesh() {
         newPolygon.setAttribute('id',M.edges[e].id);
         newPolygon.setAttribute('d',d);
         newPolygon.setAttribute('class','meshRegionBorder')
-        if(M.renderAllEdges) document.getElementById("meshSVG").appendChild(newPolygon);
+        if(M.renderAllEdges) document.getElementById("backgroundSVG").appendChild(newPolygon);
         
     }
     console.log('M.edges', M.edges)
@@ -90,7 +92,7 @@ function generateRandomMesh() {
         let light = getRandomInt(0,100);
         polygonElement.setAttributeNS(null,'fill',`hsl(${220},${sat}%,${light}%)`);
         
-        document.getElementById("polyGroup").appendChild(polygonElement);
+        document.getElementById("backgroundSVG").appendChild(polygonElement);
        
       
     }
@@ -145,8 +147,8 @@ class Mesh {
                 let x,y;
                 while(!isNewPt) {  
                     let ptExists = false;
-                    x = getRandomInt(0, 200);
-                    y = getRandomInt(0, 200);
+                    x = getRandomInt(0, 800);
+                    y = getRandomInt(0, 150);
                     for(let i=0; i < this.pts.length;++i) {
                         if(this.pts[i].x==x && this.pts[i].y==y) {
                             ptExists = true;

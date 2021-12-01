@@ -1,9 +1,8 @@
 // const { generateRandomMesh } = require("./Mesh");
 
 var myHeaders = new Headers();
-
 myHeaders.set("Access-Control-Allow-Origin", "*");
-
+myHeaders.set("Access-Control-Request-Headers", "*");
 var coverCanvas = document.getElementById("coverCanvas");
 var coverTriangles = [];
 var xSortedCoverTriangles = []
@@ -17,44 +16,38 @@ var navElementSizes = {150:2}     //keys are size, values are the quantities of 
 
 var mitDropDownOpen = false;
 
-window.onload = () =>{
-   
-    var canvas = document.getElementById("coverCanvas");
-    canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
+var navBar = document.getElementById("navBar");
+
+
+
+
+function initNavBar() {
+    coverCanvas.width = coverCanvas.height * (coverCanvas.clientWidth / coverCanvas.clientHeight);
     startAnimation(coverCanvas);
 
     window.onresize = () => {
-        canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
+        coverCanvas.width = coverCanvas.height * (coverCanvas.clientWidth / coverCanvas.clientHeight);
         startAnimation(coverCanvas);
 
-        var pathName = window.location.pathname;
-        var pathFileName = pathName.substr(pathName.lastIndexOf("/")+1)
-        pathFileName = pathFileName.replace("#","");
-        pathFileName = pathFileName.replace(".html","");
-    
-        insertNavLinks(document.getElementById("navBar"), pathFileName, true, selectedHue);
+       
+        var currentPathName = getCurrentLocation();
+        insertNavLinks(navBar, currentPathName, true, selectedHue);
         addRemainingSegment(selectedHue, true);
     }
     setInterval(updateCover,1000/60);
-    
-    var pathName = window.location.pathname;
-    var pathFileName = pathName.substr(pathName.lastIndexOf("/")+1)
-    pathFileName = pathFileName.replace("#","");
-    pathFileName = pathFileName.replace(".html","");
-
-
-    createDropdown(pathFileName);
-    insertNavLinks(document.getElementById("navBar"), pathFileName);
+  
+    var currentPathName = getCurrentLocation();
+    createDropdown(currentPathName);
+    insertNavLinks(navBar, currentPathName);
     addRemainingSegment();
     document.getElementById("sw").setAttribute("right", window.innerWidth);
 
-    console.log("navBar", document.getElementById("navBar"));
+    console.log("navBar", navBar);
 
     var settingsButton = document.getElementById("settingsButton");
     settingsButton.onclick = () => {
         if(document.getElementById("sw").style.display=="block") {document.getElementById("sw").style.display="none";}
         else document.getElementById("sw").style.display="block";
-        
     }
 
     settingsButton.onmouseover = (e) => {
@@ -62,7 +55,6 @@ window.onload = () =>{
         document.getElementById("gearRotate1").beginElement();
         document.getElementById("gearRotate2").beginElement();
         settingsButton.setAttribute("cursor","pointer");
-        
     }
     settingsButton.onmouseout = (e) => {
         document.getElementById("gearRotate1").endElement();
@@ -72,20 +64,14 @@ window.onload = () =>{
     
     // document.getElementById("mitProjectsDropdownButton")
     document.getElementById("mitProjectsDropdownButton").onclick = (e) => {
-       
-        
         if(mitDropDownOpen) {
             var dropDownAnimation = document.getElementById("reverseDropdownAnimation");
             dropDownAnimation.beginElement();
-            
-            
             document.getElementById("pacmenNavLink").style.display = 'none';
             document.getElementById("eyesNavLink").style.display = 'none';
             document.getElementById("busStopsNavLink").style.display = 'none';
-            
             mitDropDownOpen = false;
-            generateNewAnimation();
-            
+            //generateNewAnimation();
         }
         else {
             var dropDownAnimation = document.getElementById("forwardDropdownAnimation");
@@ -93,23 +79,23 @@ window.onload = () =>{
             dropDownAnimation.addEventListener("endEvent", ()=>{
                 document.getElementById("pacmenNavLink").style.display = 'block';
                 document.getElementById("eyesNavLink").style.display = 'block';
-                document.getElementById("busStopsNavLink").style.display = 'block';
-               
-                mitDropDownOpen = true;
+                document.getElementById("busStopsNavLink").style.display = 'block'; 
             },false);
+            mitDropDownOpen = true;
             
         }
-        
-        
-        
-        
 
     }
-    
-    
-    
-    //  generateRandomMesh();
 }
+function getCurrentLocation() {
+    var pathName = window.location.pathname;
+    var pathFileName = pathName.substr(pathName.lastIndexOf("/")+1)
+    pathFileName = pathFileName.replace("#","");
+    pathFileName = pathFileName.replace(".html","");
+    return pathFileName;
+}
+
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -125,7 +111,7 @@ function baseColorChanged() {
     pathFileName = pathFileName.replace("#","");
     pathFileName = pathFileName.replace(".html","");
     selectedHue = newHue.value;
-    insertNavLinks(document.getElementById("navBar"), pathFileName, true, newHue.value);
+    insertNavLinks(navBar, pathFileName, true, newHue.value);
     addRemainingSegment(newHue.value, true);
 
 }
@@ -142,12 +128,12 @@ function createDropdown(currentDir,replace=false) {
     var hue = 220;
     var mitProjectsDropdownButton = `<path class="nav-link" id="mitProjectsDropdownButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#mitProjectsLinkGradient)" stroke="black" pointer-events="all"/>
         <text x="158" y="30" fill="white" stroke="white" pointer-events="none">MIT Projects</text> 
-        <image id="gearIcon1" href="${rootDir}icons/arrow_drop_down_white_24dp.svg" x="270" y="10" height="30" width="30" pointer-events="none">
+        <image href="${rootDir}icons/arrow_drop_down_white_24dp.svg" x="270" y="10" height="30" width="30" pointer-events="none">
     </path>`
     var mitProjectsLinkGradientHTML =  `<radialGradient id="mitProjectsLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
-            <stop stop-color="hsl(${hue},70%,65%)" offset="40%"/>
-            <stop stop-color="hsl(${hue},70%,50%)" offset="65%"/>
-            <stop stop-color="hsl(${hue},70%,30%)" offset="85%"/>
+            <stop stop-color="hsl(${selectedHue},70%,65%)" offset="40%"/>
+            <stop stop-color="hsl(${selectedHue},70%,50%)" offset="65%"/>
+            <stop stop-color="hsl(${selectedHue},70%,30%)" offset="85%"/>
         <animate id="mitProjectsDropdownButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="1" />
         </radialGradient>`
     
@@ -186,7 +172,7 @@ function createDropdown(currentDir,replace=false) {
     </path>`
 
     
-    document.getElementById("navBar").insertAdjacentHTML('beforeend', mitProjectsDropdownBox);
+    navBar.insertAdjacentHTML('beforeend', mitProjectsDropdownBox);
 }
 
 function generateNewAnimation() {
@@ -365,9 +351,6 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
         insertInto.removeChild(document.getElementById("busStopsNavLink"));
         insertInto.removeChild(document.getElementById("busStopsNavLinkGradient"));
 
-
-
-
         insertInto.insertAdjacentHTML('beforeend', homeLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', homeLinkGradientHTML);
 
@@ -383,8 +366,6 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
 
     }
     
-   
-
     document.getElementById("homeNavButton").onmouseover = (e) => {
         document.getElementById("homeNavButtonAnimation").beginElement();
     }
@@ -392,9 +373,7 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
         document.getElementById("homeNavButtonAnimation").endElement();
     }
     document.getElementById("homeNavButton").onmousedown = (e) => {
-        document.getElementById("homeNavButtonAnimation").endElement();
-        document.getElementById("homeNavSelected").beginElement();
-        
+        document.getElementById("homeNavButtonAnimation").endElement(); 
     }
 
     document.getElementById("pacmenNavButton").onmouseover = (e) => {
@@ -500,10 +479,6 @@ function addMenuAnimation() {
 
 
 function addRemainingSegment(currentHue=220, replace=false) {
-    
-
-    var navBar = document.getElementById("navBar");
-
     if(replace) {
         navBar.removeChild(document.getElementById("voidSegment"))
         navBar.removeChild(document.getElementById("settingsButton"))
@@ -533,12 +508,7 @@ function addRemainingSegment(currentHue=220, replace=false) {
 
     let gear1Pos = settingsPos+20;
     let gear2Pos = settingsPos;
-    // navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon1" href="${rootDir}icons/settings_white_24dp.svg" x="${gear1Pos}" y="20" height="30" width="30" pointer-events="none">
-    //     <animateTransform xlink:href="#gearIcon1" id="gearRotate1" attributeName="transform" attributeType="XML" type="rotate" dur="1s" begin="indefinite"  repeatCount="indefinite"
-    //         from="0 ${gear1Pos+15} 35" to="360 ${gear1Pos+15} 35" >
-    //     </animateTransform>
-    // </image>`
-    // );
+
     navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon1" href="${rootDir}icons/settings_white_filled_24dp.svg" x="${gear1Pos}" y="20" height="30" width="30" pointer-events="none">
         <animateTransform xlink:href="#gearIcon1" id="gearRotate1" attributeName="transform" attributeType="XML" type="rotate" dur="3s" begin="indefinite"  repeatCount="indefinite"
             values="0 ${gear1Pos+15} 35 ;360 ${gear1Pos+15} 35; 0 ${gear1Pos+15} 35;  360 ${gear1Pos+15} 35" 
@@ -548,8 +518,7 @@ function addRemainingSegment(currentHue=220, replace=false) {
     </image>`
     );
  
-    navBar.insertAdjacentHTML("beforeend", `
-    <image id="gearIcon2" href="${rootDir}icons/settings_white_filled_24dp.svg" x="${gear2Pos}" y="0" height="30" width="30" pointer-events="none">
+    navBar.insertAdjacentHTML("beforeend", `<image id="gearIcon2" href="${rootDir}icons/settings_white_filled_24dp.svg" x="${gear2Pos}" y="0" height="30" width="30" pointer-events="none">
         <animateTransform xlink:href="#gearIcon2" id="gearRotate2" attributeName="transform" attributeType="XML" type="rotate" dur="3s" begin="indefinite" repeatCount="indefinite"
             values="360 ${gear2Pos+15} 15 ;0 ${gear2Pos+15} 15; 360 ${gear2Pos+15} 15;  0 ${gear2Pos+15} 15" 
             keySplines=".09 .89 1 .46; .09 .89 1 .46; .09 .89 1 .46; .09 .89 1 .46" 

@@ -1,28 +1,47 @@
 var myHeaders = new Headers();
+myHeaders.set("Access-Control-Allow-Origin", "*");
 myHeaders.set("Access-Control-Request-Headers", "*");
 
 
-import {startAnimation, updateCover} from "./NavBar.js";
-import {SettingsModal} from "./SettingsWindow/SettingsWindow.js"
+// import {startAnimation, updateCover} from "./NavBar.js";
+
 // var coverCanvas = document.getElementById("coverCanvas");
 
-// var coverTriangles = [];
-// var xSortedCoverTriangles = [];
-// var ySortedCoverTriangles = [];
-// var step = 0;
 
+function getCurrentLocation() {
+    var pathName = window.location.pathname;
+    var pathFileName = pathName.substr(pathName.lastIndexOf("/")+1)
+    pathFileName = pathFileName.replace("#","");
+    pathFileName = pathFileName.replace(".html","");
+    return pathFileName;
+}
 
 window.onload = () => {
-    var canvas = document.getElementById("coverCanvas");
-    
-    canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
-    startAnimation(canvas);
-    
-    window.onresize = () => {
-        canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
-        startAnimation(canvas);
+    var currentLocation = getCurrentLocation();
+    if(currentLocation=="index") {
+        initNavBar();
+        initBackground();    
     }
-    setInterval(updateCover,1000/60);
+   if(currentLocation=="eyes") {
+
+   }
+   if(currentLocation=="pacmen") {
+
+
+   }
+   if(currentLocation=="busStops") {
+       
+   }
+    // var canvas = document.getElementById("coverCanvas");
+    
+    // canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
+    // startAnimation(canvas);
+    
+    // window.onresize = () => {
+    //     canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
+    //     startAnimation(canvas);
+    // }
+    // setInterval(updateCover,1000/60);
 
 
     

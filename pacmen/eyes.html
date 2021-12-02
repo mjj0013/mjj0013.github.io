@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet"> -->
+        <link rel="stylesheet" href="./eyes.css">
+		<script type="text/javascript" src="../utility.js"></script>
+        <link rel="stylesheet" href="../Layout.css">
+        <title>Eyes | Portfolio Page</title>
+        
+        <script src="./eyes.js"></script>
+        
+    </head>
+    <div id='navBarContainer'>
+		<canvas id="coverCanvas" width="100%" />
+	</div>
+	<svg id="navBar" class="nav-menu" xmlns="http://www.w3.org/2000/svg">
+
+	</svg>
+	<div id ="sw" class="settingsWindow">
+		<label for="baseColor">Base Hue: </label>
+		<input id="baseColor" type="range" min="0" max="360" value="220" onchange="baseColorChanged()">
+		
+	</div>
+
+
+    <body>
+        
+		<script type="text/javascript" src="../NavBar.js"></script>
+		<script type="text/javascript" src="../index.js"> </script>
+		<div class="eyes">
+            <div class="eye">
+                <div class="ball"></div>
+            </div>
+            <div class="eye">
+                <div class="ball"></div>
+            </div>
+        </div>
+       
+    </body>
+</html>

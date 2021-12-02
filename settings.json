@@ -1,0 +1,14 @@
+{
+    "default": {
+        "userInfo":{
+            "firstName":"default",
+            "lastName":"default",
+            "password":"default"
+        },
+        "baseHue":220,
+        "minimalist":false,
+        "dropdownAnimation":"normal",
+        "backgroundStyle":"normal"
+    }
+
+}

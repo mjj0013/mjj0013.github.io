@@ -6,7 +6,8 @@ var mouseSlope = 0;
 var mouseLocQue = [];
 
 var layerAttributes =[  {"type":"background", "fill":"hsl(220, 50%, 50%)", "c_coeffs":[], "id":null, "touchX":0, "touchY":0}, 
-                        {"type":"2D", "fill":"hsl(40, 50%, 50%)", "c_coeffs":[], "id":null, "touchX":0, "touchY":0, "touchPt":{x:0,y:0}, "pt1":null, "pt2":null}
+                        {"type":"2D", "fill":"hsl(40, 50%, 50%)", "c_coeffs":[], "id":null, "touchX":0, "touchY":0, "touchPt":{x:0,y:0}, "pt1":null, "pt2":null},
+                        {"type":"2D", "fill":"hsl(220, 80%, 50%)", "c_coeffs":[], "id":null, "touchX":0, "touchY":0, "touchPt":{x:0,y:0}, "pt1":null, "pt2":null}
                     ];
 var backgroundSVG = document.getElementById("backgroundSVG");
 
@@ -23,26 +24,58 @@ function initBackground() {
 
     var layer1 = document.createElementNS("http://www.w3.org/2000/svg","path");
     layer1.setAttribute("id","layer1");
-
-    let pt1_1 = {x:0, y:500};
-    let pt1_2 = {x:800, y:800};
-    layerAttributes[1]["pt1"] = pt1_1;
-    layerAttributes[1]["pt2"] = pt1_2;
     layerAttributes[1]["id"] = "layer1";
-    layerAttributes[1]["dx"] = 0;
-    layerAttributes[1]["dy"] = 0;
-    layerAttributes[1]["c_coeffs"] = [.17,.67,.91,.2]
-    var d1 = `M${pt1_1.x},${pt1_1.y} c${.17*pt1_1.x} ${.67*pt1_1.y},${.91*pt1_2.x} ${.2*pt1_2.y}, ${pt1_2.x} ${pt1_2.y} L0 800 L-800 0 z`;
+    layerAttributes[1]["Mx"] = 0;
+    layerAttributes[1]["My"] = 595;
+    layerAttributes[1]["x1"] = 20;
+    layerAttributes[1]["y1"] = 828;
+    layerAttributes[1]["x2"] = 425;
+    layerAttributes[1]["y2"] = 771;
+    layerAttributes[1]["x"] = 390;
+    layerAttributes[1]["y"] = 1044;
+    layerAttributes[1]["returnX"] = -390;
+    layerAttributes[1]["returnY"] = -594;
+    
+    var d1 = `M${layerAttributes[1]["Mx"]},${layerAttributes[1]["My"]} C${layerAttributes[1]["x1"]},${layerAttributes[1]["y1"]} ${layerAttributes[1]["x2"]},${layerAttributes[1]["y2"]} ${layerAttributes[1]["x"]},${layerAttributes[1]["y"]} l${layerAttributes[1]["returnX"]} 0, l0 ${layerAttributes[1]["returnY"]}`
     layer1.setAttribute("d", d1)
     layer1.setAttribute('fill',layerAttributes[1]["fill"]);
+   
+
+
+
+    var layer2 = document.createElementNS("http://www.w3.org/2000/svg","path");
+    layer2.setAttribute("id","layer2");
+    layerAttributes[2]["id"] = "layer2";
+    layerAttributes[2]["Mx"] = 0;
+    layerAttributes[2]["My"] = 600;
+    layerAttributes[2]["x1"] = 20;
+    layerAttributes[2]["y1"] = 478;
+    layerAttributes[2]["x2"] = 267;
+    layerAttributes[2]["y2"] = 384;
+    layerAttributes[2]["x"] = 904;
+    layerAttributes[2]["y"] = 1097;
+    layerAttributes[2]["returnX"] = -904;
+    layerAttributes[2]["returnY"] = -997;
+    
+    var d2 = `M${layerAttributes[2]["Mx"]},${layerAttributes[2]["My"]} C${layerAttributes[2]["x1"]},${layerAttributes[2]["y1"]} ${layerAttributes[2]["x2"]},${layerAttributes[2]["y2"]} ${layerAttributes[2]["x"]},${layerAttributes[2]["y"]} l${layerAttributes[2]["returnX"]} 0, l0 ${layerAttributes[2]["returnY"]}`
+    layer2.setAttribute("d", d2)
+    layer2.setAttribute('fill',layerAttributes[2]["fill"]);
+
+
+
+    //added right here so that overlapping is correct
+    backgroundSVG.appendChild(layer2)
     backgroundSVG.appendChild(layer1);
+
+
 
     //setInterval(updateBackground, 1000/30);
     
     for(let i=1; i < layerAttributes.length;++i) {
         updateLayer(layerAttributes[i])
     }
-    allowInteractivity();
+    //allowInteractivity();
+    console.log(backgroundSVG.viewBox)
 
    
 }
@@ -64,12 +97,8 @@ function allowInteractivity() {
     for(let i=1; i < layerAttributes.length; ++i) {
         let layerObj = document.getElementById(layerAttributes[i].id);
         layerObj.addEventListener("mouseenter",(e)=>{
-            layerAttributes[i].touchPt = {x:e.pageX, y:e.pageY};
-            // layerAttributes[i].touchX = mouseSlope;
-            // layerAttributes[i].touchY = mouseSlope;
-            layerAttributes[i].touchX = .20;
-            layerAttributes[i].touchY = .20;
-            document.getElementById(layerAttributes[i].id+"Animation").beginElement();
+            
+            document.getElementById(layerAttributes[i].id+"Animation").setAttribute("d")
             
         })
         layerObj.addEventListener("mouseleave",(e)=>{
@@ -85,61 +114,44 @@ function allowInteractivity() {
 }
 
 
+
 function updateLayer(layer) {
-    
+    var dArray = [];
+    var dStr = ``
+    let steps = 400;
+
+    if(layer.id=="layer1") {
+        for(let i=-steps; i < steps; ++i) {
+
+            if(i > 0) {
+                dStr+=`M${layer.Mx},${layer.My} C${layer.x1+i},${layer.y1+i} ${layer.x2},${layer.y2+i/50} ${layer.x+i},${layer.y+i} l${layer.returnX-i} 0 l0 ${layer.returnY+i};`
+                dArray.push(`M${layer.Mx},${layer.My} C${layer.x1+i},${layer.y1+i} ${layer.x2},${layer.y2+i/50} ${layer.x+i},${layer.y+i} l${layer.returnX-i} 0 l0 ${layer.returnY+i};`);
+            }
+            else {
+                dStr+=`M${layer.Mx},${layer.My} C${layer.x1+i},${layer.y1+i} ${layer.x2},${layer.y2+i/50} ${layer.x+i/50},${layer.y+i/50} l${layer.returnX-i/50} 0 l0 ${layer.returnY+i/50};`
+                dArray.push(`M${layer.Mx},${layer.My} C${layer.x1+i},${layer.y1+i} ${layer.x2},${layer.y2+i/50} ${layer.x+i/50},${layer.y+i/50} l${layer.returnX-i/50} 0 l0 ${layer.returnY+i/50};`);
+            }
+            
       
-    var layerObj = document.getElementById(layer.id);
-    // if(layer.touchX!=0) layer.touchX = layer.touchX>0? layer.touchX-1 : layer.touchX+1
-    // if(layer.touchY!=0) layer.touchY = layer.touchY>0? layer.touchY-1 : layer.touchY+1
-    let touchX = layer.touchX*50;
-    let touchY = layer.touchY*50;
-    let dx1=layer.c_coeffs[0];
-    let dy1=layer.c_coeffs[1];
-    let dx2=layer.c_coeffs[2];
-    let dy2=layer.c_coeffs[3];
+            
+
+            
+        }
+        //for(let i=0; i < 10; ++i)  dStr+=dArray[dArray.length-1];
+        for(let i=dArray.length-1; i>= 0; --i) {dStr+=dArray[i];}
+        var layerObj = document.getElementById(layer.id);
+        layerObj.insertAdjacentHTML("beforeend",`<animate attributeType="XML" attributeName="d" dur="6s" begin="0s" repeatCount="indefinite" values="${dStr}"></animate>`)
+    }
+    if(layer.id=="layer2") {
+        for(let i=0; i < steps; ++i) {
+            dStr+=`M${layer.Mx},${layer.My} C${layer.x1+i},${layer.y1+i} ${layer.x2},${layer.y2} ${layer.x+i/50},${layer.y+i/50} l${layer.returnX-i/50} 0 l0 ${layer.returnY+i/50};`
+            dArray.push(`M${layer.Mx},${layer.My} C${layer.x1+i},${layer.y1+i} ${layer.x2},${layer.y2} ${layer.x+i/50},${layer.y+i/50} l${layer.returnX-i/50} 0 l0 ${layer.returnY+i/50};`);
+        }
+        for(let i=dArray.length-1; i>= 0; --i) { dStr+=dArray[i];}
+        var layerObj = document.getElementById(layer.id);
+        layerObj.insertAdjacentHTML("beforeend",`<animate attributeType="XML" attributeName="d" dur="6s" begin="0s" repeatCount="indefinite" values="${dStr}"></animate>`)
+    }
     
-    console.log(document.getElementById(`${layer.id+"Animation"}`))
-    //var d1 = `M${pt1_1.x},${pt1_1.y} c${.17*pt1_1.x} ${.67*pt1_1.y},${.91*pt1_2.x} ${.2*pt1_2.y}, ${pt1_2.x} ${pt1_2.y} L0 800 L-800 0 z`;
-    var dEnd = `M${layer.pt1.x},${layer.pt1.y} c${(dx1+.25)*layer.pt1.x} ${(dy1+.25)*layer.pt1.y},${(dx2+.25)*layer.pt2.x} ${(dy2+.25)*layer.pt2.y}, ${layer.pt2.x} ${layer.pt2.y} L0 800 L-800 0`;
-    
-         
-    layerObj.insertAdjacentHTML("beforeend",` <animate id="${layer.id+"Animation"}" attributeType="XML" attributeName="d" begin="indefinite" dur="2s" repeatCount="1" values="${layerObj.d};${dEnd};${layerObj.d};"></animate>`);
-
-
-   
-
-    // var angFreq = .3;
-    // var waveAmp = -10;
-    
-    // //var rarity = 1;
-
-    // var waveD0 = sineWaveMenuEffect(layer.pt1,layer.pt2,waveAmp, angFreq, 0, true);       //at rest
-    // var waveD1 = sineWaveMenuEffect(layer.pt1,layer.pt2,waveAmp, angFreq, 0, false);
-    // var waveD2 = sineWaveMenuEffect(layer.pt1,layer.pt2,waveAmp, angFreq, 0, false);
-
-    // var valStr1 =   `M${layer.pt1.x},0 ${waveD0}`;
-    // var valStr2 =   `M${layer.pt1.x},0 ${waveD1}`;
-    // var valStr3 =   `M${layer.pt1.x},0 ${waveD2}`;
-    
-
-    // var values = valStr1 + " ; "+ valStr2 + " ; " + valStr3;
-    // var keySplines = "0 .95 .95 .23; 0 .45 .95 .23; 0 .45 .95 .23";
-    // var keyTimes = "0 ; .50; 1";
-    // var htmlStr = `<animate xlink:href="#${layer.id}"
-    //     attributeName="d"
-    //     attributeType="XML"
-    //     values="${values}"
-    //     keyTimes="${keyTimes}"
-    //     repeatCount="indefinite"
-    //     keySplines="${keySplines}"
-    //     dur="4s"
-    //     begin="indefinite"
-    //     end="indefinite"
-    //     fill="freeze"
-    //     id="${layer.id+"Animation"}"
-    // />`
-    // layerObj.insertAdjacentHTML("beforeend",htmlStr);
-
 
 }
 

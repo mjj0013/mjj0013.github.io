@@ -5,7 +5,7 @@ body {
 	--navLink-width:50px;
 	margin: var(--nav-height) 0 0 0;
 	font-family: 'Quicksand', sans-serif;
-	font-variant: small-caps;
+	/* font-variant: small-caps; */
 	font-size:18px;
 	
 	/* background: hsl(197,84,21); */
@@ -18,6 +18,11 @@ body {
 	width:100vw;
 	height:100vh;
 	z-index:1;
+}
+
+
+textarea {
+	z-index:7;
 }
 
 #navBarContainer {
@@ -90,6 +95,8 @@ li {
 	
 	/* transition-timing-function: cubic-bezier(1.1, .001, 0.22, 1); */
 }
+
+
 .nav-link:hover {
 	cursor:pointer;
 }
@@ -144,7 +151,9 @@ li {
 	/* z-index:1; */
 }
 
-
+#navBar {
+	filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+}
 
 
 #fileText {

@@ -529,19 +529,27 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
         document.getElementById("fwdPipeAnimation").beginElement();
         document.getElementById("fwdPipeAnimation").addEventListener("endEvent", (e)=>{    
             //startBallGame(25);
-            console.log("starting ball game");
-            addBallObject(150, 150, 25, 25, 5, 5,25, null);
-            // addBallObject(300, 550, 25, 25, 50, 50, 50, null);
-            // for(let i=0; i < 25; ++i) {
-            //     addBallObject(500, 500, 25, 25, 50, 50, 50, null);
-            // }
-           
-            setInterval(()=>{
 
-                updateBallGame();
-                drawBallGame();
-            }
-            ,1000/60)
+            document.getElementById("ballContainer").classList.add("movingContainer");
+            console.log("starting ball game");
+
+            setTimeout(()=>{
+                addBallObject(150, 150, 25, 25, 5, 5,25, null);
+                // addBallObject(300, 550, 25, 25, 50, 50, 50, null);
+                // for(let i=0; i < 25; ++i) {
+                //     addBallObject(500, 500, 25, 25, 50, 50, 50, null);
+                // }
+                setInterval(()=>{
+
+                    updateBallGame();
+                    drawBallGame();
+                }
+                ,1000/60)
+            }, 500)
+            //addBallObject(150, 150, 25, 25, 5, 5,25, null);
+            
+            
+            
         })
     
     }
@@ -552,6 +560,9 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
 
 
 function makeBallGame() {
+
+   
+
     var pipeGradientHTML = `<radialGradient id="pipeGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
             <stop stop-color="hsl(255,2%,67%)" offset="40%"/>
             <stop stop-color="hsl(255,2%,30%)" offset="65%"/>

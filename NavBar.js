@@ -530,7 +530,7 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
         document.getElementById("fwdPipeAnimation").addEventListener("endEvent", (e)=>{    
             //startBallGame(25);
             console.log("starting ball game");
-            addBallObject(150, 150, 25, 25, 50, 50, 50, null);
+            addBallObject(150, 150, 25, 25, 5, 5,25, null);
             // addBallObject(300, 550, 25, 25, 50, 50, 50, null);
             // for(let i=0; i < 25; ++i) {
             //     addBallObject(500, 500, 25, 25, 50, 50, 50, null);

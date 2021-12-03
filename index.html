@@ -18,7 +18,9 @@
 		</g>
 	</svg> -->
 
-	<svg id="backgroundSVG" class="bgSVG">		
+	<svg id="ballContainer" class="bgSVG">		
+	</svg>
+	<svg id="wavesBG" class="wavesSVG">		
 	</svg>
 	
 	<svg id="navBar" class="nav-menu" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
@@ -33,6 +35,8 @@
 		<div id ="sw" class="settingsWindow">
 			<label for="baseColor">Base Hue: </label>
 			<input id="baseColor" type="range" min="0" max="360" value="220" onchange="baseColorChanged()">
+			<label for="secondaryColor">Secondary Hue: </label>
+			<input id="secondaryColor" type="range" min="0" max="360" value="220" onchange="baseColorChanged()">
 		</div>
 		<h2>Test Header</h2>
 		<p>This is a test header</p>

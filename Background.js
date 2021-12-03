@@ -5,9 +5,9 @@ myHeaders.set("Access-Control-Request-Headers", "*");
 var mouseSlope = 0;
 var mouseLocQue = [];
 
-var layerAttributes =[  {"type":"background", "fill":"hsl(220, 50%, 50%)", "c_coeffs":[], "id":null, "touchX":0, "touchY":0}, 
-                        {"type":"2D", "fill":"hsl(40, 50%, 50%)", "c_coeffs":[], "id":null, "touchX":0, "touchY":0, "touchPt":{x:0,y:0}, "pt1":null, "pt2":null},
-                        {"type":"2D", "fill":"hsl(220, 80%, 50%)", "c_coeffs":[], "id":null, "touchX":0, "touchY":0, "touchPt":{x:0,y:0}, "pt1":null, "pt2":null}
+var layerAttributes =[  {"type":"background", "fill":"hsl(220, 50%, 50%)",  "id":null }, 
+                        {"type":"2D", "fill":"hsl(40, 50%, 50%)",  "id":null, "pt1":null, "pt2":null},
+                        {"type":"2D", "fill":"hsl(220, 80%, 50%)",  "id":null, "pt1":null, "pt2":null}
                     ];
 //var backgroundSVG = document.getElementById("backgroundSVG");
 var wavesSVG = document.getElementById("wavesBG");
@@ -104,11 +104,6 @@ function allowInteractivity() {
             
         })
         layerObj.addEventListener("mouseleave",(e)=>{
-            layerAttributes[i].touchPt = {x:e.pageX, y:e.pageY};
-            // layerAttributes[i].touchX = mouseSlope;
-            // layerAttributes[i].touchY = mouseSlope;
-            layerAttributes[i].touchX = .20;
-            layerAttributes[i].touchY = .20;
             document.getElementById(layerAttributes[i].id+"Animation").beginElement();
      
         })

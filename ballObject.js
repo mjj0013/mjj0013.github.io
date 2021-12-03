@@ -4,72 +4,53 @@ myHeaders.set("Access-Control-Request-Headers", "*");
 
 
 var physicalObjects = [];
+var physicalObjectMap = [];
 var xGlobalForce = 0;
 var yGlobalForce = 0;
-var containerWidth = 0;
-var containerHeight= 0;
-class BallObject {
-    constructor(obj_id, x, y, width, height, xVelocity, yVelocity, mass, color=null) {
 
+// var containerPos = {x:}
+
+
+var controlledObjectIndex = -1;
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+  }
+//("circle"+obj.index, x, y, width, height, dx, dy, mass);
+class BallObject {
+    constructor(obj_id, x, y, width, height, xVelocity, yVelocity, mass) {
+        
         this.x = x;
         this.y = y;
         this.xVelocity = xVelocity;
         this.yVelocity = yVelocity;
         this.width = width;
         this.height = height;
-        
         this.mass = mass;
         this.collidable=false;
-        
         this.radius = width;
       
         this.obj_id = obj_id;
-
-        this.trueX = x;       //true x and y are for the object's (x,y) point after rotation (in JS, the coordinates stay the same after rotation)
-        this.trueY = y;
-
-        this.trueEdges = [
-            {x1:x,       y1:y,          x2:x+width,   y2:y,         label:'p1p2', length:width},
-            {x1:x+width, y1:y,          x2:x+width,   y2:y+height,  label:'p2p3', length:height},
-            {x1:x+width, y1:y+height,   x2:x,         y2:y+height,  label:'p3p4', length:width},
-            {x1:x,       y1:y+height,   x2:x,         y2:y,         label:'p4p1', length:height}
-        ];
-
-        this.trueCorners = [
-            {x:x, y:y, label:'p1'},
-            {x:x+width, y:y, label:'p2'},
-            {x:x+width, y:y+height, label:'p3'},
-            {x:x, y:y+height, label:'p4'}
-        ];
-        
-        this.hasShadowRect = false;
-        this.drawShadowRect = false;
-       
-
-       
         this.coeff_of_rest = 0.1    //aluminum
 
         this.isColliding = false;
         this.collidable = true;
         this.collidingObjects = [];
-        if(color==null) this.hue=getRandomInt(0,360); 
-        else this.hue=color;
+        this.hue=getRandomInt(0,360); 
+       
         
         this.movable = true;
-       
-
         this.controllable = true;
 
         this.collisionIter = 0;
         this.collisionIterSpeed = 5;
         this.startCollisionIter = false;
         this.circle2circle = this.circle2circle.bind(this);
-      
-  
+        this.drawBallObj = this.drawBallObj.bind(this);
+        this.updateBallObj =this.updateBallObj.bind(this);
     }
     circle2circle(circle1,circle2,isCollisionTest=false) {
-        //*******************************************//******************************************* */
-        //http://www.jeffreythompson.org/collision-detection/table_of_contents.php
         //This example is built on code by Matt Worden
         let squaredDist = (circle2.x-circle1.x)*(circle2.x-circle1.x) + (circle2.y-circle1.y)*(circle2.y-circle1.y);
         if(squaredDist <= (circle1.radius+circle2.radius)*(circle1.radius+circle2.radius)) {
@@ -103,16 +84,15 @@ class BallObject {
             return true;
         }
         return false; 
-        //*******************************************//******************************************* */
+       
     }
     drawBallObj() {
-        
         document.getElementById(this.obj_id).setAttribute('fill',`hsl(${this.hue}, 30%, 25%)`)
         
     }
     
     updateBallObj() {
-        
+        //console.log(this.x, this.y)
         //**************************** Object-to-Object collisions  ****************************
         physicalObjects.forEach((obj,index) => {
             if(obj != this) {   
@@ -122,49 +102,55 @@ class BallObject {
 
         
         //************************************ Inertia  ************************************
-        let new_xVelocity = (this.xVelocity+xGlobalForce)*.98;
-        let new_yVelocity = (this.yVelocity+yGlobalForce)*.98;
+        var new_xVelocity = (this.xVelocity+xGlobalForce)*.98;
+        var new_yVelocity = (this.yVelocity+yGlobalForce)*.98;
 
+        // top:325px;
+        // left:325px;
+        // width:300px;
+        // height:400px;
+        let containerTop = 325;
+        let containerLeft = 325;
+        
+        let containerWidth = 300;
+        let containerRight = containerWidth+containerLeft;
+        let containerHeight = 400;
 
-
+        let containerBottom = containerTop+containerHeight;
 
         //*********************************** Canvas Boundary Collisions *****************************************
-        if(this.x-this.width + new_xVelocity<=0) {                     //left
+        let container= document.getElementById("ballContainer");
+        //console.log(container)
+        if(this.x-this.width + new_xVelocity<=containerLeft) {                     //left
             if(xGlobalForce ==0.0) {new_xVelocity = -1*new_xVelocity;}
             else {new_xVelocity = 0.0;}
             
         }
-        if(this.x + new_xVelocity >= containerWidth-this.width) {    //right
+        if(this.x + new_xVelocity >= containerRight-this.width) {    //right
             if(xGlobalForce ==0.0) {new_xVelocity = -1*new_xVelocity;}
             else {new_xVelocity = 0.0;}
             
         }
-        if(this.y + new_yVelocity >= containerHeight-this.height) {    //bottom
+        if(this.y + new_yVelocity >= containerBottom-this.height) {    //bottom
             if(yGlobalForce == 0.0) {new_yVelocity = -1*new_yVelocity;}
             else {new_yVelocity = 0.0;}
             
         }
-        if(this.y - this.height+ new_yVelocity <= 0) {                  //top
+        if(this.y - this.height+ new_yVelocity <= containerTop) {                  //top
             if(yGlobalForce==0.0) {new_yVelocity = -1*new_yVelocity;}
             else {new_yVelocity = 0.0;}
-            
         }
-
+        //console.log("container", container.top, container.bottom, container.left, container.right)
         //*********************************** Updating attributes *****************************************
-        this.x = Math.max(Math.min(this.x + new_xVelocity, containerWidth-this.width),0);
-        this.y = Math.max(Math.min(this.y + new_yVelocity, containerHeight-this.height),0);
-        
-
-
-        var circleElement = document.getElementById(this.obj_id);
+        this.x = Math.max(Math.min(this.x + new_xVelocity, containerRight-this.width),0);
+        this.y = Math.max(Math.min(this.y + new_yVelocity, containerBottom-this.height),0);
+        //console.log(this.x, this.y)
+        let circleElement = document.getElementById(this.obj_id);
         circleElement.setAttribute("cx", this.x);
         circleElement.setAttribute("cy",this.y);
         
-        
         this.xVelocity = new_xVelocity;
         this.yVelocity = new_yVelocity;
-        
-    
     }
         
 }

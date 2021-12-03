@@ -22,14 +22,11 @@ window.onresize = () => {
         navBar.removeChild(navBar.children[i])
     }
     
-    if(getCurrentLocation()=="index") {
-        initBackground();    
-    }
+    if(getCurrentLocation()=="index") initBackground();    
+    
     initNavBar();
     //console.log(document.getElementById("mitProjectsDropdownButton").onclick);
     //coverCanvas.width = coverCanvas.height * (coverCanvas.clientWidth / coverCanvas.clientHeight);
-
-
 }
 
 
@@ -64,4 +61,14 @@ window.onload = () => {
 
 
     
+}
+
+
+function startBallGame() {
+
+    var numOfBalls = 30;
+    for(let i=0; i < numOfBalls;++i) {
+
+    }
+
 }

@@ -9,7 +9,7 @@ var xSortedCoverTriangles = []
 var ySortedCoverTriangles = []
 var step = 0;
 
-var selectedHue = 220;
+var selectedBaseHue = 220;
 
 var numOfNavElements = 3;
 var navElementSizes = {150:3, 50:1}     //keys are size, values are the quantities of each size
@@ -17,13 +17,6 @@ var navElementSizes = {150:3, 50:1}     //keys are size, values are the quantiti
 var mitDropDownOpen = false;
 
 var navBar = document.getElementById("navBar");
-
-
-
-
-
-
-
 function initNavBar() {
     coverCanvas.width = coverCanvas.height * (coverCanvas.clientWidth / coverCanvas.clientHeight);
     startAnimation(coverCanvas);
@@ -37,7 +30,7 @@ function initNavBar() {
     addRemainingSegment();
     document.getElementById("sw").setAttribute("right", window.innerWidth);
 
-    console.log("navBar", navBar);
+   
 
     var settingsButton = document.getElementById("settingsButton");
     settingsButton.onclick = () => {
@@ -95,7 +88,13 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
+function secondaryColorChanged() {
+    var newHue = document.getElementById("secondaryColor");
+    var currentPathName = getCurrentLocation();
+    selectedSecondaryHue = newHue.value;
 
+
+}
 
 function baseColorChanged() {
     var newHue = document.getElementById("baseColor");
@@ -103,7 +102,7 @@ function baseColorChanged() {
    
     
     //var pathFileName = getCurrentLocation();
-    selectedHue = newHue.value;
+    selectedBaseHue = newHue.value;
     //initNavBar();
     createDropdown(currentPathName,true);
     insertNavLinks(navBar, currentPathName, true, newHue.value);
@@ -161,7 +160,6 @@ function baseColorChanged() {
 }
 
 function createElementFromString(str) {
-
     var element = new DOMParser().parseFromString(str, 'text/html').body.firstElementChild;
     return element;
 }
@@ -170,14 +168,14 @@ function createDropdown(currentDir,replace=false) {
     var rootDir = (currentDir=="index")? "./" : "../"
    
    
-    var mitProjectsDropdownButton = `<path class="nav-link" id="mitProjectsDropdownButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#mitProjectsLinkGradient)" stroke="black" pointer-events="all"/>
+    var mitProjectsDropdownButton = `<path class="nav-link" id="mitProjectsDropdownButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#mitProjectsLinkGradient)"  pointer-events="all"/>
         <text x="158" y="30" fill="white" stroke="white" pointer-events="none">MIT Projects</text> 
         <image href="${rootDir}icons/arrow_drop_down_white_24dp.svg" x="270" y="10" height="30" width="30" pointer-events="none">
     </path>`
     var mitProjectsLinkGradientHTML =  `<radialGradient id="mitProjectsLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
-            <stop stop-color="hsl(${selectedHue},70%,65%)" offset="40%"/>
-            <stop stop-color="hsl(${selectedHue},70%,50%)" offset="65%"/>
-            <stop stop-color="hsl(${selectedHue},70%,30%)" offset="85%"/>
+            <stop stop-color="hsl(${selectedBaseHue},70%,65%)" offset="40%"/>
+            <stop stop-color="hsl(${selectedBaseHue},70%,50%)" offset="65%"/>
+            <stop stop-color="hsl(${selectedBaseHue},70%,30%)" offset="85%"/>
         <animate id="mitProjectsDropdownButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="1" />
         </radialGradient>`
     
@@ -192,9 +190,7 @@ function createDropdown(currentDir,replace=false) {
         document.getElementById("mitProjectsDropdownBox").removeChild(document.getElementById("forwardDropdownAnimation"));
         document.getElementById("mitProjectsDropdownBox").removeChild(document.getElementById("reverseDropdownAnimation"));
         navBar.removeChild(document.getElementById("mitProjectsDropdownBox"));
-        console.log(document.getElementById("forwardDropdownAnimation"));
-        
-
+        //console.log(document.getElementById("forwardDropdownAnimation"));
         
         navBar.insertAdjacentHTML('beforeend', mitProjectsDropdownButton);
         navBar.insertAdjacentHTML('beforeend', mitProjectsLinkGradientHTML);
@@ -204,7 +200,7 @@ function createDropdown(currentDir,replace=false) {
  
 
     mitProjectsDropdownBox = `
-    <path class="nav-link" id="mitProjectsDropdownBox" d="M150,50 l150,0 l0,0 l-150,0 l0,0" fill="url(#mitProjectsLinkGradient)" stroke="black" pointer-events="all">
+    <path class="nav-link" id="mitProjectsDropdownBox" d="M150,50 l150,0 l0,0 l-150,0 l0,0" fill="url(#mitProjectsLinkGradient)"  pointer-events="all">
         
     </path>`
     var fwdAnimation = `<animate id="forwardDropdownAnimation" attributeType="XML" attributeName="d" dur="100ms"  begin="indefinite" fill="freeze"
@@ -348,7 +344,7 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
 
    
     var homeLinkHTML = `<a id="homeNavLink" href="${homeHref}" x="50" y="30" pointer-events="all">
-        <path class="nav-link" id="homeNavButton" d="M0,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#homeNavLinkGradient)" stroke="black" />
+        <path class="nav-link" id="homeNavButton" d="M0,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#homeNavLinkGradient)"  />
         <text x="50" y="30" fill="white" stroke="white" pointer-events="none">Home</text> </a>`
     
     var homeLinkGradientHTML =  `<radialGradient id="homeNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
@@ -362,7 +358,7 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
 
 
     var wordSearchLinkHTML =  `<a id="wordSearchNavLink" href="${wordSearchHref}" x="50" y="30" pointer-events="all">
-    <path class="nav-link" id="wordSearchNavButton" d="M300,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#wordSearchNavLinkGradient)" stroke="black" />
+    <path class="nav-link" id="wordSearchNavButton" d="M300,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#wordSearchNavLinkGradient)"  />
     <text x="325" y="30" fill="white" stroke="white" pointer-events="none">Word Search</text> </a>`
     var wordSearchLinkGradientHTML =  `<radialGradient id="wordSearchNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
             <stop stop-color="hsl(${hue},70%,65%)" offset="40%"/>
@@ -373,9 +369,10 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
 
 
 
-    var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M450,0 l50,0 l0,50 l-50,0 l0,-50"  stroke="black" pointer-events="all">
-    
+    var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M450,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all">
+        
     </path>`
+    
     var ballGameLinkGradientHTML =  `<radialGradient id="ballGameNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
             <stop stop-color="hsl(${hue},70%,65%)" offset="40%"/>
             <stop stop-color="hsl(${hue},70%,50%)" offset="65%"/>
@@ -384,7 +381,7 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
         </radialGradient>`
     
     var pacmenLinkHTML = pacmenLinkHTML_head+ `
-        <path class="nav-link" id="pacmenNavButton" d="M${linkPositions[0][0]},${linkPositions[0][1]} l150,0 l0,50 l-150,0 l0,-50" fill="url(#pacmenNavLinkGradient)" stroke="black" pointer-events="all"/>
+        <path class="nav-link" id="pacmenNavButton" d="M${linkPositions[0][0]},${linkPositions[0][1]} l150,0 l0,50 l-150,0 l0,-50" fill="url(#pacmenNavLinkGradient)"  pointer-events="all"/>
         <text x="200" y="80" fill="white" stroke="white" pointer-events="none">Pacmen</text>
             <animate id="fadeInAnimation1" attributeType="XML" attributeName="opacity" dur="500ms"  begin="indefinite" fill="freeze"
                 from="0.0" to="1.0"  begin="indefinite"></animate> 
@@ -401,7 +398,7 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
 
    
     var eyesLinkHTML = eyesLinkHTML_head+ `
-    <path class="nav-link" id="eyesNavButton" d="M${linkPositions[1][0]},${linkPositions[1][1]} l150,0 l0,50 l-150,0 l0,-50" fill="url(#eyesNavLinkGradient)" stroke="black" pointer-events="all"/>
+    <path class="nav-link" id="eyesNavButton" d="M${linkPositions[1][0]},${linkPositions[1][1]} l150,0 l0,50 l-150,0 l0,-50" fill="url(#eyesNavLinkGradient)"  pointer-events="all"/>
     <text x="200" y="130" fill="white" stroke="white" pointer-events="none">Eyes</text> 
     <animate id="fadeInAnimation2" attributeType="XML" attributeName="opacity" dur="500ms"  begin="indefinite" fill="freeze"
         from="0.0" to="1.0"  begin="indefinite"></animate> 
@@ -417,7 +414,7 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
 
     
     var busStopsLinkHTML = busStopsLink_head+`
-        <path class="nav-link" id="busStopsNavButton" d="M${linkPositions[2][0]},${linkPositions[2][1]} l150,0 l0,50 l-150,0 l0,-50" fill="url(#busStopsNavLinkGradient)" stroke="black" pointer-events="all"/>
+        <path class="nav-link" id="busStopsNavButton" d="M${linkPositions[2][0]},${linkPositions[2][1]} l150,0 l0,50 l-150,0 l0,-50" fill="url(#busStopsNavLinkGradient)"  pointer-events="all"/>
         <text x="200" y="180" fill="white" dx="-25" stroke="white" pointer-events="none" class="mapNavLinkText">Map Animation</text> 
         <animate id="fadeInAnimation3" attributeType="XML" attributeName="opacity" dur="500ms"  begin="indefinite" fill="freeze"
             from="0.0" to="1.0"  begin="indefinite"></animate> 
@@ -481,7 +478,9 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
         insertInto.insertAdjacentHTML('beforeend', ballGameLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', ballGameLinkGradientHTML);
     }
-    
+    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${450+20}" cy="${30}" r="${10}" fill="hsl(40, 100%, 50%)" pointer-events="none"/>`)
+    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${450+30}" cy="${12}" r="${7}" fill="hsl(10, 100%, 50%)" pointer-events="none"/>`)
+    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${450+40}" cy="${35}" r="${5}" fill="hsl(90, 80%, 50%)" pointer-events="none"/>`)
     
     document.getElementById("forwardDropdownAnimation").addEventListener("endEvent", (e)=>{
         document.getElementById("fadeInAnimation1").beginElement();
@@ -524,15 +523,30 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
     document.getElementById("busStopsNavButton").onmouseout = (e) => {
         document.getElementById("busStopsNavButtonAnimation").endElement();
     }
-
+    makeBallGame();
     document.getElementById("ballGameButton").onclick = (e) => {
         
         document.getElementById("fwdPipeAnimation").beginElement();
-        document.getElementById("fwdPipeAnimation").addEventListener("endEvent", (e)=>{
-            document.getElementById("containerFwdAnimation").beginElement();
+        document.getElementById("fwdPipeAnimation").addEventListener("endEvent", (e)=>{    
+            //startBallGame(25);
+            console.log("starting ball game");
+            addBallObject(150, 150, 25, 25, 50, 50, 50, null);
+            // addBallObject(300, 550, 25, 25, 50, 50, 50, null);
+            // for(let i=0; i < 25; ++i) {
+            //     addBallObject(500, 500, 25, 25, 50, 50, 50, null);
+            // }
+           
+            setInterval(()=>{
+
+                updateBallGame();
+                drawBallGame();
+            }
+            ,1000/60)
         })
+    
     }
-    makeBallGame();
+    
+   
     
 }
 
@@ -544,61 +558,91 @@ function makeBallGame() {
             <stop stop-color="hsl(255,2%,25%)" offset="85%"/>
         </radialGradient>`
 
-        var containerGradientHTML = `<radialGradient id="containerGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
-        <stop stop-color="hsla(255,2%,67%, .5)" offset="40%"/>
-        <stop stop-color="hsla(255,2%,67%, .5)" offset="65%"/>
-        <stop stop-color="hsla(255,2%,25%, .5)" offset="85%"/>
-        </radialGradient>`
-        var containerHTML = ` <path fill="url(#containerGradient)" id="ballContainer" d="M-500,300 l500,0 l0,500   l-500,0 l0,-500"  stroke="black" pointer-events="all">
-        <animate id="containerFwdAnimation" attributeType="XML" attributeName="d" dur="200ms"  begin="indefinite" fill="freeze"
-        values="M0,200 l250,0 l0,250   l-250,0 l0,-250;
-                M50,200 l250,0 l0,250  l-250,0 l0,-250;
-                M100,200 l250,0 l0,250 l-250,0 l0,-250;
-                M150,200 l250,0 l0,250 l-250,0 l0,-250;
-                M200,200 l250,0 l0,250 l-250,0 l0,-250;
-                M250,200 l250,0 l0,250 l-250,0 l0,-250;
-                M300,200 l250,0 l0,250 l-250,0 l0,-250;
-                M350,200 l250,0 l0,250 l-250,0 l0,-250;"
-            >
-        </animate>
-    </path>`
-
-    
     var pipeHTML = `
-    <path class="nav-link" fill="url(#pipeGradient)" id="ballGamePipe" d="M450,0 l50,0 l0,0 l-50,0 l0,0"  stroke="black" pointer-events="all">
+    <path class="nav-link" fill="url(#pipeGradient)" id="ballGamePipe" d="M450,0 l50,0 l0,0 l-50,0 l0,0"   pointer-events="all">
         <animate id="fwdPipeAnimation" attributeType="XML" attributeName="d" dur="100ms"  begin="indefinite" fill="freeze"
         values="M450,50 l50,0 l0,0 l-50,0 l0,0;
                 M450,50 l50,0 l0,50 l-50,0 l0,0;
-                M450,50 l50,0 l0,100 l-50,0 l0,-100" 
+                M450,50 l50,0 l0,100 l-50,0 l0,-100;
+                M450,50 l50,0 l0,150 l-50,0 l0,-150" 
             >
         </animate>
     </path>`
-
-    navBar.insertAdjacentHTML('beforeend',containerGradientHTML);
-    navBar.insertAdjacentHTML('beforeend',containerHTML)
-    
-    
-
 
     navBar.insertAdjacentHTML('beforeend',pipeGradientHTML);
     navBar.insertAdjacentHTML('beforeend',pipeHTML)
 }
 
+var startBallGame = (numberOfBalls) =>{
+    console.log("starting ball game");
+    for(let i=0; i < numberOfBalls; ++i) {
+        addBallObject(500, 500, 25, 25, 50, 50, null);
+    }
+    
+    setInterval(()=>{
+        updateBallGame();
+        drawBallGame();
+    },1000/60)
+}
 
-function update() {  
-    //if(this.canvasRef.current!=null) {this.contextRef.current = this.canvasRef.current.getContext('2d');}
-    ballObjects.forEach((obj,index) => {
-        obj.update();
-        this.physicalObjectMap[index].x =  obj.x;
-        this.physicalObjectMap[index].y =  obj.y;
-        this.physicalObjectMap[index].dx = obj.xVelocity;
-        this.physicalObjectMap[index].dy = obj.yVelocity;
+
+function addBallObject (x,y, width, height,dx,dy,mass,color,isNew=true) {
+    //"user-ellipse",x,y,radius,radius,0,0,mass,null,true
+    ++controlledObjectIndex;
+    var obj = {
+        index:controlledObjectIndex,
+        x:x,
+        y:y,
+        width:width,
+        height:height,
+        dx:dx,
+        dy:dy,
+        mass:mass,
+        color:color
+    }
+    physicalObjectMap.push(obj);
+
+
+
+    var newObj =  new BallObject("circle"+obj.index, x, y, width, height, dx, dy, mass);
+    physicalObjects.push(newObj);
+
+    if(isNew) { localStorage.physicalObjectMap = JSON.stringify(physicalObjectMap); }
+   
+    var circleGroup = document.getElementById("circleGroup");
+    var newShape = document.createElementNS("http://www.w3.org/2000/svg",'circle');
+    newShape.setAttribute('id',"circle"+obj.index);
+    newShape.setAttribute('cx',newObj.x);
+    newShape.setAttribute('cy',newObj.y);
+    newShape.setAttribute('r',newObj.radius);
+    newShape.setAttribute('fill', newObj.color);
+
+    newShape.addEventListener('click', (e) => {
+        console.log("clicked obj: "+obj.index)
+        physicalObjects[controlledObjectIndex].isSelected = false;
+        physicalObjects[obj.index].isSelected = true;
+        controlledObjectIndex = obj.index;
+    })
+    //circleGroup.appendChild(newShape);
+    document.getElementById("ballContainer").appendChild(newShape);
+
+}
+
+
+function updateBallGame() {  
+    
+    physicalObjects.forEach((obj,index) => {
+        obj.updateBallObj();
+        physicalObjectMap[index].x =  obj.x;
+        physicalObjectMap[index].y =  obj.y;
+        physicalObjectMap[index].dx = obj.xVelocity;
+        physicalObjectMap[index].dy = obj.yVelocity;
     })
 }
 
-draw = () => {
-    for(let i=0; i<this.physicalObjects.length;++i) {
-        this.physicalObjects[i].draw();
+function drawBallGame() {
+    for(let i=0; i<physicalObjects.length;++i) {
+        physicalObjects[i].drawBallObj();
     }
     
 }
@@ -693,8 +737,8 @@ function addRemainingSegment(currentHue=220, replace=false) {
     var remSegmentLength = window.innerWidth - totalExistingLength - 50;
     var settingsPos = window.innerWidth - 50;
    
-    // var htmlStr = `<path d="M${totalExistingLength},0 l${remSegmentLength},0 l0,50 l-${Math.abs(remSegmentLength)},0 l0,-50" fill="hsl(${selectedHue},70%,30%)" stroke="black" pointer-events="all"></path>`
-    var htmlStr = `<path id="voidSegment" d="M${totalExistingLength},0 l${remSegmentLength},0 l0,50 l-${Math.abs(remSegmentLength)},0 l0,-50" fill="hsl(${currentHue},70%,30%)" stroke="black" pointer-events="all"></path>`
+    // var htmlStr = `<path d="M${totalExistingLength},0 l${remSegmentLength},0 l0,50 l-${Math.abs(remSegmentLength)},0 l0,-50" fill="hsl(${selectedBaseHue},70%,30%)"  pointer-events="all"></path>`
+    var htmlStr = `<path id="voidSegment" d="M${totalExistingLength},0 l${remSegmentLength},0 l0,50 l-${Math.abs(remSegmentLength)},0 l0,-50" fill="hsl(${currentHue},70%,30%)"  pointer-events="all"></path>`
     navBar.insertAdjacentHTML('beforeend',htmlStr)
 
     var pathName = window.location.pathname;
@@ -704,7 +748,7 @@ function addRemainingSegment(currentHue=220, replace=false) {
     if(rootDir=="index") rootDir="";
     else rootDir="../"
 
-    navBar.insertAdjacentHTML("beforeend", `<path class="nav-link" id="settingsButton" d="M${settingsPos},0 l50,0 l0,50 l-50,0 l0,-50" fill="hsl(${currentHue},70%,30%)" stroke="black" pointer-events="all"></path>`);
+    navBar.insertAdjacentHTML("beforeend", `<path class="nav-link" id="settingsButton" d="M${settingsPos},0 l50,0 l0,50 l-50,0 l0,-50" fill="hsl(${currentHue},70%,30%)"  pointer-events="all"></path>`);
 
     let gear1Pos = settingsPos+20;
     let gear2Pos = settingsPos;
@@ -772,7 +816,7 @@ function updateCover(currentHue=220) {
             context.lineTo(Tri.pts[2].x,Tri.pts[2].y);
             context.lineTo(Tri.pts[0].x,Tri.pts[0].y);
             context.closePath();
-            context.fillStyle = `hsla(${selectedHue}, ${saturationVal}%, ${triangles.value}%, .5)`;
+            context.fillStyle = `hsla(${selectedBaseHue}, ${saturationVal}%, ${triangles.value}%, .5)`;
             context.fill();
             context.stroke();
         }	
@@ -792,7 +836,7 @@ function loadTriangle(canvas, t) {
     canvas.getContext("2d").lineTo(t.pts[2].x, t.pts[2].y);
     canvas.getContext("2d").lineTo(t.pts[0].x, t.pts[0].y);
     canvas.getContext("2d").closePath();
-    canvas.getContext("2d").fillStyle = `hsla(${selectedHue}, 50%, 50%, .5)`;
+    canvas.getContext("2d").fillStyle = `hsla(${selectedBaseHue}, 50%, 50%, .5)`;
     canvas.getContext("2d").fill();
     canvas.getContext("2d").stroke();
 

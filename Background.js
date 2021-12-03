@@ -9,37 +9,39 @@ var layerAttributes =[  {"type":"background", "fill":"hsl(220, 50%, 50%)", "c_co
                         {"type":"2D", "fill":"hsl(40, 50%, 50%)", "c_coeffs":[], "id":null, "touchX":0, "touchY":0, "touchPt":{x:0,y:0}, "pt1":null, "pt2":null},
                         {"type":"2D", "fill":"hsl(220, 80%, 50%)", "c_coeffs":[], "id":null, "touchX":0, "touchY":0, "touchPt":{x:0,y:0}, "pt1":null, "pt2":null}
                     ];
-var backgroundSVG = document.getElementById("backgroundSVG");
-
+//var backgroundSVG = document.getElementById("backgroundSVG");
+var wavesSVG = document.getElementById("wavesBG");
 function initBackground() {
 
 
     var layer0 = document.createElementNS("http://www.w3.org/2000/svg","rect");
+    //layer0.setAttribute("filter","url(#backgroundLight)")
     layer0.setAttribute("width", window.innerWidth);
     layer0.setAttribute("height",window.innerHeight);
     layer0.setAttribute('fill',layerAttributes[0]["fill"]);
-    backgroundSVG.appendChild(layer0);
-
+    //backgroundSVG.appendChild(layer0);
+    wavesSVG.insertAdjacentHTML('beforeend',`<rect width="${window.innerWidth}" height="${window.innerHeight/2}" fill="${layerAttributes[0]["fill"]}"" />`)
+    //wavesSVG.appendChild(layer0);
  
 
     var layer1 = document.createElementNS("http://www.w3.org/2000/svg","path");
     layer1.setAttribute("id","layer1");
     layerAttributes[1]["id"] = "layer1";
     layerAttributes[1]["Mx"] = 0;
-    layerAttributes[1]["My"] = 595;
+    layerAttributes[1]["My"] = 595-500;
     layerAttributes[1]["x1"] = 20;
-    layerAttributes[1]["y1"] = 828;
+    layerAttributes[1]["y1"] = 828-500;
     layerAttributes[1]["x2"] = 425;
-    layerAttributes[1]["y2"] = 771;
+    layerAttributes[1]["y2"] = 771-500;
     layerAttributes[1]["x"] = 390;
-    layerAttributes[1]["y"] = 1044;
+    layerAttributes[1]["y"] = 1044-500;
     layerAttributes[1]["returnX"] = -390;
-    layerAttributes[1]["returnY"] = -594;
+    layerAttributes[1]["returnY"] = -(594-500);
     
     var d1 = `M${layerAttributes[1]["Mx"]},${layerAttributes[1]["My"]} C${layerAttributes[1]["x1"]},${layerAttributes[1]["y1"]} ${layerAttributes[1]["x2"]},${layerAttributes[1]["y2"]} ${layerAttributes[1]["x"]},${layerAttributes[1]["y"]} l${layerAttributes[1]["returnX"]} 0, l0 ${layerAttributes[1]["returnY"]}`
     layer1.setAttribute("d", d1)
     layer1.setAttribute('fill',layerAttributes[1]["fill"]);
-   
+    
 
 
 
@@ -47,26 +49,26 @@ function initBackground() {
     layer2.setAttribute("id","layer2");
     layerAttributes[2]["id"] = "layer2";
     layerAttributes[2]["Mx"] = 0;
-    layerAttributes[2]["My"] = 600;
+    layerAttributes[2]["My"] = 600-500;
     layerAttributes[2]["x1"] = 20;
-    layerAttributes[2]["y1"] = 478;
+    layerAttributes[2]["y1"] = 478-500;
     layerAttributes[2]["x2"] = 267;
-    layerAttributes[2]["y2"] = 384;
+    layerAttributes[2]["y2"] = 384-500;
     layerAttributes[2]["x"] = 904;
-    layerAttributes[2]["y"] = 1097;
+    layerAttributes[2]["y"] = 1097-500;
     layerAttributes[2]["returnX"] = -904;
-    layerAttributes[2]["returnY"] = -997;
+    layerAttributes[2]["returnY"] = -(997-500);
     
     var d2 = `M${layerAttributes[2]["Mx"]},${layerAttributes[2]["My"]} C${layerAttributes[2]["x1"]},${layerAttributes[2]["y1"]} ${layerAttributes[2]["x2"]},${layerAttributes[2]["y2"]} ${layerAttributes[2]["x"]},${layerAttributes[2]["y"]} l${layerAttributes[2]["returnX"]} 0, l0 ${layerAttributes[2]["returnY"]}`
     layer2.setAttribute("d", d2)
     layer2.setAttribute('fill',layerAttributes[2]["fill"]);
-
+   
 
 
     //added right here so that overlapping is correct
-    backgroundSVG.appendChild(layer2)
-    backgroundSVG.appendChild(layer1);
-
+   
+    wavesSVG.appendChild(layer2)
+    wavesSVG.appendChild(layer1);
 
 
     //setInterval(updateBackground, 1000/30);
@@ -75,7 +77,7 @@ function initBackground() {
         updateLayer(layerAttributes[i])
     }
     //allowInteractivity();
-    console.log(backgroundSVG.viewBox)
+   
 
    
 }

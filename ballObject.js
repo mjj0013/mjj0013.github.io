@@ -88,7 +88,6 @@ class BallObject {
     }
     drawBallObj() {
         document.getElementById(this.obj_id).setAttribute('fill',`hsl(${this.hue}, 30%, 25%)`)
-        
     }
     
     updateBallObj() {
@@ -104,47 +103,39 @@ class BallObject {
         //************************************ Inertia  ************************************
         var new_xVelocity = (this.xVelocity+xGlobalForce)*.98;
         var new_yVelocity = (this.yVelocity+yGlobalForce)*.98;
-
-        // top:325px;
-        // left:325px;
-        // width:300px;
-        // height:400px;
-        let containerTop = 325;
-        let containerLeft = 325;
         
-        let containerWidth = 300;
-        let containerRight = containerWidth+containerLeft;
-        let containerHeight = 400;
-
-        let containerBottom = containerTop+containerHeight;
-
         //*********************************** Canvas Boundary Collisions *****************************************
-        let container= document.getElementById("ballContainer");
-        //console.log(container)
-        if(this.x-this.width + new_xVelocity<=containerLeft) {                     //left
+        let containerRect= document.getElementById("ballContainer").getBoundingClientRect();
+        
+        
+        if(this.x-this.width + new_xVelocity<=0) {                     //left
             if(xGlobalForce ==0.0) {new_xVelocity = -1*new_xVelocity;}
             else {new_xVelocity = 0.0;}
-            
+           
         }
-        if(this.x + new_xVelocity >= containerRight-this.width) {    //right
+        if(this.x + new_xVelocity >= containerRect.width-this.width) {    //right
             if(xGlobalForce ==0.0) {new_xVelocity = -1*new_xVelocity;}
             else {new_xVelocity = 0.0;}
-            
+           
         }
-        if(this.y + new_yVelocity >= containerBottom-this.height) {    //bottom
+        if(this.y + new_yVelocity >= containerRect.height-this.height) {    //bottom
             if(yGlobalForce == 0.0) {new_yVelocity = -1*new_yVelocity;}
             else {new_yVelocity = 0.0;}
             
         }
-        if(this.y - this.height+ new_yVelocity <= containerTop) {                  //top
+        if(this.y - this.height + new_yVelocity <= 0) {                  //top
             if(yGlobalForce==0.0) {new_yVelocity = -1*new_yVelocity;}
             else {new_yVelocity = 0.0;}
+           
         }
-        //console.log("container", container.top, container.bottom, container.left, container.right)
+        
         //*********************************** Updating attributes *****************************************
-        this.x = Math.max(Math.min(this.x + new_xVelocity, containerRight-this.width),0);
-        this.y = Math.max(Math.min(this.y + new_yVelocity, containerBottom-this.height),0);
-        //console.log(this.x, this.y)
+        this.x = Math.max(Math.min(this.x + new_xVelocity, containerRect.width-this.width),0);
+        this.y = Math.max(Math.min(this.y + new_yVelocity, containerRect.height-this.height),0);
+        // this.x = Math.max(Math.min(this.x + new_xVelocity, Right-this.width),0);
+        // this.y = Math.max(Math.min(this.y + new_yVelocity, Bottom-this.height),0);
+        // this.x += new_xVelocity;
+        // this.y += new_yVelocity;
         let circleElement = document.getElementById(this.obj_id);
         circleElement.setAttribute("cx", this.x);
         circleElement.setAttribute("cy",this.y);

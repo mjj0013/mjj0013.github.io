@@ -15,10 +15,7 @@ var wavesSVG = document.getElementById("wavesBG");
 
 
 function initBackground() {
-
     var backgroundFill = document.getElementById("backgroundFiller");
-
-
 
     var layer0 = document.createElementNS("http://www.w3.org/2000/svg","rect");
     //layer0.setAttribute("filter","url(#backgroundLight)")
@@ -84,10 +81,7 @@ function initBackground() {
     for(let i=1; i < layerAttributes.length;++i) {
         updateLayer(layerAttributes[i])
     }
-    //allowInteractivity();
-   
-
-   
+    //allowInteractivity();   
 }
 
 window.onmousemove = (e) => {

@@ -4,11 +4,12 @@ var myHeaders = new Headers();
 myHeaders.set("Access-Control-Allow-Origin", "*");
 myHeaders.set("Access-Control-Request-Headers", "*");
 var coverCanvas = document.getElementById("coverCanvas");
+
+
 var coverTriangles = [];
 var xSortedCoverTriangles = []
 var ySortedCoverTriangles = []
 var step = 0;
-
 var selectedBaseHue = 220;
 
 var numOfNavElements = 3;
@@ -17,6 +18,7 @@ var navElementSizes = {150:3, 50:1}     //keys are size, values are the quantiti
 var mitDropDownOpen = false;
 
 var navBar = document.getElementById("navBar");
+
 function initNavBar() {
     coverCanvas.width = coverCanvas.height * (coverCanvas.clientWidth / coverCanvas.clientHeight);
     startAnimation(coverCanvas);

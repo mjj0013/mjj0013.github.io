@@ -8,7 +8,8 @@ myHeaders.set("Access-Control-Request-Headers", "*");
 var coverCanvas = document.getElementById("coverCanvas");
 
 var navBar = document.getElementById("navBar");
-var backgroundSVG = document.getElementById("backgroundSVG")
+var backgroundSVG = document.getElementById("backgroundSVG");
+
 function getCurrentLocation() {
     var pathName = window.location.pathname;
     var pathFileName = pathName.substr(pathName.lastIndexOf("/")+1)

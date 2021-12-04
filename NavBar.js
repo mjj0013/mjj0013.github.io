@@ -81,7 +81,8 @@ function getCurrentLocation() {
     var pathFileName = pathName.substr(pathName.lastIndexOf("/")+1)
     pathFileName = pathFileName.replace("#","");
     pathFileName = pathFileName.replace(".html","");
-    return pathFileName;
+    if(pathFileName=="/") return "index"
+    else return pathFileName;
 }
 
 

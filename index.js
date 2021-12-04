@@ -34,7 +34,9 @@ window.onresize = () => {
 
 
 window.onload = () => {
+    
     var currentLocation = getCurrentLocation();
+    console.log("currentLocation", currentLocation)
     if(currentLocation=="index") {
         initNavBar();
         initBackground();    

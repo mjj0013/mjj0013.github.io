@@ -12,9 +12,11 @@ var backgroundSVG = document.getElementById("backgroundSVG");
 
 function getCurrentLocation() {
     var pathName = window.location.pathname;
+    console.log("pathName", pathName)
     var pathFileName = pathName.substr(pathName.lastIndexOf("/")+1)
     pathFileName = pathFileName.replace("#","");
     pathFileName = pathFileName.replace(".html","");
+    
     return pathFileName;
 }
 

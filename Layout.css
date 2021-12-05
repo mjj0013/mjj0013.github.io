@@ -108,7 +108,10 @@ li {
 	float:left;
 }
 
-.gradientStop1 { stop-color: hsl(220,70%,30%); }
+/* .gradientStop1 { stop-color: hsl(220,70%,30%); }
+.gradientStop2 { stop-color: hsl(220,70%,50%); }
+.gradientStop3 { stop-color: rgb(154, 173, 209);  }	 */
+.gradientStop1 { stop-color: rgb(2, 4, 8); }
 .gradientStop2 { stop-color: hsl(220,70%,50%); }
 .gradientStop3 { stop-color: rgb(154, 173, 209);  }	
 /* stop-opacity: 0;	 */

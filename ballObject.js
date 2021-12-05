@@ -8,6 +8,7 @@ var physicalObjectMap = [];
 var xGlobalForce = 0;
 var yGlobalForce = 0;
 
+
 // var containerPos = {x:}
 
 
@@ -16,13 +17,15 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-  }
+}
 //("circle"+obj.index, x, y, width, height, dx, dy, mass);
 class BallObject {
     constructor(obj_id, x, y, width, height, xVelocity, yVelocity, mass) {
         
         this.x = x;
         this.y = y;
+
+        this.gracePeriodIter = 0;
         this.xVelocity = xVelocity;
         this.yVelocity = yVelocity;
         this.width = width;
@@ -51,7 +54,7 @@ class BallObject {
         this.updateBallObj =this.updateBallObj.bind(this);
     }
     circle2circle(circle1,circle2,isCollisionTest=false) {
-        //This example is built on code by Matt Worden
+       
         let squaredDist = (circle2.x-circle1.x)*(circle2.x-circle1.x) + (circle2.y-circle1.y)*(circle2.y-circle1.y);
         if(squaredDist <= (circle1.radius+circle2.radius)*(circle1.radius+circle2.radius)) {
             if(isCollisionTest) {return true;}
@@ -69,7 +72,7 @@ class BallObject {
             //speed *= Math.min(circle1.coeff_of_rest,circle2.coeff_of_rest);
 
             if(speed < 0) {return false;}
-
+            
             let impulse  = 2*speed/(circle1.mass + circle2.mass);
             if(circle1.movable) {
                 circle1.startCollisionIter = true;
@@ -93,16 +96,30 @@ class BallObject {
     updateBallObj() {
         //console.log(this.x, this.y)
         //**************************** Object-to-Object collisions  ****************************
-        physicalObjects.forEach((obj,index) => {
-            if(obj != this) {   
-                this.circle2circle(this,obj);
-            }
-        })
+        ++this.gracePeriodIter;
+        if(this.gracePeriodIter > 2) {
+            physicalObjects.forEach((obj,index) => {
+                if(obj != this) {   
+                    this.circle2circle(this,obj);
+                }
+            })
+        }
+        
 
         
         //************************************ Inertia  ************************************
-        var new_xVelocity = (this.xVelocity+xGlobalForce)*.98;
-        var new_yVelocity = (this.yVelocity+yGlobalForce)*.98;
+        var new_xVelocity;
+        var new_yVelocity;
+        //var velMag = Math.sqrt(this.xVelocity*this.xVelocity + this.yVelocity*this.yVelocity)
+        // if(velMag < 1) {
+        //     new_xVelocity = (this.xVelocity)*.98;
+        //     new_yVelocity = (this.yVelocity)*.98;
+        // }
+        // else {
+            new_xVelocity = (this.xVelocity+xGlobalForce)*.98;
+            new_yVelocity = (this.yVelocity+yGlobalForce)*.98;
+        //}
+        
         
         //*********************************** Canvas Boundary Collisions *****************************************
         let containerRect= document.getElementById("ballContainer").getBoundingClientRect();
@@ -130,18 +147,19 @@ class BallObject {
         }
         
         //*********************************** Updating attributes *****************************************
+        
+       
+       
         this.x = Math.max(Math.min(this.x + new_xVelocity, containerRect.width-this.width),0);
         this.y = Math.max(Math.min(this.y + new_yVelocity, containerRect.height-this.height),0);
-        // this.x = Math.max(Math.min(this.x + new_xVelocity, Right-this.width),0);
-        // this.y = Math.max(Math.min(this.y + new_yVelocity, Bottom-this.height),0);
-        // this.x += new_xVelocity;
-        // this.y += new_yVelocity;
         let circleElement = document.getElementById(this.obj_id);
         circleElement.setAttribute("cx", this.x);
         circleElement.setAttribute("cy",this.y);
         
         this.xVelocity = new_xVelocity;
         this.yVelocity = new_yVelocity;
+        
+        
     }
         
 }

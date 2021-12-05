@@ -179,22 +179,21 @@ function createElementFromString(str) {
 function createDropdown(currentDir,replace=false) {
     var rootDir = (currentDir=="index")? "./" : "../"
    
-   
     var mitProjectsDropdownButton = `<path class="nav-link" id="mitProjectsDropdownButton" d="M150,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#mitProjectsLinkGradient)"  pointer-events="all"/>
         <text x="158" y="30" fill="white" stroke="white" pointer-events="none">MIT Projects</text> 
         <image href="${rootDir}icons/arrow_drop_down_white_24dp.svg" x="270" y="10" height="30" width="30" pointer-events="none">
     </path>`
+
     var mitProjectsLinkGradientHTML =  `<radialGradient id="mitProjectsLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+10}%)" offset="40%"/>
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="65%"/>
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="85%"/>
         <animate id="mitProjectsDropdownButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="1" />
         </radialGradient>`
-    //hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)
+    
     if(!replace) {
         navBar.insertAdjacentHTML('beforeend', mitProjectsDropdownButton);
         navBar.insertAdjacentHTML('beforeend', mitProjectsLinkGradientHTML);
-        
     }
     else {
         navBar.removeChild(document.getElementById("mitProjectsDropdownButton"));
@@ -202,14 +201,10 @@ function createDropdown(currentDir,replace=false) {
         document.getElementById("mitProjectsDropdownBox").removeChild(document.getElementById("forwardDropdownAnimation"));
         document.getElementById("mitProjectsDropdownBox").removeChild(document.getElementById("reverseDropdownAnimation"));
         navBar.removeChild(document.getElementById("mitProjectsDropdownBox"));
-        //console.log(document.getElementById("forwardDropdownAnimation"));
         
         navBar.insertAdjacentHTML('beforeend', mitProjectsDropdownButton);
         navBar.insertAdjacentHTML('beforeend', mitProjectsLinkGradientHTML);
     }
-
- 
- 
 
     mitProjectsDropdownBox = `
     <path class="nav-link" id="mitProjectsDropdownBox" d="M150,50 l150,0 l0,0 l-150,0 l0,0" fill="url(#mitProjectsLinkGradient)"  pointer-events="all">
@@ -242,9 +237,6 @@ function generateNewAnimation() {
         dropDownObj.removeChild(document.getElementById('forwardDropdownAnimation'));
         dropDownObj.removeChild(document.getElementById('reverseDropdownAnimation'));
     } 
-
-
-    // let animationChoice = getRandomInt(0, 1);
     let animationChoice = 2
     switch(animationChoice) {
         case 0: 
@@ -354,11 +346,10 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
     busStopsLink_head = `<a id="busStopsNavLink" href="${busStopsHref}" x="200" y="130" pointer-events="all" display="none">`
     
 
-   
+   //<text x="50" y="30" fill="white" stroke="white" pointer-events="none">Home</text> </a>`
     var homeLinkHTML = `<a id="homeNavLink" href="${homeHref}" x="50" y="30" pointer-events="all">
-        <path class="nav-link" id="homeNavButton" d="M0,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#homeNavLinkGradient)"  />
-        <text x="50" y="30" fill="white" stroke="white" pointer-events="none">Home</text> </a>`
-    var homeIcon = `<image id="homeIcon" href="${homeHref=="#"? "./":"../"}icons/house-door.svg" x="75" y="20" height="30" width="30" pointer-events="none">`
+        <path class="nav-link" id="homeNavButton" d="M0,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#homeNavLinkGradient)"  /></a>`
+    var homeIcon = `<image id="homeIcon" href="${homeHref=="#"? "./":"../"}icons/house_door_filled.svg" x="60" y="10" height="30" width="30" pointer-events="none">`
     var homeLinkGradientHTML =  `<radialGradient id="homeNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+10}%)" offset="40%"/>
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="65%"/>
@@ -366,12 +357,10 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
         <animate id="homeNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
         </radialGradient>`
 
-
-
-
     var wordSearchLinkHTML =  `<a id="wordSearchNavLink" href="${wordSearchHref}" x="50" y="30" pointer-events="all">
-    <path class="nav-link" id="wordSearchNavButton" d="M300,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#wordSearchNavLinkGradient)"  />
-    <text x="325" y="30" fill="white" stroke="white" pointer-events="none">Word Search</text> </a>`
+        <path class="nav-link" id="wordSearchNavButton" d="M300,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#wordSearchNavLinkGradient)"  />
+        <text x="325" y="30" fill="white" stroke="white" pointer-events="none">Word Search</text> 
+    </a>`
     var wordSearchLinkGradientHTML =  `<radialGradient id="wordSearchNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+10}%)" offset="40%"/>
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="65%"/>
@@ -379,11 +368,7 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
         <animate id="wordSearchNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
         </radialGradient>`
 
-
-
-    var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M450,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all">
-        
-    </path>`
+    var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M450,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all"></path>`
     
     var ballGameLinkGradientHTML =  `<radialGradient id="ballGameNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+10}%)" offset="40%"/>

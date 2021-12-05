@@ -21,6 +21,7 @@ function initBackground() {
     //layer0.setAttribute("filter","url(#backgroundLight)")
     layer0.setAttribute("id", "fillerLayer")
     layer0.setAttribute("width", window.innerWidth);
+    layer0.setAttribute("pointer-events","none");
     layer0.setAttribute("height",300);
     layer0.setAttribute('fill',layerAttributes[0]["fill"]);
     backgroundFill.appendChild(layer0)
@@ -32,6 +33,7 @@ function initBackground() {
 
     var layer1 = document.createElementNS("http://www.w3.org/2000/svg","path");
     layer1.setAttribute("id","layer1");
+    layer1.setAttribute("pointer-events","none");
     layerAttributes[1]["id"] = "layer1";
     layerAttributes[1]["Mx"] = 0;
     layerAttributes[1]["My"] = 595-500;
@@ -53,6 +55,8 @@ function initBackground() {
 
     var layer2 = document.createElementNS("http://www.w3.org/2000/svg","path");
     layer2.setAttribute("id","layer2");
+    layer2.setAttribute("pointer-events","none");
+    layerAttributes[1]["id"] = "layer1";
     layerAttributes[2]["id"] = "layer2";
     layerAttributes[2]["Mx"] = 0;
     layerAttributes[2]["My"] = 600-500;

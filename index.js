@@ -3,10 +3,8 @@ myHeaders.set("Access-Control-Allow-Origin", "*");
 myHeaders.set("Access-Control-Request-Headers", "*");
 
 
-// import {startAnimation, updateCover} from "./NavBar.js";
 
 var coverCanvas = document.getElementById("coverCanvas");
-
 var navBar = document.getElementById("navBar");
 var backgroundSVG = document.getElementById("backgroundSVG");
 
@@ -25,10 +23,10 @@ window.onresize = () => {
     for(let i =0; i < navBar.children.length; ++i) {
         navBar.removeChild(navBar.children[i])
     }
-    
-    if(getCurrentLocation()=="index") initBackground();    
-    
     initNavBar();
+    if(getCurrentLocation()=="index" || getCurrentLocation()=="/") initBackground();    
+    
+    
     //console.log(document.getElementById("mitProjectsDropdownButton").onclick);
     //coverCanvas.width = coverCanvas.height * (coverCanvas.clientWidth / coverCanvas.clientHeight);
 }

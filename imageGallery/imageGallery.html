@@ -5,9 +5,11 @@
 		<link rel="stylesheet" href="../Layout.css">
 		
 		<script type="text/javascript" src="../ballObject.js"></script>
-        <script type="text/javascript" src="wordSearch.js"></script>
+       
 		<script type="text/javascript" src="../settings.js"></script>
-		<title>Word Search | Portfolio Page</title>
+        <script type="text/javascript" src="imageGallery.js"></script>
+
+		<title>Image Gallery | Portfolio Page</title>
 	</head>
 
 	<div id='navBarContainer'>
@@ -44,13 +46,28 @@
         
 		<script type="text/javascript" src="../index.js"></script>
 		
-        <div id="fileInputPanel">
-            <label htmlFor="files">Choose text file:</label>
-            <input type="file" id="textFileInput" onchange="loadText(event)"></input>
-            <textarea id="fileText" cols='100' rows='30'></textarea>
-        </div>
-        
+        <select id="imageSelector1" onchange="image1Changed()" >
+            
+            <option value="">dummy2</option>
+            <option value="Alabama_Crimson_Tide_logo.svg.png">Alabama Logo</option>
+            <option value="">dummy3</option>
+            <option value="">dummy4</option>
+        </select>
 
+        <select id="imageSelector2" onchange="image2Changed()">
+            <option value="">Alabama Logo</option>
+            <option value="">dummy2</option>
+            <option value="">dummy3</option>
+            <option value="">dummy4</option>
+        </select>
+        
+        <svg id="imageManipSVG">
+            <image id="image1" />
+            <image id="image2" />
+            <image id="resultImage"/>
+        </svg>
+       
+        
 
 		<div id ="sw" class="settingsWindow">
 			<label for="baseColor">Primary Hue: </label>
@@ -58,8 +75,6 @@
 			<label for="secondaryColor">Secondary Hue: </label>
 			<input id="secondaryColor" type="range" min="0" max="360" value="220" onchange="secondaryColorChanged()">
 		</div>
-		<!-- <h2>Test Header</h2>
-		<p>This is a test header</p> -->
 		
 	</body>
 	

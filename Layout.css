@@ -31,8 +31,9 @@ body {
 } 
 
 .wavesSVG {
-	position:fixed;
+	position:absolute;
 	top:50%;
+	bottom:0%;
 	left:0%;
 	width:100vw;
 	height:50%;
@@ -40,11 +41,13 @@ body {
 }
 
 #backgroundFiller {
-	position:absolute;
-	top:150px;
-	left:0px;
+	position:relative;
+	/* top:150px; */
+	top:0px;
+	left:0%;
 	width:100vw;
-	height:400px;
+	/* height:400px; */
+	height:50vh;
 	z-index:2;
 }
 

@@ -28,7 +28,7 @@ body {
 
 
 .bgSVG.movingContainer {
-	left:325px;
+	left:475px;
 } 
 
 .wavesSVG {
@@ -261,6 +261,10 @@ select {
 		d: path("M8,2 L2,8");
 		/* d: path("M8,2 L2,8"); */
 	}
+}
+
+select {
+	z-index:10;
 }
 
 

@@ -26,7 +26,7 @@ window.onresize = () => {
     
     initNavBar();
     if(getCurrentLocation()=="index" || getCurrentLocation()=="/") initBackground();    
-    adjustBackground();
+    //adjustBackground();
     
     //console.log(document.getElementById("mitProjectsDropdownButton").onclick);
     //coverCanvas.width = coverCanvas.height * (coverCanvas.clientWidth / coverCanvas.clientHeight);
@@ -80,20 +80,13 @@ window.onload = () => {
         initNavBar();
         // initBackground();    
         
+    }    
+    if(currentLocation=="imageGallery") {
+        
+        initNavBar();
+        //initBackground();    
+        
     }
-    // var canvas = document.getElementById("coverCanvas");
-    
-    // canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
-    // startAnimation(canvas);
-    
-    // window.onresize = () => {
-    //     canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight);
-    //     startAnimation(canvas);
-    // }
-    // setInterval(updateCover,1000/60);
-
-
-    
 }
 
 

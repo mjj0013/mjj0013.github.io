@@ -16,7 +16,7 @@ var selectedNavHue = 0;
 var selectedNavSat = 0;
 var selectedNavBrightness = 5;
 var numOfNavElements = 3;
-var navElementSizes = {150:3, 50:1}     //keys are size, values are the quantities of each size
+var navElementSizes = {150:4, 50:1}     //keys are size, values are the quantities of each size
 
 var mitDropDownOpen = false;
 var numberBallPresses = 0;
@@ -97,6 +97,7 @@ function getRandomInt(min, max) {
 function secondaryColorChanged() {
     var newHue = document.getElementById("secondaryColor");
     var currentPathName = getCurrentLocation();
+    settingsMap['secondaryHue'] = newHue.value;
     selectedSecondaryHue = newHue.value;
     document.getElementById("layer1").setAttribute("fill",`hsl(${selectedSecondaryHue}, 50%, 50%)`)
 
@@ -104,28 +105,16 @@ function secondaryColorChanged() {
 
 function baseColorChanged() {
     var newHue = document.getElementById("baseColor");
-    var currentPathName = getCurrentLocation();
-   
-    
-    //var pathFileName = getCurrentLocation();
+    //var currentPathName = getCurrentLocation();
+    settingsMap['baseHue'] = newHue.value;
     selectedBaseHue = newHue.value;
   
     document.getElementById("layer2").setAttribute("fill",`hsl(${selectedBaseHue}, 80%, 50%)`)
     document.getElementById("layer0").setAttribute("fill",`hsl(${selectedBaseHue}, 50%, 50%)`)
     document.getElementById("fillerLayer").setAttribute("fill",`hsl(${selectedBaseHue}, 50%, 50%)`)
-
-    
-    //initNavBar();
-    // createDropdown(currentPathName,true);
-    // insertNavLinks(navBar, currentPathName, true, newHue.value);
-    
-    // addRemainingSegment(newHue.value, true);
-
-
-    
     document.getElementById("sw").setAttribute("right", window.innerWidth);
 
-    console.log("navBar", navBar);
+    
 
     var settingsButton = document.getElementById("settingsButton");
     settingsButton.onclick = () => {
@@ -133,43 +122,20 @@ function baseColorChanged() {
         else document.getElementById("sw").style.display="block";
     }
 
-    // settingsButton.onmouseover = (e) => {
-        //document.getElementById("gradientAnimation").beginElement()
-    //     document.getElementById("gearRotate1").beginElement();
-    //     document.getElementById("gearRotate2").beginElement();
-    //     settingsButton.setAttribute("cursor","pointer");
-    // }
-    // settingsButton.onmouseout = (e) => {
-    //     document.getElementById("gearRotate1").endElement();
-    //     document.getElementById("gearRotate2").endElement();
-    // }
 
     
-    // // document.getElementById("mitProjectsDropdownButton")
-    // document.getElementById("mitProjectsDropdownButton").onclick = (e) => {
-    //     if(mitDropDownOpen) {
-    //         var dropDownAnimation = document.getElementById("reverseDropdownAnimation");
-    //         dropDownAnimation.beginElement();
-    //         document.getElementById("pacmenNavLink").style.display = 'none';
-    //         document.getElementById("eyesNavLink").style.display = 'none';
-    //         document.getElementById("busStopsNavLink").style.display = 'none';
-    //         mitDropDownOpen = false;
-    //         //generateNewAnimation();
-    //     }
-    //     else {
-    //         var dropDownAnimation = document.getElementById("forwardDropdownAnimation");
-    //         dropDownAnimation.beginElement();
-    //         dropDownAnimation.addEventListener("endEvent", ()=>{
-    //             document.getElementById("pacmenNavLink").style.display = 'block';
-    //             document.getElementById("eyesNavLink").style.display = 'block';
-    //             document.getElementById("busStopsNavLink").style.display = 'block'; 
-    //         },false);
-    //         mitDropDownOpen = true;
-    //     }
 
-    // }
 
 }
+
+
+const writeToSettings = (settingsMap) => {
+    let s = JSON.stringify(pegMap);
+
+    // write output
+    console.log(s);
+    pegHist.push(JSON.parse(s));
+};
 
 function createElementFromString(str) {
     var element = new DOMParser().parseFromString(str, 'text/html').body.firstElementChild;
@@ -184,9 +150,16 @@ function createDropdown(currentDir,replace=false) {
         <image href="${rootDir}icons/arrow_drop_down_white_24dp.svg" x="270" y="10" height="30" width="30" pointer-events="none">
     </path>`
 
+
+    // <radialGradient id="mitProjectsLinkGradient" cx=".8" cy="0.8" r="1.75" fx="0.1" fy="1.5" spreadMethod="repeat">
+    //         <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="10%"/>
+    //         <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="45%"/>
+    //         <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="65%"/>
+    //     <animate id="mitProjectsDropdownButtonAnimation" attributeType="XML" attributeName="r" values="1.75; 1.65; 1.2; 1" dur=".75s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
+    //     </radialGradient>
     var mitProjectsLinkGradientHTML =  `<radialGradient id="mitProjectsLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
-            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+10}%)" offset="40%"/>
-            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="65%"/>
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="10%"/>
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="65%"/>
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="85%"/>
         <animate id="mitProjectsDropdownButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="1" />
         </radialGradient>`
@@ -304,12 +277,13 @@ function generateNewAnimation() {
 
 
 
-function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
+function insertNavLinks(insertInto, currentDir, replace=false) {
     var homeHref = "./index.html";
     var pacmenHref = "./pacmen/pacmen.html"
     var eyesHref = "./eyes/eyes.html"
     var wordSearchHref = "./wordSearch/wordSearch.html"
     var busStopsHref = "./busStops/busStops.html"
+    var imageGalleryHref = "./imageGallery/imageGallery.html"
     if(currentDir=="index") homeHref="#";
     else if(currentDir=="pacmen"){ 
         pacmenHref="#";
@@ -317,6 +291,7 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
         eyesHref = "."+eyesHref;
         busStopsHref = "."+busStopsHref;
         wordSearchHref = "."+wordSearchHref;
+        imageGalleryHref = "."+imageGalleryHref
     }
     else if(currentDir=="eyes") {
         eyesHref = "#";
@@ -324,6 +299,7 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
         pacmenHref = "."+pacmenHref;
         busStopsHref = "."+busStopsHref;
         wordSearchHref = "."+wordSearchHref;
+        imageGalleryHref = "."+imageGalleryHref
     }
     else if(currentDir=="busStops") {
         busStopsHref = "#";
@@ -331,6 +307,7 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
         pacmenHref = "."+pacmenHref;
         eyesHref = "."+eyesHref;
         wordSearchHref = "."+wordSearchHref;
+        imageGalleryHref = "."+imageGalleryHref
     }
     else if(currentDir=="wordSearch") {
         busStopsHref = "."+busStopsHref;
@@ -338,41 +315,50 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
         pacmenHref = "."+pacmenHref;
         eyesHref = "."+eyesHref;
         wordSearchHref = "#";
+        imageGalleryHref = "."+imageGalleryHref
+    }
+    else if(currentDir=="imageGallery") {
+        busStopsHref = "."+busStopsHref;
+        homeHref = "."+homeHref;
+        pacmenHref = "."+pacmenHref;
+        eyesHref = "."+eyesHref;
+        wordSearchHref = "."+wordSearchHref;
+        imageGalleryHref = "#"
     }
     var linkPositions = [[150,50], [150,100], [150,150]];            //excludes Home link; ordered as => Pacmen, Eyes, BusStops
 
     pacmenLinkHTML_head = `<a id="pacmenNavLink" href="${pacmenHref}" x="200" y="30" pointer-events="all" display="none">`
     eyesLinkHTML_head = `<a id="eyesNavLink" href="${eyesHref}" x="200" y="80" pointer-events="all" display="none">`
     busStopsLink_head = `<a id="busStopsNavLink" href="${busStopsHref}" x="200" y="130" pointer-events="all" display="none">`
-    
+   
 
-   //<text x="50" y="30" fill="white" stroke="white" pointer-events="none">Home</text> </a>`
+  
     var homeLinkHTML = `<a id="homeNavLink" href="${homeHref}" x="50" y="30" pointer-events="all">
-        <path class="nav-link" id="homeNavButton" d="M0,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#homeNavLinkGradient)"  /></a>`
+        <path class="nav-link" id="homeNavButton" d="M0,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#homeNavLinkGradient)" /></a>`
     var homeIcon = `<image id="homeIcon" href="${homeHref=="#"? "./":"../"}icons/house_door_filled.svg" x="60" y="10" height="30" width="30" pointer-events="none">`
-    var homeLinkGradientHTML =  `<radialGradient id="homeNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
-            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+10}%)" offset="40%"/>
-            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="65%"/>
-            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="85%"/>
-        <animate id="homeNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
+    var homeLinkGradientHTML =  `<radialGradient id="homeNavLinkGradient" cx=".8" cy="0.8" r="2" fx="0.1" fy="1.5" spreadMethod="repeat">
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="10%"/>
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="45%"/>
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="65%"/>
+            <animate id="homeNavButtonAnimation" attributeType="XML" attributeName="r" values="1.75; 1.65; 1.2; 1" dur=".75s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
         </radialGradient>`
-
+    
     var wordSearchLinkHTML =  `<a id="wordSearchNavLink" href="${wordSearchHref}" x="50" y="30" pointer-events="all">
         <path class="nav-link" id="wordSearchNavButton" d="M300,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#wordSearchNavLinkGradient)"  />
         <text x="325" y="30" fill="white" stroke="white" pointer-events="none">Word Search</text> 
     </a>`
     var wordSearchLinkGradientHTML =  `<radialGradient id="wordSearchNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
-            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+10}%)" offset="40%"/>
-            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="65%"/>
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="10%"/>
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="65%"/>
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="85%"/>
         <animate id="wordSearchNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
         </radialGradient>`
 
-    var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M450,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all"></path>`
+    var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M600,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all"></path>`
     
     var ballGameLinkGradientHTML =  `<radialGradient id="ballGameNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
-            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+10}%)" offset="40%"/>
-            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="65%"/>
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="10%"/>
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="65%"/>
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="85%"/>
         <animate id="ballGameNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
         </radialGradient>`
@@ -387,8 +373,8 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
          </a>`
 
     var pacmenLinkGradientHTML = `<radialGradient id="pacmenNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
-        <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+10}%)" offset="40%"/>
-        <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="65%"/>
+        <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="10%"/>
+        <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="65%"/>
         <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="85%"/>
 
         <animate id="pacmenNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="indefinite"/>
@@ -404,8 +390,8 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
         from="1.0" to="0.0" begin="indefinite"></animate></a>`
 
     var eyesLinkGradientHTML = `<radialGradient id="eyesNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
-        <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+10}%)" offset="40%"/>
-        <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="65%"/>
+        <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="10%"/>
+        <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="65%"/>
         <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="85%"/>
         <animate id="eyesNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
     </radialGradient>`
@@ -420,10 +406,32 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
             from="1.0" to="0.0" begin="indefinite"></animate></a>`
 
     var busStopsGradientHTML = `<radialGradient id="busStopsNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
-            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+10}%)" offset="40%"/>
-            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="65%"/>
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="10%"/>
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="65%"/>
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="85%"/>
             <animate id="busStopsNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
+        </radialGradient>`
+
+    //`<a id="imageGalleryNavLink" href="${imageGalleryHref}" x="50" y="30" pointer-events="all" display="none">
+    var imageGalleryLinkHTML =  `
+    <a id="imageGalleryNavLink" href="${imageGalleryHref}" x="500" y="30" pointer-events="all">
+        <path class="nav-link" fill="url(#imageGalleryNavLinkGradient)" id="imageGalleryButton" d="M450,0 l150,0 l0,50 l-150,0 l0,-50" pointer-events="all" />
+        </a>`
+    
+    var imageGalleryLinkGradientHTML =  `<radialGradient id="imageGalleryNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="10%"/>
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="65%"/>
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="85%"/>
+        <animate id="imageGalleryNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
+        </radialGradient>`
+
+    var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M600,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all"></path>`
+    
+    var ballGameLinkGradientHTML =  `<radialGradient id="ballGameNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="10%"/>
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="65%"/>
+            <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="85%"/>
+        <animate id="ballGameNavButtonAnimation" attributeType="XML" attributeName="r" values=".8; .7; .6" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
         </radialGradient>`
 
     if(!replace) {
@@ -436,9 +444,6 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
 
         insertInto.insertAdjacentHTML('beforeend', ballGameLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', ballGameLinkGradientHTML);
-        
-
-        
 
         insertInto.insertAdjacentHTML('beforeend', pacmenLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', pacmenLinkGradientHTML);
@@ -448,6 +453,9 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
 
         insertInto.insertAdjacentHTML('beforeend', busStopsLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', busStopsGradientHTML);
+
+        insertInto.insertAdjacentHTML('beforeend', imageGalleryLinkHTML);
+        insertInto.insertAdjacentHTML('beforeend', imageGalleryLinkGradientHTML);
     }
     else {
         insertInto.removeChild(document.getElementById("homeNavLink"));
@@ -460,9 +468,14 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
         insertInto.removeChild(document.getElementById("busStopsNavLinkGradient"));
         insertInto.removeChild(document.getElementById("ballGameLinkHTML"));
         insertInto.removeChild(document.getElementById("ballGameLinkGradientHTML"));
+        insertInto.removeChild(document.getElementById("imageGalleryLinkHTML"));
+        insertInto.removeChild(document.getElementById("imageGalleryLinkGradientHTML"));
 
         insertInto.insertAdjacentHTML('beforeend', homeLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', homeLinkGradientHTML);
+
+        insertInto.insertAdjacentHTML('beforeend', imageGalleryLinkHTML);
+        insertInto.insertAdjacentHTML('beforeend', imageGalleryLinkGradientHTML);
 
         insertInto.insertAdjacentHTML('beforeend', pacmenLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', pacmenLinkGradientHTML);
@@ -477,9 +490,9 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
         insertInto.insertAdjacentHTML('beforeend', ballGameLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', ballGameLinkGradientHTML);
     }
-    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${450+20}" cy="${30}" r="${10}" fill="hsl(40, 100%, 50%)" pointer-events="none"/>`)
-    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${450+30}" cy="${12}" r="${7}" fill="hsl(10, 100%, 50%)" pointer-events="none"/>`)
-    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${450+40}" cy="${35}" r="${5}" fill="hsl(90, 80%, 50%)" pointer-events="none"/>`)
+    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${600+20}" cy="${30}" r="${10}" fill="hsl(40, 100%, 50%)" pointer-events="none"/>`)
+    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${600+30}" cy="${12}" r="${7}" fill="hsl(10, 100%, 50%)" pointer-events="none"/>`)
+    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${600+40}" cy="${35}" r="${5}" fill="hsl(90, 80%, 50%)" pointer-events="none"/>`)
     
     document.getElementById("forwardDropdownAnimation").addEventListener("endEvent", (e)=>{
         document.getElementById("fadeInAnimation1").beginElement();
@@ -522,6 +535,9 @@ function insertNavLinks(insertInto, currentDir, replace=false, hue=220) {
     document.getElementById("busStopsNavButton").onmouseout = (e) => {
         document.getElementById("busStopsNavButtonAnimation").endElement();
     }
+
+
+    
     makeBallGame();
     document.getElementById("ballGameButton").onclick = (e) => {
         
@@ -569,12 +585,12 @@ function makeBallGame() {
         </radialGradient>`
 
     var pipeHTML = `
-    <path class="nav-link" fill="url(#pipeGradient)" id="ballGamePipe" d="M450,0 l50,0 l0,0 l-50,0 l0,0"   pointer-events="all">
+    <path class="nav-link" fill="url(#pipeGradient)" id="ballGamePipe" d="M600,0 l50,0 l0,0 l-50,0 l0,0"   pointer-events="all">
         <animate id="fwdPipeAnimation" attributeType="XML" attributeName="d" dur="100ms"  begin="indefinite" fill="freeze"
-        values="M450,50 l50,0 l0,0 l-50,0 l0,0;
-                M450,50 l50,0 l0,50 l-50,0 l0,0;
-                M450,50 l50,0 l0,100 l-50,0 l0,-100;
-                M450,50 l50,0 l0,150 l-50,0 l0,-150" 
+        values="M600,50 l50,0 l0,0 l-50,0 l0,0;
+                M600,50 l50,0 l0,50 l-50,0 l0,0;
+                M600,50 l50,0 l0,100 l-50,0 l0,-100;
+                M600,50 l50,0 l0,150 l-50,0 l0,-150" 
             >
         </animate>
     </path>`
@@ -793,7 +809,8 @@ function addRemainingSegment(replace=false) {
         document.getElementById("gearRotate2").endElement();
     }
 }
-function updateCover(currentHue=220) {
+function updateCover() {
+    
 	var context = coverCanvas.getContext("2d");
     for(let phase=0; phase < xSortedCoverTriangles.length;++phase) {
         var triangles = xSortedCoverTriangles[phase]

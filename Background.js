@@ -5,16 +5,16 @@ myHeaders.set("Access-Control-Request-Headers", "*");
 var mouseSlope = 0;
 var mouseLocQue = [];
 
-var layerAttributes =[  {"type":"background", "fill":"hsl(220, 50%, 50%)",  "id":null }, 
-                        {"type":"2D", "fill":"hsl(40, 50%, 50%)",  "id":null, "pt1":null, "pt2":null},
-                        {"type":"2D", "fill":"hsl(220, 80%, 50%)",  "id":null, "pt1":null, "pt2":null}
+var layerAttributes =[  {"type":"background", "fill":`hsl(${settingsMap['baseHue']}, 50%, 50%)`,  "id":null }, 
+                        {"type":"2D", "fill":`hsl(${settingsMap['secondaryHue']}, 50%, 50%)`,  "id":null, "pt1":null, "pt2":null},
+                        {"type":"2D", "fill":`hsl(${settingsMap['baseHue']}, 80%, 55%)`,  "id":null, "pt1":null, "pt2":null}
                     ];
 //var backgroundSVG = document.getElementById("backgroundSVG");
 var wavesSVG = document.getElementById("wavesBG");
 var currentWidth = window.innerWidth;
 var currentHeight = window.innerHeight;
-function adjustBackground() {
 
+function adjustBackground() {
     if(currentHeight != window.innerHeight) {
         console.log("adjusting Y")
         var dh = currentHeight - window.innerHeight;
@@ -25,13 +25,9 @@ function adjustBackground() {
             layerAttributes[i].y += window.innerHeight -wavesSVG.style.height;
             layerAttributes[i].returnY += dh;
         }
-
-
     }
-    for(let i=1; i < layerAttributes.length;++i) {
-        updateLayer(layerAttributes[i],true)
-    }
-
+    for(let i=1; i < layerAttributes.length;++i) updateLayer(layerAttributes[i],true)
+    
     currentWidth = window.innerWidth;
     currentHeight = window.innerHeight;
 }
@@ -39,7 +35,6 @@ function adjustBackground() {
 
 function initBackground() {
     var backgroundFill = document.getElementById("backgroundFiller");
-
     var layer0 = document.createElementNS("http://www.w3.org/2000/svg","rect");
     //layer0.setAttribute("filter","url(#backgroundLight)")
     layer0.setAttribute("id", "fillerLayer")
@@ -53,7 +48,7 @@ function initBackground() {
     wavesSVG.insertAdjacentHTML('beforeend',`<rect id="layer0" width="${window.innerWidth}" height="${window.innerHeight/2}" fill="${layerAttributes[0]["fill"]}"" />`)
     //wavesSVG.appendChild(layer0);
  
-    console.log("window.innerHeight",window.innerHeight)
+    
     var layer1 = document.createElementNS("http://www.w3.org/2000/svg","path");
     layer1.setAttribute("id","layer1");
     layer1.setAttribute("pointer-events","none");
@@ -62,10 +57,9 @@ function initBackground() {
     layerAttributes[1]["My"] = 595-500;
     layerAttributes[1]["x1"] = 20;
     layerAttributes[1]["y1"] = 828-500;
-    layerAttributes[1]["x2"] = 425;
+    layerAttributes[1]["x2"] = 425+200;
     layerAttributes[1]["y2"] = 771-500;
     layerAttributes[1]["x"] = 390;
-    //layerAttributes[1]["y"] = 1044-500;
     layerAttributes[1]["y"] = (window.innerHeight<=1000? 1044:window.innerHeight) - 500;
     layerAttributes[1]["returnX"] = -390;
     layerAttributes[1]["returnY"] = -(594-500);
@@ -73,9 +67,6 @@ function initBackground() {
     var d1 = `M${layerAttributes[1]["Mx"]},${layerAttributes[1]["My"]} C${layerAttributes[1]["x1"]},${layerAttributes[1]["y1"]} ${layerAttributes[1]["x2"]},${layerAttributes[1]["y2"]} ${layerAttributes[1]["x"]},${layerAttributes[1]["y"]} l${layerAttributes[1]["returnX"]} 0, l0 ${layerAttributes[1]["returnY"]}`
     layer1.setAttribute("d", d1)
     layer1.setAttribute('fill',layerAttributes[1]["fill"]);
-    
-
-
 
     var layer2 = document.createElementNS("http://www.w3.org/2000/svg","path");
     layer2.setAttribute("id","layer2");
@@ -98,21 +89,15 @@ function initBackground() {
     var d2 = `M${layerAttributes[2]["Mx"]},${layerAttributes[2]["My"]} C${layerAttributes[2]["x1"]},${layerAttributes[2]["y1"]} ${layerAttributes[2]["x2"]},${layerAttributes[2]["y2"]} ${layerAttributes[2]["x"]},${layerAttributes[2]["y"]} l${layerAttributes[2]["returnX"]} 0, l0 ${layerAttributes[2]["returnY"]}`
     layer2.setAttribute("d", d2)
     layer2.setAttribute('fill',layerAttributes[2]["fill"]);
-   
-
 
     //added right here so that overlapping is correct
    
     wavesSVG.appendChild(layer2)
     wavesSVG.appendChild(layer1);
-
-
-    //setInterval(updateBackground, 1000/30);
     
-    for(let i=1; i < layerAttributes.length;++i) {
-        updateLayer(layerAttributes[i])
-    }
-    //allowInteractivity();   
+    for(let i=1; i < layerAttributes.length;++i) updateLayer(layerAttributes[i])
+    
+ 
 }
 
 window.onmousemove = (e) => {
@@ -132,13 +117,10 @@ function allowInteractivity() {
     for(let i=1; i < layerAttributes.length; ++i) {
         let layerObj = document.getElementById(layerAttributes[i].id);
         layerObj.addEventListener("mouseenter",(e)=>{
-            
             document.getElementById(layerAttributes[i].id+"Animation").setAttribute("d")
-            
         })
         layerObj.addEventListener("mouseleave",(e)=>{
             document.getElementById(layerAttributes[i].id+"Animation").beginElement();
-     
         })
     }
 }
@@ -149,14 +131,6 @@ function updateLayer(layer,replace=false) {
     var dArray = [];
     var dStr = ``
     let steps = 400;
-    // if(replace) {
-    //     let layerObj = document.getElementById(layer.id);
-    //     if(document.getElementById(layer.id+"Animation")) {
-    //         layerObj.removeChild(document.getElementById(layer.id+"Animation"));
-    //     }
-        
-       
-    // }
     if(layer.id=="layer1") {
         for(let i=-steps; i < steps; ++i) {
             if(i > 0) {

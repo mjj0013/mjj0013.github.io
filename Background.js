@@ -53,7 +53,7 @@ function initBackground() {
     wavesSVG.insertAdjacentHTML('beforeend',`<rect id="layer0" width="${window.innerWidth}" height="${window.innerHeight/2}" fill="${layerAttributes[0]["fill"]}"" />`)
     //wavesSVG.appendChild(layer0);
  
-
+    console.log("window.innerHeight",window.innerHeight)
     var layer1 = document.createElementNS("http://www.w3.org/2000/svg","path");
     layer1.setAttribute("id","layer1");
     layer1.setAttribute("pointer-events","none");
@@ -66,7 +66,7 @@ function initBackground() {
     layerAttributes[1]["y2"] = 771-500;
     layerAttributes[1]["x"] = 390;
     //layerAttributes[1]["y"] = 1044-500;
-    layerAttributes[1]["y"] = window.innerHeight-wavesSVG.style.height;
+    layerAttributes[1]["y"] = (window.innerHeight<=1000? 1044:window.innerHeight) - 500;
     layerAttributes[1]["returnX"] = -390;
     layerAttributes[1]["returnY"] = -(594-500);
     

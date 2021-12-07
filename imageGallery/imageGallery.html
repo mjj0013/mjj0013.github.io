@@ -9,6 +9,12 @@
 		<script type="text/javascript" src="../settings.js"></script>
         <script type="text/javascript" src="imageGallery.js"></script>
 
+
+
+		<!-- <object data="./images/gradient1.svg" type="image/svg+xml"></object> -->
+
+
+
 		<title>Image Gallery | Portfolio Page</title>
 	</head>
 
@@ -41,6 +47,8 @@
 	</svg> -->
 	
 	<body>
+		
+
 		<!-- <script type="text/javascript" src="../Background.js"></script> -->
 		<script type="text/javascript" src="../NavBar.js"></script>
         
@@ -50,21 +58,21 @@
             
             <option value="">dummy2</option>
             <option value="Alabama_Crimson_Tide_logo.svg.png">Alabama Logo</option>
-            <option value="">dummy3</option>
+            <option value="mona_lisa.jpg">Mona Lisa</option>
             <option value="">dummy4</option>
         </select>
 
         <select id="imageSelector2" onchange="image2Changed()">
-            <option value="">Alabama Logo</option>
-            <option value="">dummy2</option>
-            <option value="">dummy3</option>
-            <option value="">dummy4</option>
+            <option value="Alabama_Crimson_Tide_logo.svg.png">Alabama Logo</option>
+            <option value="gradient1.svg">Gradient 1</option>
+            <option value="mona_lisa.jpg">Mona Lisa</option>
+            
         </select>
         
-        <svg id="imageManipSVG">
-            <image id="image1" />
-            <image id="image2" />
-            <image id="resultImage"/>
+        <svg id="imageManipSVG" width="1500" height="800">
+            <image id="image1" x="0" y="0" width="500px" height="800px"/>
+            <image id="image2" x="500" y="0" width="500px" height="800px"/>
+            <image id="resultImage" x="1000" y="0" width="500px" height="800px"/>
         </svg>
        
         

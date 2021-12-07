@@ -1,0 +1,11 @@
+<svg id="svgGradient1" viewBox="0 0 500 800" xmlns="http://www.w3.org/2000/svg">
+   
+    <linearGradient id="gradient1" >    
+        <stop offset="25%"  stop-color="blue" />
+        <stop offset="75%" stop-color="red" />
+    </linearGradient>
+
+    <rect x="0" y="0" width="500" height="800" fill="url('#gradient1')" />
+</svg>
+<!-- gradientTransform="rotate(90)" -->
+<!--  xmlns:xlink="http://www.w3.org/1999/xlink" -->

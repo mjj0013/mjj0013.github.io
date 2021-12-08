@@ -60,6 +60,9 @@ window.addEventListener("keydown",
 
 window.onload = () => {
     
+
+    //document.getElementById("infoButton").
+
     var currentLocation = getCurrentLocation();
     console.log("currentLocation", currentLocation)
     if(currentLocation=="index" || currentLocation=="/") {

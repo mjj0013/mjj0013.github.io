@@ -7,6 +7,20 @@
 		<script type="text/javascript" src="ballObject.js"></script>
 		<script type="text/javascript" src="settings.js"></script>
 		<title>Home | Portfolio Page</title>
+
+		<style>
+			#infoButton:hover {
+				cursor:pointer;
+			}
+		</style>
+		<script>
+			function toggleBallGameInfo() {
+				if(document.getElementById("infoWindow").style.display=="none") {
+					document.getElementById("infoWindow").style.display="block";
+				}
+				else document.getElementById("infoWindow").style.display="none";
+			}
+		</script>
 	</head>
 
 	<div id='navBarContainer'>
@@ -17,6 +31,12 @@
 
 	<svg id="ballContainer" class="bgSVG" xmlns="http://www.w3.org/2000/svg">
 		<rect x="0" y="0" width="100%" height="100%"" fill="grey" />
+		<image id="infoButton" x="0" y="0" href="./icons/infoIcon.svg" onclick="toggleBallGameInfo()"/>
+		<g id="infoWindow" style="display:none;">
+			<text x="20" y="35" class="small">Select a ball by clicking on it.</text>
+			<text x="20" y="55" class="small" >Use &#x02190; , &#x02191;, &#x02192;, &#x02193; to move.</text>
+		</g>
+		
 	</svg>
 	<svg id="backgroundFiller" xmlns="http://www.w3.org/2000/svg" style="pointer-events:none;"></svg>
 	<svg id="wavesBG" class="wavesSVG" xmlns="http://www.w3.org/2000/svg" style="pointer-events:none;"></svg>

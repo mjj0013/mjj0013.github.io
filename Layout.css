@@ -26,17 +26,15 @@ body {
 	
 }
 
-/* .searchPanel {
-	border-radius:15px;
 
 
-} */
 
-
-.searchBar {
+#searchField {
+	white-space:pre;
 	position:relative;
 	width: 100%;
 	height:100%;
+	
 }
 
 
@@ -49,7 +47,7 @@ body {
 
 
 .bgSVG.movingContainer {
-	left:475px;
+	left:225px;
 } 
 
 .wavesSVG {
@@ -151,6 +149,8 @@ li {
 	
 	/* transition-timing-function: cubic-bezier(1.1, .001, 0.22, 1); */
 }
+
+
 
 
 

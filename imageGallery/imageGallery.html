@@ -21,8 +21,7 @@
 	<svg id="ballContainer" class="bgSVG" xmlns="http://www.w3.org/2000/svg">
 		<rect x="0" y="0" width="100%" height="100%"" fill="grey" />
 	</svg>
-	<svg id="backgroundFiller" xmlns="http://www.w3.org/2000/svg" style="pointer-events:none;"></svg>
-	<svg id="wavesBG" class="wavesSVG" xmlns="http://www.w3.org/2000/svg" style="pointer-events:none;"></svg>
+	
 
 	
 	<svg id="navBar" class="nav-menu" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
@@ -42,7 +41,7 @@
 		<script type="text/javascript" src="../index.js"></script>
         
         <svg id="imageManipSVG" width="1500" height="800">
-			<filter id="gradient1_filter" color-interpolation-filters="sRGB">
+			<filter id="gradient1_filter" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
 				<!-- <feImage href="./images/gradient1.svg" result="Result"/> -->
 				<feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="4" result="turb">
 					<animate attributeName="baseFrequency" values="0.05; 0.25; 0.625; 0.25; 0.05"  dur="4s" repeatCount="indefinite"></animate>
@@ -50,8 +49,13 @@
 				<feDisplacementMap id="dispFE" result="displacement" in="SourceGraphic" in2="turbulence" scale="200" xChannelSelector="R" yChannelSelector="B">
 					<!-- <animate attributeName="scale" from="1" to="200" dur="5s" repeatCount="indefinite"></animate> -->
 				</feDisplacementMap>
+				
+				<feComposite in="displacement" in2="SourceAlpha" operator="in" result="comp" />
+				<feBlend mode="overlay" in="comp" in2="SourceGraphic"/>
 			</filter>
             <image href="./images/mona_lisa.jpg" id="image1" x="0" y="0" width="500px" height="800px" filter="url(#gradient1_filter)"/>
+			<image href="./images/Ham_the_chimp.jpg" id="image2" x="500" y="75" width="500px" height="600px"/>
+			<image href="./images/saturnV.jpg" id="image3" x="500" y="800" width="500px" height="600px"/>
         </svg>
        
         

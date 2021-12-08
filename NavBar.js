@@ -7,19 +7,18 @@ var coverCanvas = document.getElementById("coverCanvas");
 
 var searchBarShowing = 0;
 var searchBarResults = [
-    {path:"~/pacmen", subject:"Pacmen" ,keywords:["pacmen","yellow"]},
-    {path:"~/imageGallery", subject:"Crimson Tide" , keywords:["team", "alabama", "crimson","tide","logo"]},
-    {path:"~/imageGallery", subject:"Mona Lisa" , keywords:["art","image","mona" ,"lisa"]},
-    {path:"~/imageGallery", subject:"Saturn V" , keywords:["saturn","V","5" ,"rocket", "huntsville", "alabama"]},
-    {path:"~/imageGallery", subject:"Monte Sano" , keywords:["mountain","world","monte" ,"sano", "outside","nature","huntsville", "alabama"]},
-    {path:"~/imageGallery", subject:"Mural" , keywords:["jesus","mural","art" ,"huntsville", "alabama"]},
-    {path:"~/imageGallery", subject:"Ham" , keywords:["animal","chimp","space" ,"astronaut", "huntsville", "alabama", "ham"]},
-
-
-    {path:"~/eyes", subject:"Eyes" , keywords:["eyes","demo","MIT", "assignment","course"]},
-    {path:"~/busStops", subject:"Map Animation" , keywords:["bus","stops", "map","animation", "demo","MIT", "assignment","course"]},
-    {path:"---", subject:"Settings" , keywords:["settings"]},
-    {path:"---", subject:"Primary Color" , keywords:["settings", "base", "primary","color"]}
+    {path:"/pacmen/pacmen.html", subject:"Pacmen" ,keywords:["pacmen","yellow"]},
+    {path:"/imageGallery/imageGallery.html", subject:"Crimson Tide" , keywords:["alabama", "crimson", "tide"]},
+    {path:"/imageGallery/imageGallery.html", subject:"Mona Lisa" , keywords:["image","mona", "lisa"]},
+    {path:"/imageGallery/imageGallery.html", subject:"Saturn V" , keywords:["saturn","saturn v" ,"saturn 5" ,"rocket"]},
+    {path:"/imageGallery/imageGallery.html", subject:"Monte Sano" , keywords:["monte", "sano","nature"]},
+    {path:"/imageGallery/imageGallery.html", subject:"Church" , keywords:["church", "jesus"]},
+    {path:"/imageGallery/imageGallery.html", subject:"Ham" , keywords:["chimpanzee","astronaut", "ham"]},
+    {path:"/eyes/eyes.html", subject:"Eyes" , keywords:["eyes"]},
+    {path:"/busStops/busStops.html", subject:"Map Animation" , keywords:["bus","stops", "map", "demo"]},
+    {path:"#", subject:"Gallery" , keywords:["gallery"]},
+    {path:"#", subject:"Settings" , keywords:["settings"]},
+    {path:"#", subject:"Primary Color" , keywords:["settings", "base", "primary","color"]}
 
 ]
 
@@ -33,7 +32,7 @@ var selectedNavHue = 0;
 var selectedNavSat = 0;
 var selectedNavBrightness = 5;
 var numOfNavElements = 3;
-var navElementSizes = {150:3, 50:2}     //keys are size, values are the quantities of each size
+var navElementSizes = {150:2, 50:2}     //keys are size, values are the quantities of each size
 
 var mitDropDownOpen = false;
 var numberBallPresses = 0;
@@ -90,12 +89,12 @@ function initNavBar(replace=false) {
         }
 
     }
-    createSearchDropdown("asdf");
+    createSearchDropdown();
 }
 
 var searchBarInit=0;
-function createSearchDropdown(currentDir) {
-    var rootDir = (currentDir=="index")? "./" : "../"
+function createSearchDropdown() {
+    
 
     var searchBar = document.getElementById("searchBar")
     console.log("searchBar", searchBar.x.baseVal.value)
@@ -124,52 +123,141 @@ function createSearchDropdown(currentDir) {
     searchBar.addEventListener("input", (e)=>{
         if(searchBarInit==0) {
             searchBarInit=1;
-            document.getElementById('searchFwd').beginElement();
-        }
+
+            
+            var searchFwd = document.getElementById("searchFwd");
+            searchFwd.beginElement();
+            searchFwd.addEventListener("endEvent", ()=>{
+                document.getElementById("result1Component").style.display = 'block';
+                document.getElementById("result2Component").style.display = 'block';
+                document.getElementById("result3Component").style.display = 'block'; 
+                document.getElementById("result4Component").style.display = 'block'; 
+            },false);
+            mitDropDownOpen = true;
+            
         
             
-
-
+        }
+        processSearchBar();
 
     });
+    
+    var result1 = `
+        <a href="#" id="result1Component" style="display:none;">
+            <path class="nav-link searchResult" id="searchResult1" d="M${searchBoxX},50 l${searchBoxW},0 l0,25 l${-searchBoxW},0  l0,-25" fill="white"  pointer-events="all"/>
+            <text id="result1Str" x="${searchBoxX}" y="70" fill="black" stroke="black" pointer-events="none"></text>
+        </a>`
+
+    var result2 = `
+    <a href="#" id="result2Component" style="display:none;">
+        <path class="nav-link searchResult" id="searchResult2" d="M${searchBoxX},75 l${searchBoxW},0 l0,25 l${-searchBoxW},0  l0,-25" fill="white"  pointer-events="all"/>
+        <text id="result2Str" x="${searchBoxX}" y="95" fill="black" stroke="black" pointer-events="none"></text> 
+    </a>`
+
+    var result3 = `
+    <a  href="#" id="result3Component" style="display:none;">
+        <path class="nav-link searchResult" id="searchResult3" d="M${searchBoxX},100 l${searchBoxW},0 l0,25 l${-searchBoxW},0  l0,-25" fill="white"  pointer-events="all"/>
+        <text id="result3Str" x="${searchBoxX}" y="120" fill="black" stroke="black" pointer-events="none"></text> 
+    </a>`
+
+    var result4 = `
+    <a href="#" id="result4Component" style="display:none;">
+        <path class="nav-link searchResult" id="searchResult4" d="M${searchBoxX},125 l${searchBoxW},0 l0,25 l${-searchBoxW},0  l0,-25" fill="white"  pointer-events="all"/>
+        <text id="result4Str" x="${searchBoxX}" y="145" fill="black" stroke="black" pointer-events="none"></text>
+    </a> `
+    navBar.insertAdjacentHTML("beforeend", result1)
+    navBar.insertAdjacentHTML("beforeend", result2)
+    navBar.insertAdjacentHTML("beforeend", result3)
+    navBar.insertAdjacentHTML("beforeend", result4)
+
+    // document.getElementById("searchResult1").onclick =(e)=> {
+        
+    // }
+
+    
+
 }
+
 function levenshteinDist(str1, str2) {
     let M = str1.length;
     let N = str2.length;
-    var d = Array(M+1).fill(Array(N+1).fill(0));
+    var d  = Array(N+1).fill(null).map(() =>Array(M+1).fill(null));
+    
+    for(let i=0; i < M; ++i) d[0][i] = i;
+    for(let j=0; j < N; ++j) d[j][0] = j;
 
-    for(let i=1; i < M; ++i) d[0][i] = i;
-    for(let j=1; j < N; ++j) d[j][0] = j;
-
-    for(let j=1; j < N; ++j) {
-        for(let i=1; i < M; ++i) {
+    for(let j=1; j <= N; ++j) {
+        for(let i=1; i <= M; ++i) {
             let subCost;
-            if(str1[i-1]==str2[j-1]) subCost = 0;
+            if(str1[i-1]===str2[j-1]) subCost = 0;
             else subCost = 1;
-            d[j][i] = Math.min(d[j][i-1]+1,  d[j][i-1]+1, d[j-1][i-1]+subCost);
+            d[j][i] = Math.min(d[j][i-1]+1,  d[j-1][i]+1, d[j-1][i-1]+subCost);
         }
     }
-    return d[M][N];
+    
+    return d[N][M];
 
 }
 
 function processSearchBar() {
-    let query = document.getElementById("searchBar");
-
-    var words =query.value.split(" ");
-    var keyWordVals =  searchBarResults.map((x)=>{[x["subject"],0]})
+    let rootDir = (getCurrentLocation()=="index")? "./" : "../"
+    let query = document.getElementById("searchField");
+    query.onkeydown = (e) => {e.stopPropagation();}
     
-    var wordStats = Object.fromEntries(keyWordVals);
-    var key
+    var queryString = query.value.toLowerCase();
+    var words = queryString.split(" ");
+
+    var subjects =  searchBarResults.map( x => {return [x["subject"],0]})
+    var subjectStats = Object.fromEntries(subjects)
+    var selectedSubjects = [];
+
+    //var wordStats = Object.fromEntries(words.map((x)=> [x,Object.fromEntries(subjects)]));
+    var subjectNames = Object.keys(subjectStats);
+    console.log("subjectNames", subjectNames)
     for(let i=0; i < words.length;++i) {
         let w = words[i];
-        wordStates[w] = {};
-        for(let kw=0; kw < keyWordVals.length; ++kw) {
-            k
+        
+        for(let s=0; s < searchBarResults.length; ++s) {
+            let keywords = searchBarResults[s]["keywords"];
+            let leastDist = 999;
+            let isNear = false;
+            for(let kw=0; kw<keywords.length;++kw) {
+                let dist = levenshteinDist(keywords[kw], w);
+                if(dist < leastDist && dist <=3) {
+                    isNear = true;
+                    leastDist = dist;   
+                }
+            }
+            if(isNear) { selectedSubjects.push([searchBarResults[s]["subject"], leastDist, s]); }
         }
-        // let re = new RegExp(/ab+c/, 'i');
-
     }
+
+    selectedSubjects.sort(function(a,b){return a[1]-b[1]});
+    // for(let s=0; s < 4;++s) {
+    //if(selectedSubjects[0][0] != words[0][0]) selectedSubjects.shift();
+    //}
+    
+
+    if(selectedSubjects[0]!=undefined) {
+        document.getElementById("result1Str").innerHTML = selectedSubjects[0][0];
+        document.getElementById("result1Component").setAttribute("href", rootDir+searchBarResults[selectedSubjects[0][2]].path);
+    }
+
+    if(selectedSubjects[1]!=undefined) {
+        document.getElementById("result2Str").innerHTML = selectedSubjects[1][0];
+        document.getElementById("result2Component").setAttribute("href", rootDir+searchBarResults[selectedSubjects[1][2]].path);
+    }
+    
+    if(selectedSubjects[2]!=undefined) {
+        document.getElementById("result3Str").innerHTML = selectedSubjects[2][0];
+        document.getElementById("result3Component").setAttribute("href", rootDir+searchBarResults[selectedSubjects[2][2]].path);
+    }
+    if(selectedSubjects[3]!=undefined) {
+        document.getElementById("result4Str").innerHTML = selectedSubjects[3][0];
+        document.getElementById("result4Component").setAttribute("href", rootDir+searchBarResults[selectedSubjects[3][2]].path);
+    }
+
+    
 }
 
 
@@ -330,7 +418,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     var homeHref = "./index.html";
     var pacmenHref = "./pacmen/pacmen.html"
     var eyesHref = "./eyes/eyes.html"
-    var wordSearchHref = "./wordSearch/wordSearch.html"
+   
     var busStopsHref = "./busStops/busStops.html"
     var imageGalleryHref = "./imageGallery/imageGallery.html"
     var rootDir = (currentDir=="index")? "./" : "../"
@@ -340,7 +428,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
         homeHref = "."+homeHref;
         eyesHref = "."+eyesHref;
         busStopsHref = "."+busStopsHref;
-        wordSearchHref = "."+wordSearchHref;
+       
         imageGalleryHref = "."+imageGalleryHref
     }
     else if(currentDir=="eyes") {
@@ -348,7 +436,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
         homeHref = "."+homeHref;
         pacmenHref = "."+pacmenHref;
         busStopsHref = "."+busStopsHref;
-        wordSearchHref = "."+wordSearchHref;
+       
         imageGalleryHref = "."+imageGalleryHref
     }
     else if(currentDir=="busStops") {
@@ -356,23 +444,16 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
         homeHref = "."+homeHref;
         pacmenHref = "."+pacmenHref;
         eyesHref = "."+eyesHref;
-        wordSearchHref = "."+wordSearchHref;
+       
         imageGalleryHref = "."+imageGalleryHref
     }
-    else if(currentDir=="wordSearch") {
-        busStopsHref = "."+busStopsHref;
-        homeHref = "."+homeHref;
-        pacmenHref = "."+pacmenHref;
-        eyesHref = "."+eyesHref;
-        wordSearchHref = "#";
-        imageGalleryHref = "."+imageGalleryHref
-    }
+    
     else if(currentDir=="imageGallery") {
         busStopsHref = "."+busStopsHref;
         homeHref = "."+homeHref;
         pacmenHref = "."+pacmenHref;
         eyesHref = "."+eyesHref;
-        wordSearchHref = "."+wordSearchHref;
+       
         imageGalleryHref = "#"
     }
     var subLinkPos = [[50,50], [50,100], [50,150]];            //excludes Home link; ordered as => Pacmen, Eyes, BusStops
@@ -391,15 +472,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
             <animate id="homeNavButtonAnimation" attributeType="XML" attributeName="y2" values="0; .35; .65; .35;" dur="1.5s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
             </linearGradient>`
     
-    var wordSearchLinkHTML =  `<a id="wordSearchNavLink" href="${wordSearchHref}" x="50" y="30" pointer-events="all">
-        <path class="nav-link" id="wordSearchNavButton" d="M200,0 c0 0,0 0,150 0 l0,50 c0 0,0 0,-150 0 l0,-50" fill="url(#wordSearchNavLinkGradient)"  />
-        <text x="225" y="30" fill="white" stroke="white" pointer-events="none">Word Search</text>  </a>`
-
-    var wordSearchLinkGradientHTML =  `<linearGradient id="wordSearchNavLinkGradient" x1="0" y1="1.8" x2="0" y2="0" spreadMethod="repeat" gradientTransform="rotate(90) skewX(110) scale(.625)">
-    <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="10%"/>
-    <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="65%"/>
-    <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="85%"/>
-    <animate id="wordSearchNavButtonAnimation" attributeType="XML" attributeName="y2" values="0; .35; .65; .35;" dur="1.5s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/></linearGradient>`
+    
 
     var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M600,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all"></path>`
     
@@ -454,11 +527,11 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
 </linearGradient>`
 
     //`<a id="imageGalleryNavLink" href="${imageGalleryHref}" x="50" y="30" pointer-events="all" display="none">
-    var imageGalleryLinkHTML =  `<a id="imageGalleryNavLink" href="${imageGalleryHref}" x="500" y="30" pointer-events="all">
-        <path class="nav-link" fill="url(#imageGalleryNavLinkGradient)" id="imageGalleryButton" d="M350,0 l150,0 l0,50 l-150,0 l0,-50" pointer-events="all" />
-        <text x="400" y="30" fill="white" dx="-25" stroke="white" pointer-events="none" class="mapNavLinkText">Gallery </text> 
+    var imageGalleryLinkHTML =  `<a id="imageGalleryNavLink" href="${imageGalleryHref}" x="350" y="30" pointer-events="all">
+        <path class="nav-link" fill="url(#imageGalleryNavLinkGradient)" id="imageGalleryButton" d="M200,0 l150,0 l0,50 l-150,0 l0,-50" pointer-events="all" />
+        <text x="250" y="30" fill="white" dx="-25" stroke="white" pointer-events="none" class="mapNavLinkText">Gallery </text> 
         
-        <image href="${rootDir}icons/imageIcon.svg" x="430" y="10" height="30" width="30" pointer-events="none">
+        <image href="${rootDir}icons/imageIcon.svg" x="280" y="10" height="30" width="30" pointer-events="none">
         </a>`
         
     var imageGalleryLinkGradientHTML =  `<linearGradient id="imageGalleryNavLinkGradient"  x1="0" y1="1.8" x2="0" y2="0" spreadMethod="repeat" gradientTransform="rotate(90) skewX(110) scale(.625)">
@@ -467,7 +540,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="85%"/>
     <animate id="imageGalleryNavButtonAnimation" attributeType="XML" attributeName="y2" values="0; .35; .65; .35;" dur="1.5s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
     </linearGradient>`
-    var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M500,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all"></path>`
+    var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M350,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all"></path>`
     
     var ballGameLinkGradientHTML =  `<radialGradient id="ballGameNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="10%"/>
@@ -481,8 +554,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
         insertInto.insertAdjacentHTML('beforeend', homeLinkGradientHTML);
         insertInto.insertAdjacentHTML("beforeend",homeIcon);
 
-        insertInto.insertAdjacentHTML('beforeend', wordSearchLinkHTML);
-        insertInto.insertAdjacentHTML('beforeend', wordSearchLinkGradientHTML);
+        
 
         insertInto.insertAdjacentHTML('beforeend', ballGameLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', ballGameLinkGradientHTML);
@@ -532,9 +604,9 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
         insertInto.insertAdjacentHTML('beforeend', ballGameLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', ballGameLinkGradientHTML);
     }
-    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${500+20}" cy="${30}" r="${10}" fill="hsl(40, 100%, 50%)" pointer-events="none"/>`)
-    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${500+30}" cy="${12}" r="${7}" fill="hsl(10, 100%, 50%)" pointer-events="none"/>`)
-    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${500+40}" cy="${35}" r="${5}" fill="hsl(90, 80%, 50%)" pointer-events="none"/>`)
+    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${350+20}" cy="${30}" r="${10}" fill="hsl(40, 100%, 50%)" pointer-events="none"/>`)
+    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${350+30}" cy="${12}" r="${7}" fill="hsl(10, 100%, 50%)" pointer-events="none"/>`)
+    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${350+40}" cy="${35}" r="${5}" fill="hsl(90, 80%, 50%)" pointer-events="none"/>`)
     
     document.getElementById("forwardDropdownAnimation").addEventListener("endEvent", (e)=>{
         document.getElementById("fadeInAnimation1").beginElement();
@@ -551,7 +623,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     // setLinkAnimations("pacmenNavButton");
     // setLinkAnimations("eyesNavButton");
     // setLinkAnimations("busStopsNavButton");
-    // setLinkAnimations("wordSearchNavButton");
+    
     // setLinkAnimations("homeNavButton");
     
     makeBallGame();
@@ -608,12 +680,12 @@ function makeBallGame() {
         </radialGradient>`
 
     var pipeHTML = `
-    <path class="nav-link" fill="url(#pipeGradient)" id="ballGamePipe" d="M600,0 l50,0 l0,0 l-50,0 l0,0"   pointer-events="all">
-        <animate id="fwdPipeAnimation" attributeType="XML" attributeName="d" dur="100ms"  begin="indefinite" fill="freeze"
-        values="M600,50 l50,0 l0,0 l-50,0 l0,0;
-                M600,50 l50,0 l0,50 l-50,0 l0,0;
-                M600,50 l50,0 l0,100 l-50,0 l0,-100;
-                M600,50 l50,0 l0,150 l-50,0 l0,-150" 
+    <path class="nav-link" fill="url(#pipeGradient)" id="ballGamePipe" d="M350,50 l50,0 l0,0 l-50,0 l0,0"   pointer-events="all">
+        <animate id="fwdPipeAnimation" attributeType="XML" attributeName="d" dur="50ms"  begin="indefinite" fill="freeze"
+        values="M350,50 l50,0 l0,0 l-50,0 l0,0;
+                M350,50 l50,0 l0,50 l-50,0 l0,0;
+                M350,50 l50,0 l0,100 l-50,0 l0,-100;
+                M350,50 l50,0 l0,150 l-50,0 l0,-150" 
             >
         </animate>
     </path>`
@@ -801,7 +873,7 @@ function addRemainingSegment(replace=false) {
     navBar.insertAdjacentHTML("beforeend", `
         <foreignObject id="searchBar" class="searchPanel" x="${settingsPos-450}" y="0" width="350" height="55" opacity="0">
             <div xmlns="http://www.w3.org/1999/xhtml" width="350" height="55">
-                <input placeholder="Type anything..." class="searchBar" type="text" style="font-size:35px;" width="350" height="55"></input>
+                <td><input id="searchField" placeholder="Type anything..."  type="text" style="font-size:35px;" width="350" height="55"></input></td>
             </div>
         </foreignObject>
         <animate xlink:href="#searchBar" id="searchBarFadeIn" attributeType="XML" attributeName="opacity" dur="500ms"  begin="indefinite" fill="freeze"

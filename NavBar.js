@@ -7,8 +7,20 @@ var coverCanvas = document.getElementById("coverCanvas");
 
 var searchBarShowing = 0;
 var searchBarResults = [
-    {path:"~/pacmen", keyword:"pacmen"},
-    {path:"~/gallery", keyword:"mona lisa"}
+    {path:"~/pacmen", subject:"Pacmen" ,keywords:["pacmen","yellow"]},
+    {path:"~/imageGallery", subject:"Crimson Tide" , keywords:["team", "alabama", "crimson","tide","logo"]},
+    {path:"~/imageGallery", subject:"Mona Lisa" , keywords:["art","image","mona" ,"lisa"]},
+    {path:"~/imageGallery", subject:"Saturn V" , keywords:["saturn","V","5" ,"rocket", "huntsville", "alabama"]},
+    {path:"~/imageGallery", subject:"Monte Sano" , keywords:["mountain","world","monte" ,"sano", "outside","nature","huntsville", "alabama"]},
+    {path:"~/imageGallery", subject:"Mural" , keywords:["jesus","mural","art" ,"huntsville", "alabama"]},
+    {path:"~/imageGallery", subject:"Ham" , keywords:["animal","chimp","space" ,"astronaut", "huntsville", "alabama", "ham"]},
+
+
+    {path:"~/eyes", subject:"Eyes" , keywords:["eyes","demo","MIT", "assignment","course"]},
+    {path:"~/busStops", subject:"Map Animation" , keywords:["bus","stops", "map","animation", "demo","MIT", "assignment","course"]},
+    {path:"---", subject:"Settings" , keywords:["settings"]},
+    {path:"---", subject:"Primary Color" , keywords:["settings", "base", "primary","color"]}
+
 ]
 
 var coverTriangles = [];
@@ -78,7 +90,93 @@ function initNavBar(replace=false) {
         }
 
     }
+    createSearchDropdown("asdf");
 }
+
+var searchBarInit=0;
+function createSearchDropdown(currentDir) {
+    var rootDir = (currentDir=="index")? "./" : "../"
+
+    var searchBar = document.getElementById("searchBar")
+    console.log("searchBar", searchBar.x.baseVal.value)
+    let searchBoxX = searchBar.x.baseVal.value;
+    let searchBoxW = searchBar.width.baseVal.value;
+    var searchDropdownBox = `<path class="nav-link" id="searchDropdownBox" d="M${searchBoxX},50 l${searchBoxW},0 l0,0 l${-searchBoxW},0 l0,-50" fill="white"  pointer-events="all" />`
+    var searchFwd = `<animate id="searchFwd" attributeType="XML" attributeName="d" dur="100ms"  begin="indefinite" fill="freeze"
+    values="M${searchBoxX},50 l${searchBoxW},0 l0,0 l${-searchBoxW},0   l0,0;
+            M${searchBoxX},50 l${searchBoxW},0 l0,50 l${-searchBoxW},0  l0,-50;
+            M${searchBoxX},50 l${searchBoxW},0 l0,100 l${-searchBoxW},0 l0,-100;
+            M${searchBoxX},50 l${searchBoxW},0 l0,150 l${-searchBoxW},0 l0,-150;" ></animate>`
+    var searchBkwdClose = `<animate id="searchBkwdClose" attributeType="XML" attributeName="d" dur="100ms"  begin="indefinite" fill="freeze"
+
+    values="M${searchBoxX},50 l${searchBoxW},0 l0,150 l${-searchBoxW},0 l0,-150;
+            M${searchBoxX},50 l${searchBoxW},0 l0,100 l${-searchBoxW},0 l0,-100;
+            M${searchBoxX},50 l${searchBoxW},0 l0,50 l${-searchBoxW},0  l0,-50;
+            M${searchBoxX},50 l${searchBoxW},0 l0,0 l${-searchBoxW},0   l0,0;" ></animate>`
+
+    document.getElementById("navBar").insertAdjacentHTML("beforeend", searchDropdownBox);
+   
+    
+    var searchDropdownBox = document.getElementById("searchDropdownBox");
+    searchDropdownBox.insertAdjacentHTML("beforeend", searchFwd);
+     searchDropdownBox.insertAdjacentHTML("beforeend", searchBkwdClose);
+    //  searchBarResults
+    searchBar.addEventListener("input", (e)=>{
+        if(searchBarInit==0) {
+            searchBarInit=1;
+            document.getElementById('searchFwd').beginElement();
+        }
+        
+            
+
+
+
+    });
+}
+function levenshteinDist(str1, str2) {
+    let M = str1.length;
+    let N = str2.length;
+    var d = Array(M+1).fill(Array(N+1).fill(0));
+
+    for(let i=1; i < M; ++i) d[0][i] = i;
+    for(let j=1; j < N; ++j) d[j][0] = j;
+
+    for(let j=1; j < N; ++j) {
+        for(let i=1; i < M; ++i) {
+            let subCost;
+            if(str1[i-1]==str2[j-1]) subCost = 0;
+            else subCost = 1;
+            d[j][i] = Math.min(d[j][i-1]+1,  d[j][i-1]+1, d[j-1][i-1]+subCost);
+        }
+    }
+    return d[M][N];
+
+}
+
+function processSearchBar() {
+    let query = document.getElementById("searchBar");
+
+    var words =query.value.split(" ");
+    var keyWordVals =  searchBarResults.map((x)=>{[x["subject"],0]})
+    
+    var wordStats = Object.fromEntries(keyWordVals);
+    var key
+    for(let i=0; i < words.length;++i) {
+        let w = words[i];
+        wordStates[w] = {};
+        for(let kw=0; kw < keyWordVals.length; ++kw) {
+            k
+        }
+        // let re = new RegExp(/ab+c/, 'i');
+
+    }
+}
+
+
+
+
+
+
 function getCurrentLocation() {
     var pathName = window.location.pathname;
     var pathFileName = pathName.substr(pathName.lastIndexOf("/")+1)
@@ -449,12 +547,12 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
         document.getElementById("fadeOutAnimation3").beginElement();
     });
     
-    setLinkAnimations("homeNavButton");
-    setLinkAnimations("pacmenNavButton");
-    setLinkAnimations("eyesNavButton");
-    setLinkAnimations("busStopsNavButton");
-    setLinkAnimations("wordSearchNavButton");
-    setLinkAnimations("homeNavButton");
+    // setLinkAnimations("homeNavButton");
+    // setLinkAnimations("pacmenNavButton");
+    // setLinkAnimations("eyesNavButton");
+    // setLinkAnimations("busStopsNavButton");
+    // setLinkAnimations("wordSearchNavButton");
+    // setLinkAnimations("homeNavButton");
     
     makeBallGame();
     document.getElementById("ballGameButton").onclick = (e) => {
@@ -703,7 +801,7 @@ function addRemainingSegment(replace=false) {
     navBar.insertAdjacentHTML("beforeend", `
         <foreignObject id="searchBar" class="searchPanel" x="${settingsPos-450}" y="0" width="350" height="55" opacity="0">
             <div xmlns="http://www.w3.org/1999/xhtml" width="350" height="55">
-                <input class="searchBar" type="text" style="font-size:35px;" width="350" height="55"></input>
+                <input placeholder="Type anything..." class="searchBar" type="text" style="font-size:35px;" width="350" height="55"></input>
             </div>
         </foreignObject>
         <animate xlink:href="#searchBar" id="searchBarFadeIn" attributeType="XML" attributeName="opacity" dur="500ms"  begin="indefinite" fill="freeze"
@@ -758,6 +856,7 @@ function addRemainingSegment(replace=false) {
         else {
             document.getElementById("searchBarFadeOut").beginElement();
             searchBarShowing = 0;
+            document.getElementById("searchBkwdClose").beginElement();
         }
         
     }

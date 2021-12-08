@@ -146,7 +146,7 @@ li {
 	/* z-index:5; */
 	color:white;
 	
-	transition:filter 1s;
+	transition:all 1s;
 	
 	
 	/* transition-timing-function: cubic-bezier(1.1, .001, 0.22, 1); */
@@ -156,6 +156,7 @@ li {
 
 .nav-link:hover {
 	cursor:pointer;
+	/* filter:url(#turbFilter); */
 }
 
 

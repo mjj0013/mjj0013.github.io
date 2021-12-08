@@ -70,9 +70,16 @@
         </select>
         
         <svg id="imageManipSVG" width="1500" height="800">
-            <image id="image1" x="0" y="0" width="500px" height="800px"/>
-            <image id="image2" x="500" y="0" width="500px" height="800px"/>
-            <image id="resultImage" x="1000" y="0" width="500px" height="800px"/>
+		<filter id="gradient1_filter" color-interpolation-filters="sRGB">
+			<feImage href="./images/gradient1.svg" result="Result"/>
+			<feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="4" result="turb">
+				<animate attributeName="baseFrequency" values="0.05; 0.25; 0.625; 0.25; 0.05"  dur="4s" repeatCount="indefinite"></animate>
+			</feTurbulence>
+			<feDisplacementMap id="dispFE" result="displacement" in="SourceGraphic" in2="turbulence" scale="200" xChannelSelector="R" yChannelSelector="B">
+				<!-- <animate attributeName="scale" from="1" to="200" dur="5s" repeatCount="indefinite"></animate> -->
+			</feDisplacementMap>
+		</filter>
+            	<image id="image1" x="0" y="0" width="500px" height="800px" filter="url(#gradient1_filter)"/>
         </svg>
        
         

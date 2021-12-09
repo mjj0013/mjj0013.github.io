@@ -13,7 +13,7 @@ var searchBarResults = [
     {path:"/imageGallery/imageGallery.html", subject:"Saturn V" , keywords:["saturn","saturn v" ,"saturn 5" ,"rocket"]},
     {path:"/imageGallery/imageGallery.html", subject:"Ham" , keywords:["chimpanzee","astronaut", "ham"]},
     {path:"/imageGallery/imageGallery.html", subject:"Dog" , keywords:["dog","australian", "shepherd", "aussie"]},
-    {path:"/imageGallery/imageGallery.html", subject:"Félicette" , keywords:["cat","astronaut", "félicette"]},
+    {path:"/imageGallery/imageGallery.html", subject:"Félicette (cat)" , keywords:["cat","astronaut", "félicette"]},
     {path:"/imageGallery/imageGallery.html", subject:"Miss Baker" , keywords:["monkey","astronaut", "miss", "baker", "squirrel"]},
     {path:"/imageGallery/imageGallery.html", subject:"Space and Rocket Center" , keywords:["museum","center", "space", "rocket"]},
     {path:"/eyes/eyes.html", subject:"Eyes" , keywords:["eyes"]},

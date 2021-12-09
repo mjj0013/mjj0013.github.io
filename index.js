@@ -87,6 +87,7 @@ window.onload = () => {
     if(currentLocation=="imageGallery") {
         
         initNavBar();
+        insertImageFooters();
         //initBackground();    
         
     }

@@ -66,6 +66,7 @@ function initBackground() {
     
     var d1 = `M${layerAttributes[1]["Mx"]},${layerAttributes[1]["My"]} C${layerAttributes[1]["x1"]},${layerAttributes[1]["y1"]} ${layerAttributes[1]["x2"]},${layerAttributes[1]["y2"]} ${layerAttributes[1]["x"]},${layerAttributes[1]["y"]} l${layerAttributes[1]["returnX"]} 0, l0 ${layerAttributes[1]["returnY"]}`
     layer1.setAttribute("d", d1)
+    
     layer1.setAttribute('fill',layerAttributes[1]["fill"]);
 
     var layer2 = document.createElementNS("http://www.w3.org/2000/svg","path");
@@ -89,6 +90,7 @@ function initBackground() {
     var d2 = `M${layerAttributes[2]["Mx"]},${layerAttributes[2]["My"]} C${layerAttributes[2]["x1"]},${layerAttributes[2]["y1"]} ${layerAttributes[2]["x2"]},${layerAttributes[2]["y2"]} ${layerAttributes[2]["x"]},${layerAttributes[2]["y"]} l${layerAttributes[2]["returnX"]} 0, l0 ${layerAttributes[2]["returnY"]}`
     layer2.setAttribute("d", d2)
     layer2.setAttribute('fill',layerAttributes[2]["fill"]);
+    
 
     //added right here so that overlapping is correct
    

@@ -20,10 +20,7 @@ body {
 	height:400px;
 	border: 1px solid black;
 	z-index:3;
-
 	transition: left 500ms;
-	
-	
 }
 
 
@@ -37,13 +34,59 @@ body {
 	
 }
 
+.galleryGrid {
 
+	display:grid;
 
-#imageManipSVG {
-	top:200px;
-	left:0px;
-	z-index:50;
+	grid-gap: 10px;
+	grid-template-columns: repeat(3,1fr);
+	grid-template-rows:repeat(5, 1fr);
+	grid-template-areas:
+			"img1 img2 img3"
+			"img1 img2 img4"
+			"img1 img2 img4"
+			"img6 img7 img5"
+			"img6 img7 img5";
+
 }
+
+.gallerySVG {
+	z-index:1;
+}
+/*row-start, column-start, row-finish, columm-finish*/
+.gallerySVG.img1{
+	grid-area:img1;
+	/* grid-area: 1/1/1/1;		 */
+}
+.gallerySVG.img2{
+	grid-area:img2;
+	/* grid-area: 1/2/2/2; */
+}
+
+.gallerySVG.img3{
+	grid-area:img3;
+	/* grid-area: 2/2/2/2; */
+}
+
+.gallerySVG.img4{
+	grid-area:img4;
+	/* grid-area: 2/1/2/1; */
+}
+.gallerySVG.img5{
+	grid-area:img5;
+	/* grid-area: 2/3/2/3; */
+}
+.gallerySVG.img6{
+	grid-area:img6;
+	/* grid-area: 2/2/2/2; */
+}
+.gallerySVG.img7{
+	grid-area:img7;
+	/* grid-area: 1/2/2/2; */
+}
+
+
+
 
 
 .bgSVG.movingContainer {
@@ -58,6 +101,7 @@ body {
 	width:100vw;
 	height:50%;
 	z-index:2;
+	
 }
 
 #backgroundFiller {
@@ -93,7 +137,7 @@ textarea {
 	height: 125px;
 	border:1px solid black;
 	transform: translate3d(0);
-	
+
 	
 	/* z-index:10; */
 }
@@ -156,7 +200,7 @@ li {
 
 .nav-link:hover {
 	cursor:pointer;
-	/* filter:url(#turbFilter); */
+	
 }
 
 
@@ -222,8 +266,11 @@ li {
 } */
 
 #navBar {
-	filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+	/* filter: drop-shadow(0 6mm 4mm rgb(160,0,210)); */
+	filter: drop-shadow(3px 5px 2px rgba(0, 0, 0 , 0.4 ));
+	/* filter:  drop-shadow(0 6mm 4mm rgb(0, 0, 0)); */
 
+	
 }
 
 

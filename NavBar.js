@@ -5,7 +5,7 @@ myHeaders.set("Access-Control-Allow-Origin", "*");
 myHeaders.set("Access-Control-Request-Headers", "*");
 var coverCanvas = document.getElementById("coverCanvas");
 var coverContext = coverCanvas.getContext("2d");
-
+var ballGameInterval;
 var searchBarShowing = 0;
 var searchBarResults = [
     {path:"/pacmen/pacmen.html", subject:"Pacmen" ,keywords:["pacmen","yellow"]},
@@ -24,6 +24,8 @@ var searchBarResults = [
 
 ]
 
+var ballContainer = document.getElementById("ballContainer");
+
 
 var coverTriangles = [];
 var xSortedCoverTriangles = []
@@ -39,6 +41,7 @@ var navElementSizes = {150:2, 50:2}     //keys are size, values are the quantiti
 
 var mitDropDownOpen = false;
 var numberBallPresses = 0;
+var ballGameStarted = 0;
 var navBar = document.getElementById("navBar");
 
 function initNavBar(replace=false) {
@@ -285,22 +288,36 @@ function getRandomInt(min, max) {
 }
 
 
-
 function secondaryColorChanged() {
+    let currentDir = getCurrentLocation();
     var newHue = document.getElementById("secondaryColor");
     settingsMap['secondaryHue'] = newHue.value;
     selectedSecondaryHue = newHue.value;
+    if(currentDir=="imageGallery") return;
+
+    
     document.getElementById("layer1").setAttribute("fill",`hsl(${selectedSecondaryHue}, 50%, 50%)`)
+    
+    
 }
 
 function baseColorChanged() {
+    let currentDir = getCurrentLocation();
+    
     var newHue = document.getElementById("baseColor");
     settingsMap['baseHue'] = newHue.value;
     selectedBaseHue = newHue.value;
-    document.getElementById("layer2").setAttribute("fill",`hsl(${selectedBaseHue}, 80%, 50%)`)
-    document.getElementById("layer0").setAttribute("fill",`hsl(${selectedBaseHue}, 50%, 50%)`)
-    document.getElementById("fillerLayer").setAttribute("fill",`hsl(${selectedBaseHue}, 50%, 50%)`)
-    document.getElementById("sw").setAttribute("right", window.innerWidth);
+
+    if(currentDir=="imageGallery") {
+        document.getElementById("fillerLayer").setAttribute("fill",`hsl(${selectedBaseHue}, 50%, 50%)`)
+    }
+    else {
+        document.getElementById("layer2").setAttribute("fill",`hsl(${selectedBaseHue}, 80%, 50%)`)
+        document.getElementById("layer0").setAttribute("fill",`hsl(${selectedBaseHue}, 50%, 50%)`)
+        document.getElementById("fillerLayer").setAttribute("fill",`hsl(${selectedBaseHue}, 50%, 50%)`)
+        document.getElementById("sw").setAttribute("right", window.innerWidth);
+    }
+    
     var settingsButton = document.getElementById("settingsButton");
     settingsButton.onclick = () => {
         if(document.getElementById("sw").style.display=="block") {document.getElementById("sw").style.display="none";}
@@ -308,16 +325,10 @@ function baseColorChanged() {
     }
 }
 
-function createElementFromString(str) {
-    var element = new DOMParser().parseFromString(str, 'text/html').body.firstElementChild;
-    return element;
-}
 
 function createDropdown(currentDir,replace=false) {
     var rootDir = (currentDir=="index")? "./" : "../"
     
-
-
     var mitProjectsDropdownButton = `<path class="nav-link" id="mitProjectsDropdownButton" d="M50,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#mitProjectsLinkGradient)"  pointer-events="all"/>
         <text x="58" y="30" fill="white" stroke="white" pointer-events="none">MIT Projects</text> 
         <image href="${rootDir}icons/arrow_drop_down_white_24dp.svg" x="170" y="10" height="30" width="30" pointer-events="none">
@@ -328,7 +339,7 @@ function createDropdown(currentDir,replace=false) {
     <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="100%"/>
     <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="25%"/>
     
-    <animate id="mitProjectsDropdownButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
+    <animate id="mitProjectsDropdownButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur="1.25s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
     </linearGradient>`
     
     if(!replace) {
@@ -477,8 +488,6 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="25%"/>
             <animate id="homeNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
             </linearGradient>`
-    
-    
 
     var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M600,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all"></path>`
     
@@ -509,9 +518,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     <text x="100" y="130" fill="white" stroke="white" pointer-events="none">Eyes</text> 
     <animate id="fadeInAnimation2" attributeType="XML" attributeName="opacity" dur="500ms"  begin="indefinite" fill="freeze" from="0.0" to="1.0"  begin="indefinite"></animate> 
     <animate id="fadeOutAnimation2" attributeType="XML" attributeName="opacity" dur="100ms"  begin="indefinite" fill="freeze" from="1.0" to="0.0" begin="indefinite"></animate></a>`
-        
-
-
+    
     
     var eyesLinkGradientHTML = `<linearGradient id="eyesNavLinkGradient" x1="0" y1=".9" x2="1.8" y2=".9" spreadMethod="reflect" gradientTransform="rotate(90) skewY(20)">
     <stop stop-color="hsla(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%,0.5)" offset="5%"/>
@@ -615,9 +622,15 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
         insertInto.insertAdjacentHTML('beforeend', ballGameLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', ballGameLinkGradientHTML);
     }
-    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${350+20}" cy="${30}" r="${10}" fill="hsl(40, 100%, 50%)" pointer-events="none"/>`)
-    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${350+30}" cy="${12}" r="${7}" fill="hsl(10, 100%, 50%)" pointer-events="none"/>`)
-    insertInto.insertAdjacentHTML("beforeend", `<circle cx="${350+40}" cy="${35}" r="${5}" fill="hsl(90, 80%, 50%)" pointer-events="none"/>`)
+
+    insertInto.insertAdjacentHTML("beforeend", `
+    <g id="ballIcons">
+        <circle cx="${350+20}" cy="${30}" r="${10}" fill="hsl(40, 100%, 50%)" pointer-events="none"/>
+        <circle cx="${350+30}" cy="${12}" r="${7}" fill="hsl(10, 100%, 50%)" pointer-events="none"/>
+        <circle cx="${350+40}" cy="${35}" r="${5}" fill="hsl(90, 80%, 50%)" pointer-events="none"/>
+    </g>
+    <image id="ballGameEndIcon" href="${rootDir}icons/box-arrow-left.svg" x="357" y="10" height="30" width="30" pointer-events="none" style="display:none;">`);
+   
     
     document.getElementById("forwardDropdownAnimation").addEventListener("endEvent", (e)=>{
         document.getElementById("fadeInAnimation1").beginElement();
@@ -639,38 +652,64 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     
     makeBallGame();
     document.getElementById("ballGameButton").onclick = (e) => {
-        
-        ++numberBallPresses;
-        if(numberBallPresses>=3) {
-            return;
-        }
-        document.getElementById("fwdPipeAnimation").beginElement();
-        document.getElementById("fwdPipeAnimation").addEventListener("endEvent", (e)=>{    
-            //startBallGame(25);
+        if(ballGameStarted==0){
+            ballGameStarted = 1;
+            document.getElementById("ballIcons").style.display="none";
+            document.getElementById("ballGameEndIcon").style.display="block";
+            document.getElementById("fwdPipeAnimation").beginElement();
+            document.getElementById("fwdPipeAnimation").addEventListener("endEvent", (e)=>{    
 
-            document.getElementById("ballContainer").classList.add("movingContainer");
-            console.log("starting ball game");
+                ballContainer.classList.add("movingContainer");
+                console.log("starting ball game");
+                setTimeout(()=>{
+                    
+                    for(let i=0; i < 25 ; ++i) {
+                        let x = getRandomInt(100,175);
+                        while(x==null) x = getRandomInt(100,175);
+                        let y = getRandomInt(10,20);
+                        while(y==null) y = getRandomInt(10,20);
+                        let r = getRandomInt(5,25);
+                        while(r==null) r = getRandomInt(5,25);
+                        let xVel = getRandomInt(-10,10);
+                        while(xVel==null)xVel = getRandomInt(-10,10);
+                        addBallObject(x, y, r, r, xVel, 25 , 50, null);
+                    }
+                    
+                    ballGameInterval = setInterval(()=>{
+                        let status = updateBallGame();
+                        if(status==-1) {
+
+                            clearBallGame();
+
+                            document.body.insertAdjacentHTML("beforeend",`<div id="gameAlert" class="alert alert-danger" role="alert">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="rgb(241, 13, 13)" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                            </svg>
+                            <div>Error! 
+                            Refresh page and try again.</div>
+                            </div>`);
+                            document.getElementById("gameAlert").style.top=ballContainer.style.top;
+                            
+                        }
+                        drawBallGame();
+                    }
+                    ,1000/60)
+                    
+                }, 500)
             
-            setTimeout(()=>{
-                //addBallObject(150, 150, 25, 25, 5, 5,25, null);
-                for(let i=0; i < 25 ; ++i) {
-                    let x = getRandomInt(100,175);
-                    let y = getRandomInt(10,20);
-                    let r = getRandomInt(5,25);
-                    let xVel = getRandomInt(-10,10);
-                    addBallObject(x, y, r, r, xVel, 25 , 50, null);
-                }
-                
-                setInterval(()=>{
-                    updateBallGame();
-                    drawBallGame();
-                }
-                
-                ,1000/60)
-                
-            }, 500)
-            //addBallObject(150, 150, 25, 25, 5, 5,25, null);
-        })
+            })
+        }
+        else {
+            clearBallGame();
+            ballContainer.classList.remove("movingContainer");
+            ballGameStarted = 0;
+            document.getElementById("ballIcons").style.display="block";
+            document.getElementById("ballGameEndIcon").style.display="none";
+            document.getElementById("bkwdPipeAnimation").beginElement();
+            
+        }
+        
+        
     
     }
 }
@@ -699,22 +738,36 @@ function makeBallGame() {
                 M350,50 l50,0 l0,150 l-50,0 l0,-150" 
             >
         </animate>
+        <animate id="bkwdPipeAnimation" attributeType="XML" attributeName="d" dur="50ms"  begin="indefinite" fill="freeze"
+        values="M350,50 l50,0 l0,150 l-50,0 l0,-150;
+                M350,50 l50,0 l0,100 l-50,0 l0,-100;
+                M350,50 l50,0 l0,50 l-50,0 l0,-50;
+                M350,50 l50,0 l0,0 l-50,0 l0,0" 
+            >
+        </animate>
     </path>`
 
     navBar.insertAdjacentHTML('beforeend',pipeGradientHTML);
     navBar.insertAdjacentHTML('beforeend',pipeHTML)
 }
 
-var startBallGame = (numberOfBalls) =>{
-    console.log("starting ball game");
-    for(let i=0; i < numberOfBalls; ++i) {
-        addBallObject(500, 500, 25, 25, 50, 50, null);
-    }
+var clearBallGame = () =>{
+    clearInterval(ballGameInterval);
+    console.log("clearing ball game");
     
-    setInterval(()=>{
-        updateBallGame();
-        drawBallGame();
-    },1000/60)
+    
+    
+    for(let i = 0; i < physicalObjects.length; ++i) {
+        ballContainer.removeChild(document.getElementById(`circle${i}`));
+    }
+
+    console.log("physicalObjects.length", physicalObjects.length)
+    
+    
+    clearGame();
+    
+    
+
 }
 
 
@@ -737,7 +790,7 @@ function addBallObject (x,y, width, height,dx,dy,mass,color,isNew=true) {
     var newObj =  new BallObject("circle"+obj.index, x, y, width, height, dx, dy, mass);
     physicalObjects.push(newObj);
 
-    if(isNew) { localStorage.physicalObjectMap = JSON.stringify(physicalObjectMap); }
+    //if(isNew) { localStorage.physicalObjectMap = JSON.stringify(physicalObjectMap); }
    
     //var circleGroup = document.getElementById("circleGroup");
     var newShape = document.createElementNS("http://www.w3.org/2000/svg",'circle');
@@ -754,19 +807,29 @@ function addBallObject (x,y, width, height,dx,dy,mass,color,isNew=true) {
         controlledObjectIndex = obj.index;
     })
     //circleGroup.appendChild(newShape);
-    document.getElementById("ballContainer").appendChild(newShape);
+    ballContainer.appendChild(newShape);
 
 }
 
 
 function updateBallGame() {  
-    physicalObjects.forEach((obj,index) => {
-        obj.updateBallObj();
-        physicalObjectMap[index].x =  obj.x;
-        physicalObjectMap[index].y =  obj.y;
-        physicalObjectMap[index].dx = obj.xVelocity;
-        physicalObjectMap[index].dy = obj.yVelocity;
-    })
+    var status;
+    var BreakException = {}
+    try {
+        physicalObjects.forEach((obj,index) => {
+            status = obj.updateBallObj();
+            if(status==-1) throw BreakException;
+            physicalObjectMap[index].x =  obj.x;
+            physicalObjectMap[index].y =  obj.y;
+            physicalObjectMap[index].dx = obj.xVelocity;
+            physicalObjectMap[index].dy = obj.yVelocity;
+        })
+    }
+    catch(e) {
+        if(e!==BreakException) throw e;
+    }
+    
+    return status;
 }
 
 function drawBallGame() {
@@ -893,7 +956,7 @@ function addRemainingSegment(replace=false) {
             from="1.0" to="0.0" begin="indefinite"></animate>
     
         <image id="searchIcon" href="${rootDir}icons/search.svg" x="${settingsPos-50}" y="10" height="30" width="30" pointer-events="none">
-        <animateTransform  id="rotateSearchStart"  attributeName="transform" attributeType="XML" type="rotate" begin="indefinite" from="0 ${settingsPos-50+10} 20" to="30 ${settingsPos-50+10} 20" dur=".5s" repeatCount="1"/>
+        
         </image>
     `
     );
@@ -934,20 +997,22 @@ function addRemainingSegment(replace=false) {
 
     document.getElementById("searchButton").onclick = () => {
         console.log(document.getElementById("searchBar").style.opacity);
+        
         if(searchBarShowing==0) {
             document.getElementById("searchBarFadeIn").beginElement();
+            document.getElementById("searchField").focus();
             searchBarShowing = 1;
+
         }
         else {
             document.getElementById("searchBarFadeOut").beginElement();
             searchBarShowing = 0;
             document.getElementById("searchBkwdClose").beginElement();
+            document.getElementById("searchField").blur();
         }
         
     }
-    document.getElementById("searchButton").onmouseover = () => {
-        document.getElementById("rotateSearchStart").beginElement();
-    }
+
 }
 function updateCover() {
     

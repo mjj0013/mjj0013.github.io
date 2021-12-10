@@ -18,6 +18,11 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
+function clearGame() {
+    controlledObjectIndex = -1;
+    physicalObjects = [];
+    physicalObjectMap = [];
+}
 //("circle"+obj.index, x, y, width, height, dx, dy, mass);
 class BallObject {
     constructor(obj_id, x, y, width, height, xVelocity, yVelocity, mass) {
@@ -52,7 +57,11 @@ class BallObject {
         this.circle2circle = this.circle2circle.bind(this);
         this.drawBallObj = this.drawBallObj.bind(this);
         this.updateBallObj =this.updateBallObj.bind(this);
+        
     }
+
+
+    
     circle2circle(circle1,circle2,isCollisionTest=false) {
        
         let squaredDist = (circle2.x-circle1.x)*(circle2.x-circle1.x) + (circle2.y-circle1.y)*(circle2.y-circle1.y);
@@ -153,11 +162,17 @@ class BallObject {
         this.x = Math.max(Math.min(this.x + new_xVelocity, containerRect.width-this.width),0);
         this.y = Math.max(Math.min(this.y + new_yVelocity, containerRect.height-this.height),0);
         let circleElement = document.getElementById(this.obj_id);
+
+        if(isNaN(this.x) || isNaN(this.y)) return -1;
+        
         circleElement.setAttribute("cx", this.x);
         circleElement.setAttribute("cy",this.y);
-        
         this.xVelocity = new_xVelocity;
         this.yVelocity = new_yVelocity;
+        
+        
+        
+        
         
         
     }

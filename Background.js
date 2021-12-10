@@ -33,9 +33,29 @@ function adjustBackground() {
 }
 
 
-function initBackground() {
+function initBackground(simple=false) {
     var backgroundFill = document.getElementById("backgroundFiller");
     var layer0 = document.createElementNS("http://www.w3.org/2000/svg","rect");
+
+    if(simple) {
+        
+        backgroundFill.style.position="fixed"
+        backgroundFill.style.top="150px";
+        backgroundFill.style.left="0px";
+        backgroundFill.style.width=window.innerWidth;
+        backgroundFill.style.height=window.screen.height;
+
+        layer0.setAttribute("id", "fillerLayer")
+        
+        layer0.setAttribute("width", "100%");
+        layer0.setAttribute("pointer-events","none");
+        layer0.setAttribute("height","100%");
+        layer0.setAttribute('fill',layerAttributes[0]["fill"]);
+        backgroundFill.appendChild(layer0)
+
+        return;
+    }
+    
     //layer0.setAttribute("filter","url(#backgroundLight)")
     layer0.setAttribute("id", "fillerLayer")
     layer0.setAttribute("width", window.innerWidth);
@@ -46,6 +66,10 @@ function initBackground() {
 
     //backgroundSVG.appendChild(layer0);
     wavesSVG.insertAdjacentHTML('beforeend',`<rect id="layer0" width="${window.innerWidth}" height="${window.innerHeight/2}" fill="${layerAttributes[0]["fill"]}"" />`)
+   
+   
+    
+    
     //wavesSVG.appendChild(layer0);
  
     

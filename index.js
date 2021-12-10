@@ -78,18 +78,14 @@ window.onload = () => {
     if(currentLocation=="busStops") {
         initNavBar();
     }
-    if(currentLocation=="wordSearch") {
-        
-        initNavBar();
-        // initBackground();    
-        
-    }    
     if(currentLocation=="imageGallery") {
-        
         initNavBar();
-        insertImageFooters();
-        //initBackground();    
-        
+        initBackground(true);    
+    }
+    if(currentLocation=="meshGenerate") {
+        initNavBar();
+        initBackground(true);    
+       
     }
 }
 

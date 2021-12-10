@@ -1,6 +1,11 @@
 var myHeaders = new Headers();
 myHeaders.set("Access-Control-Allow-Origin", "*");
 myHeaders.set("Access-Control-Request-Headers", "*");
+
+
+
+var meshSVG = document.getElementById("meshSVG");
+
 function det(a,b,c,d) {
     return a*d - b*c;
 }
@@ -10,7 +15,7 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
   }
-function generateRandomMesh() {
+function generateMesh(makeRandom=true) {
     var M = new Mesh();
     
     //generate random points
@@ -32,7 +37,7 @@ function generateRandomMesh() {
         newPt.setAttribute('cy', M.pts[p].y);
         newPt.setAttribute('r', 3);
         
-        document.getElementById("backgroundSVG").appendChild(newPt);
+        meshSVG.appendChild(newPt);
     }
 
     var edgeCounter = [];
@@ -50,10 +55,10 @@ function generateRandomMesh() {
         newPolygon.setAttribute('id',M.edges[e].id);
         newPolygon.setAttribute('d',d);
         newPolygon.setAttribute('class','meshRegionBorder')
-        if(M.renderAllEdges) document.getElementById("backgroundSVG").appendChild(newPolygon);
+        if(M.renderAllEdges) meshSVG.appendChild(newPolygon);
         
     }
-    console.log('M.edges', M.edges)
+    
     for(let m =0; m < M.cyclesDFS.length; ++m) {
         var newPolygon = new Polygon(`polygon${m}`,M.cyclesDFS[m], M);
         var polygonElement = document.createElementNS("http://www.w3.org/2000/svg",'path');
@@ -92,7 +97,7 @@ function generateRandomMesh() {
         let light = getRandomInt(0,100);
         polygonElement.setAttributeNS(null,'fill',`hsl(${220},${sat}%,${light}%)`);
         
-        document.getElementById("backgroundSVG").appendChild(polygonElement);
+        meshSVG.appendChild(polygonElement);
        
       
     }
@@ -126,7 +131,7 @@ class Mesh {
         this.renderAllEdges = false;
         this.build = this.build.bind(this);
 
-        //this.pathsToOrigin = null;
+       
 
         this.mapShortestPaths = this.mapShortestPaths.bind(this);
         
@@ -139,9 +144,9 @@ class Mesh {
        
     }
 
-    build(numPts, random=false,minDistBwPts=20) {
+    build(numPts, makeRandom=true,minDistBwPts=20) {
         const summation = (previousValue, currentValue) => previousValue + currentValue;
-        if(!random) {
+        if(makeRandom) {
             for(let i=0; i < numPts;++i) {
                 let isNewPt = false;
                 let x,y;
@@ -161,51 +166,52 @@ class Mesh {
                 this.pts.push({x:x, y:y});
 
             }
-
-            //"merge" points that are minimum distance b/w each other (minDistBwPts)
-            for(let i=0; i < this.pts.length; ++i) {
-                let thisPt = this.pts[i];
-                for(let j=0; j < this.pts.length; ++j){
-                    let otherPt =  this.pts[j];
-                    let squaredDist = (thisPt.x-otherPt.x)*(thisPt.x-otherPt.x) + (thisPt.y-otherPt.y)*(thisPt.y-otherPt.y);
-                    if(squaredDist < (minDistBwPts*minDistBwPts)) {
-                        this.pts.splice(j,1);
-                    }
-                }
-            }
-
-            //find closest points for each point
-            for(let i=0; i < this.pts.length; ++i) {
-                let thisPt = this.pts[i];
-                let closestPts = [];
-                for(let j=0; j < this.pts.length; ++j){
-                    if(j==i) continue;
-                    let otherPt =  this.pts[j];
-                    let squaredDist = (thisPt.x-otherPt.x)*(thisPt.x-otherPt.x) + (thisPt.y-otherPt.y)*(thisPt.y-otherPt.y);
-                    closestPts.push({index:j,squaredDist:squaredDist});
-                }
-                closestPts.sort(function(a,b) { return a.squaredDist - b.squaredDist;  })
-
-                let topPercentile = Math.ceil(closestPts.length/10);
-                let topPts = closestPts.slice(0,topPercentile);
-                
-                topPts = topPts.map(x=> {return x.squaredDist});
-                let closestAvgDist = topPts.reduce(summation)/topPercentile
-                
-                let animationPhase = getRandomInt(0, 360);
-
-                this.ptData.push({
-                    index:i, 
-                    closestPts:closestPts, 
-                    connections:[], 
-                    mappedPaths:{},
-                    edgeIDs:[], 
-                    closestAvgDist:closestAvgDist,
-                    associatedPolygons:0,
-                    animationPhase:animationPhase
-                });
-            }
         }
+
+        // //"merge" points that are minimum distance b/w each other (minDistBwPts)
+        // for(let i=0; i < this.pts.length; ++i) {
+        //     let thisPt = this.pts[i];
+        //     for(let j=0; j < this.pts.length; ++j){
+        //         let otherPt =  this.pts[j];
+        //         let squaredDist = (thisPt.x-otherPt.x)*(thisPt.x-otherPt.x) + (thisPt.y-otherPt.y)*(thisPt.y-otherPt.y);
+        //         if(squaredDist < (minDistBwPts*minDistBwPts)) {
+        //             this.pts.splice(j,1);
+        //         }
+        //     }
+        // }
+
+        //find closest points for each point
+        for(let i=0; i < this.pts.length; ++i) {
+            let thisPt = this.pts[i];
+            let closestPts = [];
+            for(let j=0; j < this.pts.length; ++j){
+                if(j==i) continue;
+                let otherPt =  this.pts[j];
+                let squaredDist = (thisPt.x-otherPt.x)*(thisPt.x-otherPt.x) + (thisPt.y-otherPt.y)*(thisPt.y-otherPt.y);
+                closestPts.push({index:j,squaredDist:squaredDist});
+            }
+            closestPts.sort(function(a,b) { return a.squaredDist - b.squaredDist;  })
+
+            let topPercentile = Math.ceil(closestPts.length/10);
+            let topPts = closestPts.slice(0,topPercentile);
+            
+            topPts = topPts.map(x=> {return x.squaredDist});
+            let closestAvgDist = topPts.reduce(summation)/topPercentile
+            
+            let animationPhase = getRandomInt(0, 360);
+
+            this.ptData.push({
+                index:i, 
+                closestPts:closestPts, 
+                connections:[], 
+                mappedPaths:{},
+                edgeIDs:[], 
+                closestAvgDist:closestAvgDist,
+                associatedPolygons:0,
+                animationPhase:animationPhase
+            });
+        }
+    
         
     }
 
@@ -217,21 +223,37 @@ class Mesh {
 
         //  using sortedByDensity to start with the points that are most strongly connected 
         //  strongly connected  ==> (least average distance between closest neighbors)
+
+
+        let numTopClosestPts = this.ptData.length>5? 4:1;
         for(let a=0; a < sortedByDensity.length; ++a) {
             //  closestPts[0] ===> closest point
             //  closestPts[numPts-1] ==> farthest point
             
             //first try this: find set-intersections of the top 5 closest points to point A
-            let aTop5 = sortedByDensity[a].closestPts.map(x=>{return x.index;}).slice(0,4);
-            let bTop5 = this.ptData[aTop5[0]].closestPts.map(x=>{return x.index;}).slice(0,4);
-            let cTop5 = this.ptData[aTop5[1]].closestPts.map(x=>{return x.index;}).slice(0,4);
-            let dTop5 = this.ptData[aTop5[2]].closestPts.map(x=>{return x.index;}).slice(0,4);
-         
-            let commonTopPts = aTop5.concat(bTop5,cTop5,dTop5);
-            commonTopPts = commonTopPts.filter(p => aTop5.includes(p));
-            commonTopPts = commonTopPts.filter(p => bTop5.includes(p));
-            commonTopPts = commonTopPts.filter(p => cTop5.includes(p));
-            commonTopPts = commonTopPts.filter(p => dTop5.includes(p));
+            let aTop5 = sortedByDensity[a].closestPts.map(x=>{return x.index;}).slice(0,numTopClosestPts);
+            let numNeighbors = aTop5.length;
+            var commonTopPts = aTop5;
+            var topPts = [];
+            for(let i =0; i < numNeighbors; ++i) {
+                let TP = this.ptData[aTop5[i]].closestPts.map(x=>{return x.index;}).slice(0,numNeighbors);
+                topPts.push(TP);
+                commonTopPts.concat(TP);
+            }
+            // let bTop5 = this.ptData[aTop5[0]].closestPts.map(x=>{return x.index;}).slice(0,numTopClosestPts);
+            // let cTop5 = this.ptData[aTop5[1]].closestPts.map(x=>{return x.index;}).slice(0,numTopClosestPts);
+            // let dTop5 = this.ptData[aTop5[2]].closestPts.map(x=>{return x.index;}).slice(0,numTopClosestPts);
+            
+            // let commonTopPts = aTop5.concat(bTop5,cTop5,dTop5);
+            for(let i=0; i < numNeighbors; ++i) {
+                commonTopPts = commonTopPts.filter(p => topPts[i].includes(p));
+            }
+            
+            // commonTopPts = commonTopPts.filter(p => aTop5.includes(p));
+            // commonTopPts = commonTopPts.filter(p => bTop5.includes(p));
+            // commonTopPts = commonTopPts.filter(p => cTop5.includes(p));
+            // commonTopPts = commonTopPts.filter(p => dTop5.includes(p));
+            
             commonTopPts = commonTopPts.concat(aTop5);
             
             for(let p=0; p < commonTopPts.length; ++p) {
@@ -767,7 +789,7 @@ class Polygon {
     }
 }
 if (typeof module !== 'undefined') {
-    module.exports = { generateRandomMesh, Mesh };
+    module.exports = { generateMesh, Mesh };
   }
 
-// export {generateRandomMesh, Mesh};
+

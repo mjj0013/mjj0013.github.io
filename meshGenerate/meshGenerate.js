@@ -38,7 +38,7 @@ function resetMesh() {
         meshNodes[i].remove();
     }
     
-   
+    document.getElementById("playButton").classList.add("disabled");
     meshSVG.removeEventListener("click", (e)=> mouseClickHandler(e), true);
     document.getElementById("startMeshButton").style.opacity=1.0;
     document.getElementById("startMeshButton").style.display='block';

@@ -62,12 +62,15 @@
             <!-- style={{filter:'url(#filter)'}} -->
             
             <rect id="meshSVGBackground"  width="100%" height="100%" fill='grey' />
-            <rect id="startMeshButton" x="400" y="300" width="50" height="50" fill="red" onclick="initSession()"/>
-            <!-- <image id="playButton" href="../icons/play.svg" x="25" y="25" width="40" height="40" onclick="toggleAnimateVertices()"/> -->
-            <g id="meshGroup" transform="matrix(1 0 0 1 0 0)" >
-
-
+            <g id="startMeshButton" onclick="initSession()">
                 
+                <path id="beginMeshSessionButton" d="M 494 254 A 12.25 12.25 0 0 1 494 404 L 327 404 A 12.25 12.25 0 0 1 327 254 L 494 254" fill="red"  />
+                <!-- <rect id="" x="325" y="275" width="150" height="50" fill="red" onclick="initSession()"/> -->
+                <text x="360" y="340" style="font-size: 40px;" style="pointer-events: none;">Start</text>
+            </g>
+            
+            
+            <g id="meshGroup" transform="matrix(1 0 0 1 0 0)" >
                 <g id="regionGroup"  transform="matrix(1 0 0 1 0 0)" />
                 <g id="polyGroup" transform="matrix(1 0 0 1 0 0)"  />
                 <g id="circleGroup"  transform="matrix(1 0 0 1 0 0)"/>
@@ -93,11 +96,15 @@
                 </path>
             </svg>
         </button>
+        <button id="resetButton" class="disabled" onClick = "toggleAnimateVertices()" width="100" height="100">
+            
+            <svg id="resetIcon" width="100" height="100" style="pointer-events:none" viewBox="0 0 45 40">
+                <image id="resetIcon" href="../icons/arrow-clockwise.svg" x="0" y="0" />
+            </svg>
+        </button>
         <div id="numPointsLabel"></div>
 
-		  
-		<!-- <h2>Test Header</h2>
-		<p>This is a test header</p> -->
+	
 		
 	</body>
 

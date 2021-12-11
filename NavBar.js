@@ -21,7 +21,6 @@ var searchBarResults = [
     {path:"#", subject:"Gallery" , keywords:["gallery"]},
     {path:"#", subject:"Settings" , keywords:["settings"]},
     {path:"#", subject:"Primary Color" , keywords:["settings", "base", "primary","color"]}
-
 ]
 
 var ballContainer = document.getElementById("ballContainer");
@@ -37,7 +36,7 @@ var selectedNavHue = 0;
 var selectedNavSat = 0;
 var selectedNavBrightness = 5;
 var numOfNavElements = 3;
-var navElementSizes = {150:2, 50:2}     //keys are size, values are the quantities of each size
+var navElementSizes = {150:3, 50:2}     //keys are size, values are the quantities of each size
 
 var mitDropDownOpen = false;
 var numberBallPresses = 0;
@@ -293,7 +292,7 @@ function secondaryColorChanged() {
     var newHue = document.getElementById("secondaryColor");
     settingsMap['secondaryHue'] = newHue.value;
     selectedSecondaryHue = newHue.value;
-    if(currentDir=="imageGallery") return;
+    if(currentDir=="imageGallery" || currentDir=="meshGenerate") return;
 
     
     document.getElementById("layer1").setAttribute("fill",`hsl(${selectedSecondaryHue}, 50%, 50%)`)
@@ -308,7 +307,7 @@ function baseColorChanged() {
     settingsMap['baseHue'] = newHue.value;
     selectedBaseHue = newHue.value;
 
-    if(currentDir=="imageGallery") {
+    if(currentDir=="imageGallery" || currentDir=="meshGenerate") {
         document.getElementById("fillerLayer").setAttribute("fill",`hsl(${selectedBaseHue}, 50%, 50%)`)
     }
     else {
@@ -438,6 +437,8 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
    
     var busStopsHref = "./busStops/busStops.html"
     var imageGalleryHref = "./imageGallery/imageGallery.html"
+    var meshGenHref = "./meshGenerate/meshGenerate.html"
+
     var rootDir = (currentDir=="index")? "./" : "../"
     if(currentDir=="index") homeHref="#";
     else if(currentDir=="pacmen"){ 
@@ -445,7 +446,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
         homeHref = "."+homeHref;
         eyesHref = "."+eyesHref;
         busStopsHref = "."+busStopsHref;
-       
+        meshGenHref = "."+meshGenHref;
         imageGalleryHref = "."+imageGalleryHref
     }
     else if(currentDir=="eyes") {
@@ -453,7 +454,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
         homeHref = "."+homeHref;
         pacmenHref = "."+pacmenHref;
         busStopsHref = "."+busStopsHref;
-       
+        meshGenHref = "."+meshGenHref;
         imageGalleryHref = "."+imageGalleryHref
     }
     else if(currentDir=="busStops") {
@@ -461,7 +462,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
         homeHref = "."+homeHref;
         pacmenHref = "."+pacmenHref;
         eyesHref = "."+eyesHref;
-       
+        meshGenHref = "."+meshGenHref;
         imageGalleryHref = "."+imageGalleryHref
     }
     
@@ -470,8 +471,16 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
         homeHref = "."+homeHref;
         pacmenHref = "."+pacmenHref;
         eyesHref = "."+eyesHref;
-       
+        meshGenHref = "."+meshGenHref;
         imageGalleryHref = "#"
+    }
+    else if(currentDir=="meshGenerate") {
+        busStopsHref = "."+busStopsHref;
+        homeHref = "."+homeHref;
+        pacmenHref = "."+pacmenHref;
+        eyesHref = "."+eyesHref;
+        meshGenHref = "#";
+        imageGalleryHref = "."+imageGalleryHref
     }
     var subLinkPos = [[50,50], [50,100], [50,150]];            //excludes Home link; ordered as => Pacmen, Eyes, BusStops
     //var linkPos = [0,];
@@ -558,7 +567,24 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     
     <animate id="imageGalleryNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
     </linearGradient>` 
-    var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M350,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all"></path>`
+
+    var meshGenLinkHTML =  `<a id="imageGalleryNavLink" href="${meshGenHref}" x="500" y="30" pointer-events="all">
+        <path class="nav-link" fill="url(#meshGenNavLinkGradient)" id="meshGenNavButton" d="M350,0 l150,0 l0,50 l-150,0 l0,-50" pointer-events="all" />
+        <text x="400" y="30" fill="white" dx="-35" stroke="white" pointer-events="none" style="font-size:16px;">Mesh Generation </text> 
+        
+        
+        </a>`
+        
+    var meshGenLinkGradientHTML =  `<linearGradient id="meshGenNavLinkGradient"   x1="0" y1=".9" x2="1.8" y2=".9" spreadMethod="reflect" gradientTransform="rotate(90) skewY(20)">
+    <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="5%"/>
+    <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="100%"/>
+    <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="25%"/>
+    
+    <animate id="meshGenNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
+    </linearGradient>` 
+
+
+    var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M500,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all"></path>`
     
     var ballGameLinkGradientHTML =  `<radialGradient id="ballGameNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="10%"/>
@@ -588,6 +614,9 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
 
         insertInto.insertAdjacentHTML('beforeend', imageGalleryLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', imageGalleryLinkGradientHTML);
+
+        insertInto.insertAdjacentHTML('beforeend', meshGenLinkHTML);
+        insertInto.insertAdjacentHTML('beforeend', meshGenLinkGradientHTML);
     }
     else {
         insertInto.removeChild(document.getElementById("homeNavLink"));
@@ -602,12 +631,19 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
         insertInto.removeChild(document.getElementById("ballGameLinkGradientHTML"));
         insertInto.removeChild(document.getElementById("imageGalleryLinkHTML"));
         insertInto.removeChild(document.getElementById("imageGalleryLinkGradientHTML"));
+        insertInto.removeChild(document.getElementById("meshGenLinkHTML"));
+        insertInto.removeChild(document.getElementById("meshGenLinkGradientHTML"));
 
         insertInto.insertAdjacentHTML('beforeend', homeLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', homeLinkGradientHTML);
 
+        
+
         insertInto.insertAdjacentHTML('beforeend', imageGalleryLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', imageGalleryLinkGradientHTML);
+
+        insertInto.insertAdjacentHTML('beforeend', meshGenLinkHTML);
+        insertInto.insertAdjacentHTML('beforeend', meshGenLinkGradientHTML);
 
         insertInto.insertAdjacentHTML('beforeend', pacmenLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', pacmenLinkGradientHTML);
@@ -625,11 +661,11 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
 
     insertInto.insertAdjacentHTML("beforeend", `
     <g id="ballIcons">
-        <circle cx="${350+20}" cy="${30}" r="${10}" fill="hsl(40, 100%, 50%)" pointer-events="none"/>
-        <circle cx="${350+30}" cy="${12}" r="${7}" fill="hsl(10, 100%, 50%)" pointer-events="none"/>
-        <circle cx="${350+40}" cy="${35}" r="${5}" fill="hsl(90, 80%, 50%)" pointer-events="none"/>
+        <circle cx="${500+20}" cy="${30}" r="${10}" fill="hsl(40, 100%, 50%)" pointer-events="none"/>
+        <circle cx="${500+30}" cy="${12}" r="${7}" fill="hsl(10, 100%, 50%)" pointer-events="none"/>
+        <circle cx="${500+40}" cy="${35}" r="${5}" fill="hsl(90, 80%, 50%)" pointer-events="none"/>
     </g>
-    <image id="ballGameEndIcon" href="${rootDir}icons/box-arrow-left.svg" x="357" y="10" height="30" width="30" pointer-events="none" style="display:none;">`);
+    <image id="ballGameEndIcon" href="${rootDir}icons/box-arrow-left.svg" x="507" y="10" height="30" width="30" pointer-events="none" style="display:none;">`);
    
     
     document.getElementById("forwardDropdownAnimation").addEventListener("endEvent", (e)=>{
@@ -648,6 +684,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     setLinkAnimations("eyesNavButton");
     setLinkAnimations("busStopsNavButton");
     setLinkAnimations("imageGalleryNavButton")
+    setLinkAnimations("meshGenNavButton")
     
     
     makeBallGame();
@@ -730,19 +767,19 @@ function makeBallGame() {
         </radialGradient>`
 
     var pipeHTML = `
-    <path class="nav-link" fill="url(#pipeGradient)" id="ballGamePipe" d="M350,50 l50,0 l0,0 l-50,0 l0,0"   pointer-events="all">
+    <path class="nav-link" fill="url(#pipeGradient)" id="ballGamePipe" d="M500,50 l50,0 l0,0 l-50,0 l0,0"   pointer-events="all">
         <animate id="fwdPipeAnimation" attributeType="XML" attributeName="d" dur="50ms"  begin="indefinite" fill="freeze"
-        values="M350,50 l50,0 l0,0 l-50,0 l0,0;
-                M350,50 l50,0 l0,50 l-50,0 l0,0;
-                M350,50 l50,0 l0,100 l-50,0 l0,-100;
-                M350,50 l50,0 l0,150 l-50,0 l0,-150" 
+        values="M500,50 l50,0 l0,0 l-50,0 l0,0;
+                M500,50 l50,0 l0,50 l-50,0 l0,0;
+                M500,50 l50,0 l0,100 l-50,0 l0,-100;
+                M500,50 l50,0 l0,150 l-50,0 l0,-150" 
             >
         </animate>
         <animate id="bkwdPipeAnimation" attributeType="XML" attributeName="d" dur="50ms"  begin="indefinite" fill="freeze"
-        values="M350,50 l50,0 l0,150 l-50,0 l0,-150;
-                M350,50 l50,0 l0,100 l-50,0 l0,-100;
-                M350,50 l50,0 l0,50 l-50,0 l0,-50;
-                M350,50 l50,0 l0,0 l-50,0 l0,0" 
+        values="M500,50 l50,0 l0,150 l-50,0 l0,-150;
+            M500,50 l50,0 l0,100 l-50,0 l0,-100;
+            M500,50 l50,0 l0,50 l-50,0 l0,-50;
+            M500,50 l50,0 l0,0 l-50,0 l0,0" 
             >
         </animate>
     </path>`

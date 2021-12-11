@@ -23,10 +23,12 @@ window.onresize = () => {
     for(let i =0; i < navBar.children.length; ++i) {
         navBar.removeChild(navBar.children[i])
     }
-    
+    var currentLocation  =getCurrentLocation()
     initNavBar();
-    if(getCurrentLocation()=="index" || getCurrentLocation()=="/") initBackground();    
-    //adjustBackground();
+    if(currentLocation=="index" || currentLocation=="/") initBackground();    
+
+
+    adjustBackground(currentLocation);
     
     //console.log(document.getElementById("mitProjectsDropdownButton").onclick);
     //coverCanvas.width = coverCanvas.height * (coverCanvas.clientWidth / coverCanvas.clientHeight);

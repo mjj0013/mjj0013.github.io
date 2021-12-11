@@ -25,6 +25,9 @@ body {
 	z-index:91;
 	transition: left 500ms;
 }
+.bgSVG.movingContainer {
+	left:375px;
+} 
 
 
 
@@ -116,9 +119,7 @@ image {
 
 
 
-.bgSVG.movingContainer {
-	left:225px;
-} 
+
 
 .wavesSVG {
 	position:absolute;
@@ -263,8 +264,18 @@ li {
 	left:25%;
 
 }
+#resetButton {
+	z-index:99;
+	position:absolute;
+	top:25%;
+	width:50px;
+	height:50px;
+	left:30%;
+}
+
 button.disabled {
 	filter:opacity(.5);
+	
 	
 }
 
@@ -274,8 +285,10 @@ button.disabled {
 	left:5%;
 	z-index:88;
 }
-
-#playButton:hover {
+#resetButton:hover {
+	cursor:pointer;
+}
+#startMeshButton:hover {
 	cursor:pointer;
 }
 

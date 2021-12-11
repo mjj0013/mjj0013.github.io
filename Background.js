@@ -2,8 +2,6 @@ var myHeaders = new Headers();
 myHeaders.set("Access-Control-Allow-Origin", "*");
 myHeaders.set("Access-Control-Request-Headers", "*");
 
-var mouseSlope = 0;
-var mouseLocQue = [];
 
 var layerAttributes =[  {"type":"background", "fill":`hsl(${settingsMap['baseHue']}, 50%, 50%)`,  "id":null }, 
                         {"type":"2D", "fill":`hsl(${settingsMap['secondaryHue']}, 50%, 50%)`,  "id":null, "pt1":null, "pt2":null},
@@ -11,11 +9,35 @@ var layerAttributes =[  {"type":"background", "fill":`hsl(${settingsMap['baseHue
                     ];
 //var backgroundSVG = document.getElementById("backgroundSVG");
 var wavesSVG = document.getElementById("wavesBG");
+
 var currentWidth = window.innerWidth;
 var currentHeight = window.innerHeight;
 
-function adjustBackground() {
-    if(currentHeight != window.innerHeight) {
+function adjustBackground(currentLocation) {
+    if(currentLocation=="meshGenerate" || currentLocation=="imageGallery") {
+        var backgroundFill = document.getElementById("backgroundFiller");
+        var layer0 = document.createElementNS("http://www.w3.org/2000/svg","rect");
+
+        
+            
+        backgroundFill.style.position="fixed"
+        backgroundFill.style.top="150px";
+        backgroundFill.style.left="0px";
+        backgroundFill.style.width=window.innerWidth;
+        backgroundFill.style.height=window.screen.height;
+
+        layer0.setAttribute("id", "fillerLayer")
+        
+        layer0.setAttribute("width", "100%");
+        layer0.setAttribute("pointer-events","none");
+        layer0.setAttribute("height","100%");
+        layer0.setAttribute('fill',layerAttributes[0]["fill"]);
+        backgroundFill.appendChild(layer0)
+
+        return;
+        
+    }
+    else if(currentHeight != window.innerHeight) {
         console.log("adjusting Y")
         var dh = currentHeight - window.innerHeight;
         for(let i =1; i < layerAttributes.length;++i) {
@@ -30,6 +52,8 @@ function adjustBackground() {
     
     currentWidth = window.innerWidth;
     currentHeight = window.innerHeight;
+
+
 }
 
 
@@ -126,18 +150,6 @@ function initBackground(simple=false) {
  
 }
 
-window.onmousemove = (e) => {
-    if(mouseLocQue.length < 8) mouseLocQue.push({x:e.pageX, y:e.pageY})
-    else {
-        mouseLocQue.shift();
-        mouseLocQue.push({x:e.pageX, y:e.pageY});
-    }
-    if(mouseLocQue.length > 1) {
-        mouseSlope = (mouseLocQue[mouseLocQue.length-1].y-mouseLocQue[0].y)/(mouseLocQue[mouseLocQue.length-1].x-mouseLocQue[0].x);
-    }
-    
-
-}
 
 function allowInteractivity() {
     for(let i=1; i < layerAttributes.length; ++i) {

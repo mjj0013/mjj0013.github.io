@@ -31,17 +31,6 @@
 			<canvas id="coverCanvas" width="100%" />
 		</div>
 		<svg id="navBar" class="nav-menu" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
-			<filter id="turbFilter" color-interpolation-filters="sRGB" width="100%" height="100%">
-				<feTurbulence type="turbulence" baseFrequency=".05" numOctaves="2" result="turb">
-					<animate attributeName="baseFrequency" values="0.05; 0.25; 0.625; 0.25; 0.05"  dur="4s" repeatCount="indefinite"></animate>
-				</feTurbulence>
-				<feDisplacementMap id="dispFE" result="displacement" in="SourceGraphic" in2="turbulence" scale="-200" xChannelSelector="R" yChannelSelector="B">
-					<!-- <animate attributeName="scale" from="1" to="200" dur="5s" repeatCount="indefinite"></animate> -->
-				</feDisplacementMap>
-				
-				<!-- <feComposite in="displacement" in2="SourceGraphic" operator="in" result="comp" />
-				<feBlend mode="overlay" in="comp" in2="SourceGraphic"/> -->
-			</filter>
 		</svg>
 		
 	
@@ -58,7 +47,17 @@
 		</div>
 		
 		<svg id="meshSVG" viewBox="0 0 800 600"   width="800" height="600" xmlns="http://www.w3.org/2000/svg"> 
-                        
+            <filter id="turbFilter" color-interpolation-filters="sRGB" >
+				<feTurbulence type="turbulence" baseFrequency=".05" numOctaves="2" result="turb">
+					<!-- <animate attributeName="baseFrequency" values="0.05; 0.25; 0.625; 0.25; 0.05"  dur="4s" repeatCount="indefinite"></animate> -->
+				</feTurbulence>
+				<feDisplacementMap id="dispFE" result="displacement" in="SourceGraphic" in2="turbulence" scale="1" xChannelSelector="R" yChannelSelector="B">
+					<animate attributeName="scale" from="1" to="20" dur="5s" repeatCount="indefinite"></animate>
+				</feDisplacementMap>
+				
+				<!-- <feComposite in="displacement" in2="SourceGraphic" operator="in" result="comp" />
+				<feBlend mode="overlay" in="comp" in2="SourceGraphic"/> -->
+			</filter>
             <!-- style={{filter:'url(#filter)'}} -->
             
             <rect id="meshSVGBackground"  width="100%" height="100%" fill='grey' />

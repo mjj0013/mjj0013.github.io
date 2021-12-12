@@ -23,7 +23,7 @@ window.onresize = () => {
     for(let i =0; i < navBar.children.length; ++i) {
         navBar.removeChild(navBar.children[i])
     }
-    var currentLocation  =getCurrentLocation()
+    var currentLocation  = getCurrentLocation()
     initNavBar();
     if(currentLocation=="index" || currentLocation=="/") initBackground();    
 
@@ -66,10 +66,11 @@ window.onload = () => {
     //document.getElementById("infoButton").
 
     var currentLocation = getCurrentLocation();
-    console.log("currentLocation", currentLocation)
+    
     if(currentLocation=="index" || currentLocation=="/") {
         initNavBar();
         initBackground();    
+        adjustBackground(currentLocation);
     }
     if(currentLocation=="eyes") {
         initNavBar();
@@ -83,10 +84,12 @@ window.onload = () => {
     if(currentLocation=="imageGallery") {
         initNavBar();
         initBackground(true);    
+        adjustBackground(currentLocation);
     }
     if(currentLocation=="meshGenerate") {
         initNavBar();
         initBackground(true);    
+        adjustBackground(currentLocation);
        
     }
 }

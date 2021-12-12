@@ -8,19 +8,17 @@ var coverContext = coverCanvas.getContext("2d");
 var ballGameInterval;
 var searchBarShowing = 0;
 var searchBarResults = [
-    {path:"/pacmen/pacmen.html", subject:"Pacmen" ,keywords:["pacmen","yellow"]},
-    {path:"/imageGallery/imageGallery.html", subject:"Mona Lisa" , keywords:["image","mona", "lisa"]},
-    {path:"/imageGallery/imageGallery.html", subject:"Saturn V" , keywords:["saturn","saturn v" ,"saturn 5" ,"rocket"]},
-    {path:"/imageGallery/imageGallery.html", subject:"Ham" , keywords:["chimpanzee","astronaut", "ham"]},
-    {path:"/imageGallery/imageGallery.html", subject:"Dog" , keywords:["dog","australian", "shepherd", "aussie"]},
-    {path:"/imageGallery/imageGallery.html", subject:"Félicette (cat)" , keywords:["cat","astronaut", "félicette"]},
-    {path:"/imageGallery/imageGallery.html", subject:"Miss Baker" , keywords:["monkey","astronaut", "miss", "baker", "squirrel"]},
-    {path:"/imageGallery/imageGallery.html", subject:"Space and Rocket Center" , keywords:["museum","center", "space", "rocket"]},
-    {path:"/eyes/eyes.html", subject:"Eyes" , keywords:["eyes"]},
-    {path:"/busStops/busStops.html", subject:"Map Animation" , keywords:["bus","stops", "map", "demo"]},
-    {path:"#", subject:"Gallery" , keywords:["gallery"]},
-    {path:"#", subject:"Settings" , keywords:["settings"]},
-    {path:"#", subject:"Primary Color" , keywords:["settings", "base", "primary","color"]}
+    {category:"MIT Projects", path:"/pacmen/pacmen.html", subject:"Pacmen" ,keywords:["pacmen","yellow"]},
+    {category:"Gallery", path:"/imageGallery/imageGallery.html", subject:"Mona Lisa" , keywords:["image","mona", "lisa"]},
+    {category:"Gallery" , path:"/imageGallery/imageGallery.html", subject:"Saturn V" , keywords:["saturn","saturn v" ,"saturn 5" ,"rocket"]},
+    {category:"Gallery", path:"/imageGallery/imageGallery.html", subject:"Dog" , keywords:["dog","australian", "shepherd", "aussie"]},
+    {category:"Gallery", path:"/imageGallery/imageGallery.html", subject:"F&#233;licette (cat)" , keywords:["cat","astronaut", "felicette"]},
+    {category:"Gallery", path:"/imageGallery/imageGallery.html", subject:"Miss Baker" , keywords:["monkey","astronaut", "miss", "baker", "squirrel"]},
+    {category:"Gallery", path:"/imageGallery/imageGallery.html", subject:"Space and Rocket Center" , keywords:["museum","center", "space", "rocket"]},
+    {category:"MIT Projects", path:"/eyes/eyes.html", subject:"Eyes" , keywords:["eyes"]},
+    {category:"MIT Projects", path:"/busStops/busStops.html", subject:"Map Animation" , keywords:["bus","stops", "map", "demo"]},
+    {category:"", path:"#", subject:"Gallery" , keywords:["gallery"]},
+    {category:"", path:"#", subject:"Settings" , keywords:["settings"]},
 ]
 
 var ballContainer = document.getElementById("ballContainer");
@@ -75,14 +73,21 @@ function initNavBar(replace=false) {
     // document.getElementById("mitProjectsDropdownButton")
     document.getElementById("mitProjectsDropdownButton").onclick = (e) => {
         if(mitDropDownOpen) {
+            // document.getElementById("navBar").setAttribute("z-index","99");
+            
             var dropDownAnimation = document.getElementById("reverseDropdownAnimation");
             dropDownAnimation.beginElement();
+            dropDownAnimation.addEventListener("endEvent", ()=>{
+                document.getElementById("navBar").style.zIndex="99";
+            },false);
             document.getElementById("pacmenNavLink").style.display = 'none';
             document.getElementById("eyesNavLink").style.display = 'none';
             document.getElementById("busStopsNavLink").style.display = 'none';
             mitDropDownOpen = false;
         }
         else {
+            document.getElementById("navBar").style.zIndex="101";
+            
             var dropDownAnimation = document.getElementById("forwardDropdownAnimation");
             dropDownAnimation.beginElement();
             dropDownAnimation.addEventListener("endEvent", ()=>{
@@ -121,9 +126,10 @@ function createSearchDropdown() {
     document.getElementById("navBar").insertAdjacentHTML("beforeend", searchDropdownBox);
    
     
-    var searchDropdownBox = document.getElementById("searchDropdownBox");
-    searchDropdownBox.insertAdjacentHTML("beforeend", searchFwd);
-     searchDropdownBox.insertAdjacentHTML("beforeend", searchBkwdClose);
+    var searchResultBox = document.getElementById("searchDropdownBox");
+    searchResultBox.insertAdjacentHTML("beforeend", searchFwd);
+    searchResultBox.insertAdjacentHTML("beforeend", searchBkwdClose);
+     
     //  searchBarResults
     searchBar.addEventListener("input", (e)=>{
         if(searchBarInit==0) {
@@ -140,40 +146,46 @@ function createSearchDropdown() {
             },false);
             mitDropDownOpen = true;
             
-        
-            
         }
         processSearchBar();
 
     });
     
     var result1 = `
-        <a href="#" id="result1Component" style="display:none;">
+        <a href="#" id="result1Component" style="display:none;" class="searchBarResult">
             <path class="nav-link searchResult" id="searchResult1" d="M${searchBoxX},50 l${searchBoxW},0 l0,25 l${-searchBoxW},0  l0,-25" fill="white"  pointer-events="all"/>
             <text id="result1Str" x="${searchBoxX}" y="70" fill="black" stroke="black" pointer-events="none"></text>
+            <text id="result1Cat" x="${searchBoxX+245}" y="70" fill="black" stroke="grey" pointer-events="none" style="text-decoration: none;"></text>
         </a>`
 
     var result2 = `
-    <a href="#" id="result2Component" style="display:none;">
+    <a href="#" id="result2Component" style="display:none;" class="searchBarResult">
         <path class="nav-link searchResult" id="searchResult2" d="M${searchBoxX},75 l${searchBoxW},0 l0,25 l${-searchBoxW},0  l0,-25" fill="white"  pointer-events="all"/>
         <text id="result2Str" x="${searchBoxX}" y="95" fill="black" stroke="black" pointer-events="none"></text> 
+        <text id="result2Cat" x="${searchBoxX+245}" y="95" fill="black" stroke="grey" pointer-events="none" style="text-decoration: none;"></text>
     </a>`
 
     var result3 = `
-    <a  href="#" id="result3Component" style="display:none;">
+    <a  href="#" id="result3Component" style="display:none;" class="searchBarResult">
         <path class="nav-link searchResult" id="searchResult3" d="M${searchBoxX},100 l${searchBoxW},0 l0,25 l${-searchBoxW},0  l0,-25" fill="white"  pointer-events="all"/>
         <text id="result3Str" x="${searchBoxX}" y="120" fill="black" stroke="black" pointer-events="none"></text> 
+        <text id="result3Cat" x="${searchBoxX+245}" y="120" fill="black" stroke="grey" pointer-events="none" style="text-decoration: none;"></text>
     </a>`
 
     var result4 = `
-    <a href="#" id="result4Component" style="display:none;">
+    <a href="#" id="result4Component" style="display:none;" class="searchBarResult">
         <path class="nav-link searchResult" id="searchResult4" d="M${searchBoxX},125 l${searchBoxW},0 l0,25 l${-searchBoxW},0  l0,-25" fill="white"  pointer-events="all"/>
         <text id="result4Str" x="${searchBoxX}" y="145" fill="black" stroke="black" pointer-events="none"></text>
+        <text id="result4Cat" x="${searchBoxX+245}" y="145" fill="black" stroke="grey" pointer-events="none" style="text-decoration: none;"></text>
     </a> `
+
+
+
     navBar.insertAdjacentHTML("beforeend", result1)
     navBar.insertAdjacentHTML("beforeend", result2)
     navBar.insertAdjacentHTML("beforeend", result3)
     navBar.insertAdjacentHTML("beforeend", result4)
+    
 
     // document.getElementById("searchResult1").onclick =(e)=> {
         
@@ -218,7 +230,7 @@ function processSearchBar() {
 
     //var wordStats = Object.fromEntries(words.map((x)=> [x,Object.fromEntries(subjects)]));
     var subjectNames = Object.keys(subjectStats);
-    console.log("subjectNames", subjectNames)
+    
     for(let i=0; i < words.length;++i) {
         let w = words[i];
         
@@ -233,33 +245,58 @@ function processSearchBar() {
                     leastDist = dist;   
                 }
             }
-            if(isNear) { selectedSubjects.push([searchBarResults[s]["subject"], leastDist, s]); }
+            if(isNear) { selectedSubjects.push([searchBarResults[s]["subject"], leastDist, s, searchBarResults[s]["category"]]) }
         }
     }
 
     selectedSubjects.sort(function(a,b){return a[1]-b[1]});
-    // for(let s=0; s < 4;++s) {
-    //if(selectedSubjects[0][0] != words[0][0]) selectedSubjects.shift();
-    //}
-    
+
 
     if(selectedSubjects[0]!=undefined) {
         document.getElementById("result1Str").innerHTML = selectedSubjects[0][0];
+        document.getElementById("result1Cat").innerHTML  = selectedSubjects[0][3];
         document.getElementById("result1Component").setAttribute("href", rootDir+searchBarResults[selectedSubjects[0][2]].path);
+        document.getElementById("searchResult1").onclick = (e) => {
+            console.log("clicked")
+            if(searchBarResults[selectedSubjects[0][2]].path.substr(1,12)=="imageGallery") {
+                imageSearchedFor(searchBarResults[selectedSubjects[0][2]].subject);
+             }
+        }
     }
 
     if(selectedSubjects[1]!=undefined) {
         document.getElementById("result2Str").innerHTML = selectedSubjects[1][0];
+        document.getElementById("result2Cat").innerHTML  = selectedSubjects[1][3];
         document.getElementById("result2Component").setAttribute("href", rootDir+searchBarResults[selectedSubjects[1][2]].path);
+        document.getElementById("searchResult2").onclick = (e) => {
+            if(searchBarResults[selectedSubjects[1][2]].path.substr(1,12)=="imageGallery") {
+                imageSearchedFor(searchBarResults[selectedSubjects[1][2]].subject);
+             }
+        }
     }
     
     if(selectedSubjects[2]!=undefined) {
-        document.getElementById("result3Str").innerHTML = selectedSubjects[2][0];
+        document.getElementById("result3Str").innerHTML = selectedSubjects[2][0]
+        document.getElementById("result3Cat").innerHTML  = selectedSubjects[2][3];
         document.getElementById("result3Component").setAttribute("href", rootDir+searchBarResults[selectedSubjects[2][2]].path);
+        document.getElementById("searchResult3").onclick = (e) => {
+            if(searchBarResults[selectedSubjects[2][2]].path.substr(1,12)=="imageGallery") {
+                imageSearchedFor(searchBarResults[selectedSubjects[2][2]].subject);
+             }
+        }
     }
     if(selectedSubjects[3]!=undefined) {
         document.getElementById("result4Str").innerHTML = selectedSubjects[3][0];
+        document.getElementById("result4Cat").innerHTML  = selectedSubjects[3][3];
         document.getElementById("result4Component").setAttribute("href", rootDir+searchBarResults[selectedSubjects[3][2]].path);
+        
+        document.getElementById("searchResult4").onclick = (e) => {
+                if(searchBarResults[selectedSubjects[3][2]].path.substr(1,12)=="imageGallery") {
+                    imageSearchedFor(searchBarResults[selectedSubjects[3][2]].subject);
+                 }
+        }
+        
+        
     }
 
     
@@ -338,7 +375,7 @@ function createDropdown(currentDir,replace=false) {
     <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="100%"/>
     <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="25%"/>
     
-    <animate id="mitProjectsDropdownButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur="1.25s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
+    <animate id="mitProjectsDropdownButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur="1.25s"  begin="indefinite" repeatCount="indefinite"/>
     </linearGradient>`
     
     if(!replace) {
@@ -495,7 +532,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="5%"/>
     <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="100%"/>
     <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="25%"/>
-            <animate id="homeNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
+            <animate id="homeNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
             </linearGradient>`
 
     var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M600,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all"></path>`
@@ -519,7 +556,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     <stop stop-color="hsla(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%,0.5)" offset="5%"/>
     <stop stop-color="hsla(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%,0.5)" offset="100%"/>
     <stop stop-color="hsla(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%,0.5)" offset="25%"/>
-            <animate id="pacmenNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
+            <animate id="pacmenNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
             </linearGradient>`
 
     var eyesLinkHTML = eyesLinkHTML_head+ `
@@ -533,7 +570,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     <stop stop-color="hsla(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%,0.5)" offset="5%"/>
     <stop stop-color="hsla(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%,0.5)" offset="100%"/>
     <stop stop-color="hsla(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%,0.5)" offset="25%"/>
-            <animate id="eyesNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
+            <animate id="eyesNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
             </linearGradient>`
 
     
@@ -549,7 +586,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     <stop stop-color="hsla(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%,0.5)" offset="5%"/>
     <stop stop-color="hsla(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%,0.5)" offset="100%"/>
     <stop stop-color="hsla(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%,0.5)" offset="25%"/>
-            <animate id="busStopsNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
+        <animate id="busStopsNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite"/>
             </linearGradient>`
 
     //`<a id="imageGalleryNavLink" href="${imageGalleryHref}" x="50" y="30" pointer-events="all" display="none">
@@ -565,7 +602,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="100%"/>
     <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="25%"/>
     
-    <animate id="imageGalleryNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
+    <animate id="imageGalleryNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
     </linearGradient>` 
 
     var meshGenLinkHTML =  `<a id="imageGalleryNavLink" href="${meshGenHref}" x="500" y="30" pointer-events="all">
@@ -580,7 +617,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="100%"/>
     <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="25%"/>
     
-    <animate id="meshGenNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" fill="freeze"/>
+    <animate id="meshGenNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
     </linearGradient>` 
 
 
@@ -1038,14 +1075,32 @@ function addRemainingSegment(replace=false) {
         if(searchBarShowing==0) {
             document.getElementById("searchBarFadeIn").beginElement();
             document.getElementById("searchField").focus();
+            document.getElementById("searchFwd").beginElement();
+            document.getElementById("searchFwd").addEventListener("endEvent", ()=>{
+                document.getElementById("searchDropdownBox").style.display="block";
+                document.getElementById("result1Component").style.display="block";
+                document.getElementById("result2Component").style.display="block";
+                document.getElementById("result3Component").style.display="block";
+                document.getElementById("result4Component").style.display="block";
+            });
             searchBarShowing = 1;
 
         }
         else {
             document.getElementById("searchBarFadeOut").beginElement();
-            searchBarShowing = 0;
             document.getElementById("searchBkwdClose").beginElement();
+            document.getElementById("searchBkwdClose").addEventListener("endEvent", ()=>{
+                document.getElementById("searchDropdownBox").style.display="none";
+                document.getElementById("result1Component").style.display="none";
+                document.getElementById("result2Component").style.display="none";
+                document.getElementById("result3Component").style.display="none";
+                document.getElementById("result4Component").style.display="none";
+            });
+
+            
             document.getElementById("searchField").blur();
+            searchBarShowing = 0;
+            
         }
         
     }

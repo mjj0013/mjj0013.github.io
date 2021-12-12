@@ -352,6 +352,9 @@ function baseColorChanged() {
         document.getElementById("layer0").setAttribute("fill",`hsl(${selectedBaseHue}, 50%, 50%)`)
         document.getElementById("fillerLayer").setAttribute("fill",`hsl(${selectedBaseHue}, 50%, 50%)`)
         document.getElementById("sw").setAttribute("right", window.innerWidth);
+        if(currentDir=="index" || currentDir=="/") {
+            document.getElementById("bioCard").setAttribute("fill",`hsla(${selectedBaseHue}, 40%, 20%, 0.3)`)
+        }
     }
     
     var settingsButton = document.getElementById("settingsButton");

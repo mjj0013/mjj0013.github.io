@@ -7,7 +7,8 @@ var layerAttributes =[  {"type":"background", "fill":`hsl(${settingsMap['baseHue
                         {"type":"2D", "fill":`hsl(${settingsMap['secondaryHue']}, 50%, 50%)`,  "id":null, "pt1":null, "pt2":null},
                         {"type":"2D", "fill":`hsl(${settingsMap['baseHue']}, 80%, 55%)`,  "id":null, "pt1":null, "pt2":null}
                     ];
-//var backgroundSVG = document.getElementById("backgroundSVG");
+
+
 var wavesSVG = document.getElementById("wavesBG");
 
 var currentWidth = window.innerWidth;

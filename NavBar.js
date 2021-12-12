@@ -8,18 +8,17 @@ var coverContext = coverCanvas.getContext("2d");
 var ballGameInterval;
 var searchBarShowing = 0;
 var searchBarResults = [
-    {path:"/pacmen/pacmen.html", subject:"Pacmen" ,keywords:["pacmen","yellow"]},
-    {path:"/imageGallery/imageGallery.html", subject:"Mona Lisa" , keywords:["image","mona", "lisa"]},
-    {path:"/imageGallery/imageGallery.html", subject:"Saturn V" , keywords:["saturn","saturn v" ,"saturn 5" ,"rocket"]},
-    {path:"/imageGallery/imageGallery.html", subject:"Dog" , keywords:["dog","australian", "shepherd", "aussie"]},
-    {path:"/imageGallery/imageGallery.html", subject:"F&#233;licette (cat)" , keywords:["cat","astronaut", "felicette"]},
-    {path:"/imageGallery/imageGallery.html", subject:"Miss Baker" , keywords:["monkey","astronaut", "miss", "baker", "squirrel"]},
-    {path:"/imageGallery/imageGallery.html", subject:"Space and Rocket Center" , keywords:["museum","center", "space", "rocket"]},
-    {path:"/eyes/eyes.html", subject:"Eyes" , keywords:["eyes"]},
-    {path:"/busStops/busStops.html", subject:"Map Animation" , keywords:["bus","stops", "map", "demo"]},
-    {path:"#", subject:"Gallery" , keywords:["gallery"]},
-    {path:"#", subject:"Settings" , keywords:["settings"]},
-    {path:"#", subject:"Primary Color" , keywords:["settings", "base", "primary","color"]}
+    {category:"MIT Projects", path:"/pacmen/pacmen.html", subject:"Pacmen" ,keywords:["pacmen","yellow"]},
+    {category:"Gallery", path:"/imageGallery/imageGallery.html", subject:"Mona Lisa" , keywords:["image","mona", "lisa"]},
+    {category:"Gallery" , path:"/imageGallery/imageGallery.html", subject:"Saturn V" , keywords:["saturn","saturn v" ,"saturn 5" ,"rocket"]},
+    {category:"Gallery", path:"/imageGallery/imageGallery.html", subject:"Dog" , keywords:["dog","australian", "shepherd", "aussie"]},
+    {category:"Gallery", path:"/imageGallery/imageGallery.html", subject:"F&#233;licette (cat)" , keywords:["cat","astronaut", "felicette"]},
+    {category:"Gallery", path:"/imageGallery/imageGallery.html", subject:"Miss Baker" , keywords:["monkey","astronaut", "miss", "baker", "squirrel"]},
+    {category:"Gallery", path:"/imageGallery/imageGallery.html", subject:"Space and Rocket Center" , keywords:["museum","center", "space", "rocket"]},
+    {category:"MIT Projects", path:"/eyes/eyes.html", subject:"Eyes" , keywords:["eyes"]},
+    {category:"MIT Projects", path:"/busStops/busStops.html", subject:"Map Animation" , keywords:["bus","stops", "map", "demo"]},
+    {category:"", path:"#", subject:"Gallery" , keywords:["gallery"]},
+    {category:"", path:"#", subject:"Settings" , keywords:["settings"]},
 ]
 
 var ballContainer = document.getElementById("ballContainer");
@@ -127,9 +126,10 @@ function createSearchDropdown() {
     document.getElementById("navBar").insertAdjacentHTML("beforeend", searchDropdownBox);
    
     
-    var searchDropdownBox = document.getElementById("searchDropdownBox");
-    searchDropdownBox.insertAdjacentHTML("beforeend", searchFwd);
-     searchDropdownBox.insertAdjacentHTML("beforeend", searchBkwdClose);
+    var searchResultBox = document.getElementById("searchDropdownBox");
+    searchResultBox.insertAdjacentHTML("beforeend", searchFwd);
+    searchResultBox.insertAdjacentHTML("beforeend", searchBkwdClose);
+     
     //  searchBarResults
     searchBar.addEventListener("input", (e)=>{
         if(searchBarInit==0) {
@@ -152,27 +152,31 @@ function createSearchDropdown() {
     });
     
     var result1 = `
-        <a href="#" id="result1Component" style="display:none;">
+        <a href="#" id="result1Component" style="display:none;" class="searchBarResult">
             <path class="nav-link searchResult" id="searchResult1" d="M${searchBoxX},50 l${searchBoxW},0 l0,25 l${-searchBoxW},0  l0,-25" fill="white"  pointer-events="all"/>
             <text id="result1Str" x="${searchBoxX}" y="70" fill="black" stroke="black" pointer-events="none"></text>
+            <text id="result1Cat" x="${searchBoxX+245}" y="70" fill="black" stroke="grey" pointer-events="none" style="text-decoration: none;"></text>
         </a>`
 
     var result2 = `
-    <a href="#" id="result2Component" style="display:none;">
+    <a href="#" id="result2Component" style="display:none;" class="searchBarResult">
         <path class="nav-link searchResult" id="searchResult2" d="M${searchBoxX},75 l${searchBoxW},0 l0,25 l${-searchBoxW},0  l0,-25" fill="white"  pointer-events="all"/>
         <text id="result2Str" x="${searchBoxX}" y="95" fill="black" stroke="black" pointer-events="none"></text> 
+        <text id="result2Cat" x="${searchBoxX+245}" y="95" fill="black" stroke="grey" pointer-events="none" style="text-decoration: none;"></text>
     </a>`
 
     var result3 = `
-    <a  href="#" id="result3Component" style="display:none;">
+    <a  href="#" id="result3Component" style="display:none;" class="searchBarResult">
         <path class="nav-link searchResult" id="searchResult3" d="M${searchBoxX},100 l${searchBoxW},0 l0,25 l${-searchBoxW},0  l0,-25" fill="white"  pointer-events="all"/>
         <text id="result3Str" x="${searchBoxX}" y="120" fill="black" stroke="black" pointer-events="none"></text> 
+        <text id="result3Cat" x="${searchBoxX+245}" y="120" fill="black" stroke="grey" pointer-events="none" style="text-decoration: none;"></text>
     </a>`
 
     var result4 = `
-    <a href="#" id="result4Component" style="display:none;">
+    <a href="#" id="result4Component" style="display:none;" class="searchBarResult">
         <path class="nav-link searchResult" id="searchResult4" d="M${searchBoxX},125 l${searchBoxW},0 l0,25 l${-searchBoxW},0  l0,-25" fill="white"  pointer-events="all"/>
         <text id="result4Str" x="${searchBoxX}" y="145" fill="black" stroke="black" pointer-events="none"></text>
+        <text id="result4Cat" x="${searchBoxX+245}" y="145" fill="black" stroke="grey" pointer-events="none" style="text-decoration: none;"></text>
     </a> `
 
 
@@ -226,7 +230,7 @@ function processSearchBar() {
 
     //var wordStats = Object.fromEntries(words.map((x)=> [x,Object.fromEntries(subjects)]));
     var subjectNames = Object.keys(subjectStats);
-    console.log("subjectNames", subjectNames)
+    
     for(let i=0; i < words.length;++i) {
         let w = words[i];
         
@@ -241,7 +245,7 @@ function processSearchBar() {
                     leastDist = dist;   
                 }
             }
-            if(isNear) { selectedSubjects.push([searchBarResults[s]["subject"], leastDist, s]); }
+            if(isNear) { selectedSubjects.push([searchBarResults[s]["subject"], leastDist, s, searchBarResults[s]["category"]]) }
         }
     }
 
@@ -250,6 +254,7 @@ function processSearchBar() {
 
     if(selectedSubjects[0]!=undefined) {
         document.getElementById("result1Str").innerHTML = selectedSubjects[0][0];
+        document.getElementById("result1Cat").innerHTML  = selectedSubjects[0][3];
         document.getElementById("result1Component").setAttribute("href", rootDir+searchBarResults[selectedSubjects[0][2]].path);
         document.getElementById("searchResult1").onclick = (e) => {
             console.log("clicked")
@@ -261,6 +266,7 @@ function processSearchBar() {
 
     if(selectedSubjects[1]!=undefined) {
         document.getElementById("result2Str").innerHTML = selectedSubjects[1][0];
+        document.getElementById("result2Cat").innerHTML  = selectedSubjects[1][3];
         document.getElementById("result2Component").setAttribute("href", rootDir+searchBarResults[selectedSubjects[1][2]].path);
         document.getElementById("searchResult2").onclick = (e) => {
             if(searchBarResults[selectedSubjects[1][2]].path.substr(1,12)=="imageGallery") {
@@ -270,7 +276,8 @@ function processSearchBar() {
     }
     
     if(selectedSubjects[2]!=undefined) {
-        document.getElementById("result3Str").innerHTML = selectedSubjects[2][0];
+        document.getElementById("result3Str").innerHTML = selectedSubjects[2][0]
+        document.getElementById("result3Cat").innerHTML  = selectedSubjects[2][3];
         document.getElementById("result3Component").setAttribute("href", rootDir+searchBarResults[selectedSubjects[2][2]].path);
         document.getElementById("searchResult3").onclick = (e) => {
             if(searchBarResults[selectedSubjects[2][2]].path.substr(1,12)=="imageGallery") {
@@ -280,6 +287,7 @@ function processSearchBar() {
     }
     if(selectedSubjects[3]!=undefined) {
         document.getElementById("result4Str").innerHTML = selectedSubjects[3][0];
+        document.getElementById("result4Cat").innerHTML  = selectedSubjects[3][3];
         document.getElementById("result4Component").setAttribute("href", rootDir+searchBarResults[selectedSubjects[3][2]].path);
         
         document.getElementById("searchResult4").onclick = (e) => {
@@ -1067,14 +1075,32 @@ function addRemainingSegment(replace=false) {
         if(searchBarShowing==0) {
             document.getElementById("searchBarFadeIn").beginElement();
             document.getElementById("searchField").focus();
+            document.getElementById("searchFwd").beginElement();
+            document.getElementById("searchFwd").addEventListener("endEvent", ()=>{
+                document.getElementById("searchDropdownBox").style.display="block";
+                document.getElementById("result1Component").style.display="block";
+                document.getElementById("result2Component").style.display="block";
+                document.getElementById("result3Component").style.display="block";
+                document.getElementById("result4Component").style.display="block";
+            });
             searchBarShowing = 1;
 
         }
         else {
             document.getElementById("searchBarFadeOut").beginElement();
-            searchBarShowing = 0;
             document.getElementById("searchBkwdClose").beginElement();
+            document.getElementById("searchBkwdClose").addEventListener("endEvent", ()=>{
+                document.getElementById("searchDropdownBox").style.display="none";
+                document.getElementById("result1Component").style.display="none";
+                document.getElementById("result2Component").style.display="none";
+                document.getElementById("result3Component").style.display="none";
+                document.getElementById("result4Component").style.display="none";
+            });
+
+            
             document.getElementById("searchField").blur();
+            searchBarShowing = 0;
+            
         }
         
     }

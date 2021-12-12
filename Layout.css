@@ -13,6 +13,9 @@ body {
 	
 	/* background: hsl(197,84,21); */
 }
+.searchBarResult:hover {
+	filter:brightness(.5);
+}
 
 .bgSVG {
 	position:absolute;

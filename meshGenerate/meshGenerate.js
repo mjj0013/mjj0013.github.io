@@ -91,7 +91,7 @@ function mouseClickHandler(e) {
         newPt.setAttribute("class","meshNode")
         newPt.setAttribute('cx', x);
         newPt.setAttribute('cy', y);
-        newPt.setAttribute('r', 6);
+        newPt.setAttribute('r', 5);
         document.getElementById("circleGroup").appendChild(newPt);
         M.pts.push({x:x, y:y});
         ++nodeCount
@@ -103,23 +103,6 @@ function mouseClickHandler(e) {
         M.build(maxNumOfNodes, false);
         M.generateEdges();
         M.depthFirstSearch();
-        // var edgeCounter = [];
-        // for(let e=0; e < M.edges.length;++e) {
-        //     if(!edgeCounter.includes(M.edges[e].id)) edgeCounter.push(M.edges[e].id);
-        //     else continue;
-        //     let a = M.pts[M.edges[e].data[0]]
-        //     let b = M.pts[M.edges[e].data[1]]
-        //     let d  = ``;
-        //     d += `M ${a.x}, ${a.y}`;
-        //     d += `L ${b.x}, ${b.y}`;
-        
-        //     let newPolygon = document.createElementNS("http://www.w3.org/2000/svg",'path');
-        //     newPolygon.setAttribute('id',M.edges[e].id);
-        //     newPolygon.setAttribute('d',d);
-        //     newPolygon.setAttribute('class','meshRegionBorder')
-        //     if(M.renderAllEdges) document.getElementById("polyGroup").appendChild(newPolygon);
-            
-        // }
     
         for(let m =0; m < M.cyclesDFS.length; ++m) {
             var newPolygon = new Polygon(`polygon${m}`,M.cyclesDFS[m], M);
@@ -156,7 +139,7 @@ function mouseClickHandler(e) {
             
             let sat = getRandomInt(0,100);
             let light = getRandomInt(0,100);
-            polygonElement.setAttributeNS(null,'fill',`hsl(${220},${sat}%,${light}%)`);
+            polygonElement.setAttributeNS(null,'fill',`hsla(${220},${sat}%,${light}%, .5)`);
             
             document.getElementById("polyGroup").appendChild(polygonElement);
             meshCreated=true;

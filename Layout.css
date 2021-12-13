@@ -4,7 +4,8 @@ body {
 	--navLink-height:50px;
 	--navLink-width:50px;
 	margin: var(--nav-height) 0 0 0;
-	font-family: 'Quicksand', sans-serif;
+	/* font-family: 'Quicksand', sans-serif; */
+	font-family: system-ui;
 	/* font-variant: small-caps; */
 	font-size:18px;
 	
@@ -46,7 +47,7 @@ body {
 .galleryGrid {
 	z-index:90;
 	top:150px;
-	left:0px;
+	left:20%;
 	position:absolute;
 	display:grid;
 	margin: 50px 5% 50px 5%;
@@ -78,6 +79,7 @@ image {
 }
 .gallerySVG {
 	z-index:1;
+	box-shadow:3px 3px black;
 }
 /*row-start, column-start, row-finish, columm-finish*/
 .gallerySVG.img1{
@@ -186,19 +188,21 @@ textarea {
 #introVidEmbed {
 	
 	z-index:99;
-	position:absolute;
+	position:relative;
 	top:5vh;
 	/* left:calc(50vw - 20x); */
-	left:calc(50vw - 710px);
+	/* left:calc(50vw - 710px); */
+	left: 10px;
 	/* top:calc(50vh - 158px); */
 	
 }
 
 .accordion{
 	z-index:81;
-	position:absolute;
-	top:45vh;
-	left:calc(50vw - 710px);
+	position:relative;
+	top:10vh;
+	left:10px;
+	/* left:calc(50vw - 710px); */
 	width:560px;
 	background-color:'black';
 
@@ -223,7 +227,7 @@ textarea {
 	height:100vh;
 	width:580px;
 	/* left:0%; */
-	right:50%;
+	/* right:50%; */
 	top:170px;
 	/* top:calc(75vh - 25px); */
 	left:calc(50vw - 290px);
@@ -437,7 +441,7 @@ select {
 
 
 .settingsWindow {
-    position: absolute;
+    position: fixed;
     font-family: system-ui;
     top: 175px;
     right:5px;

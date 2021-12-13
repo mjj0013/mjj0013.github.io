@@ -3,6 +3,16 @@ This concept was first implemented in my earlier repository [WebDev-Concepts](ht
 
 ### Building Edges
 I didn't follow a specific methodology in this first step, so it may not be as optimized as it can be. For each generated node, I would find and store the distances between it and every other node. I would then sort these distances from least to greatest to determine the closest nodes to each node.
-I would then reiterate through the list of nodes again. For each node, I would take its top 4 closest nodes and then merge their own top 4 closest nodes into one list of common nodes, removing any repeating values. For each permutation of two nodes in this new list, I would first determine if an edge already exists between them. If an edge doesn't exist, I would then evaluate if the edge had a point of intersect with any other existing edges using this equation:
+I would then reiterate through the list of nodes again. For each node, I would take its top 4 closest nodes and then merge their own top 4 closest nodes into one list of common nodes, removing any repeating values. For each permutation of two nodes in this new list, I would first determine if an edge already exists between them. If an edge doesn't exist, I would then evaluate if the edge had a point of intersection with any other existing edges using this equation:
 ![formula1](../lineIntersectionFormula.png)
 [https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection](https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection)
+
+If the point of intersection was located anywhere on both edges, then there would be an intersection, and the edge would be discarded.
+
+
+### Finding Cycles
+For this step, I followed a methodology using a Depth-First Search algorithm. This involved using recursion and traversing the graph structure, from node to node. after traversing a node it would be marked as 'visited'. If the algorithm ever moved to a node that was already visited, it would know that it had traveled in a cycle. One of issues with this method was that it didn't account for the case when a cycle could exist 'inside' a larger cycle. The desired outcome was detecting all of the smallest cycles, so that none of the cycles overlapped each other. However, this was never entirely resolved. The short-term solution was making the color of each shape 'hsla' so that any smaller cycles could at least be seen. 
+
+## Animating the Mesh
+To do this, each node's coordinates are expressed with trigonometric functions (x=cos(...), y=sin(...)). A variable was continuously incremented to serve as the time-variable. to It was more visually appealing to have the nodes move in different phases from each other, and this was easily done by giving each node a randomly generated number for 'phase' and adding that inside their trigonometric functions.
+

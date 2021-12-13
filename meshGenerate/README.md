@@ -5,4 +5,4 @@ This concept was first implemented in my earlier repository [WebDev-Concepts](ht
 I didn't follow a specific methodology in this first step, so it may not be as optimized as it can be. For each generated node, I would find and store the distances between it and every other node. I would then sort these distances from least to greatest to determine the closest nodes to each node.
 I would then reiterate through the list of nodes again. For each node, I would take its top 4 closest nodes and then merge their own top 4 closest nodes into one list of common nodes, removing any repeating values. For each permutation of two nodes in this new list, I would first determine if an edge already exists between them. If an edge doesn't exist, I would then evaluate if the edge had a point of intersect with any other existing edges using this equation:
 ![formula1](../lineIntersectionFormula.png)
-[Line_Intersection](https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection)
+[](https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection)

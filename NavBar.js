@@ -1,8 +1,8 @@
-// const { generateRandomMesh } = require("./Mesh");
-
 var myHeaders = new Headers();
 myHeaders.set("Access-Control-Allow-Origin", "*");
 myHeaders.set("Access-Control-Request-Headers", "*");
+
+
 var coverCanvas = document.getElementById("coverCanvas");
 var coverContext = coverCanvas.getContext("2d");
 var ballGameInterval;
@@ -1110,7 +1110,6 @@ function addRemainingSegment(replace=false) {
 
 }
 function updateCover() {
-    
 	
     for(let phase=0; phase < xSortedCoverTriangles.length;++phase) {
         var triangles = xSortedCoverTriangles[phase]

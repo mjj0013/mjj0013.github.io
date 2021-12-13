@@ -13,7 +13,7 @@ var searchBarResults = [
     {category:"Gallery" , path:"/imageGallery/imageGallery.html", subject:"Saturn V" , keywords:["saturn","saturn v" ,"saturn 5" ,"rocket"]},
     {category:"Gallery", path:"/imageGallery/imageGallery.html", subject:"Dog" , keywords:["dog","australian", "shepherd", "aussie"]},
     {category:"Gallery", path:"/imageGallery/imageGallery.html", subject:"F&#233;licette (cat)" , keywords:["cat","astronaut", "felicette"]},
-    {category:"Gallery", path:"/imageGallery/imageGallery.html", subject:"Miss Baker" , keywords:["monkey","astronaut", "miss", "baker", "squirrel"]},
+    {category:"Gallery", path:"/imageGallery/imageGallery.html", subject:"Miss Baker (monkey)" , keywords:["monkey","astronaut", "miss", "baker", "squirrel"]},
     {category:"Gallery", path:"/imageGallery/imageGallery.html", subject:"Space and Rocket Center" , keywords:["museum","center", "space", "rocket"]},
     {category:"MIT Projects", path:"/eyes/eyes.html", subject:"Eyes" , keywords:["eyes"]},
     {category:"MIT Projects", path:"/busStops/busStops.html", subject:"Map Animation" , keywords:["bus","stops", "map", "demo"]},

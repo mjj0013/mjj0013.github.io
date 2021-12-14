@@ -72,6 +72,11 @@ window.onload = () => {
         initBackground();    
         adjustBackground(currentLocation);
     }
+    if(currentLocation=="projectsPage") {
+        initNavBar();
+        initBackground();    
+        adjustBackground(currentLocation);
+    }
     if(currentLocation=="eyes") {
         initNavBar();
     }

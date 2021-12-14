@@ -34,7 +34,7 @@ var selectedNavHue = 0;
 var selectedNavSat = 0;
 var selectedNavBrightness = 5;
 var numOfNavElements = 3;
-var navElementSizes = {150:3, 50:2}     //keys are size, values are the quantities of each size
+var navElementSizes = {150:4, 50:2}     //keys are size, values are the quantities of each size
 
 var mitDropDownOpen = false;
 var numberBallPresses = 0;
@@ -211,13 +211,13 @@ function levenshteinDist(str1, str2) {
             d[j][i] = Math.min(d[j][i-1]+1,  d[j-1][i]+1, d[j-1][i-1]+subCost);
         }
     }
-    
     return d[N][M];
 
 }
 
 function processSearchBar() {
-    let rootDir = (getCurrentLocation()=="index")? "./" : "../"
+    let currentLocation = getCurrentLocation();
+    let rootDir = (currentLocation=="index" ||  currentLocation=="projectsPage")? "./" : "../"
     let query = document.getElementById("searchField");
     query.onkeydown = (e) => {e.stopPropagation();}
     
@@ -366,11 +366,11 @@ function baseColorChanged() {
 
 
 function createDropdown(currentDir,replace=false) {
-    var rootDir = (currentDir=="index")? "./" : "../"
+    var rootDir = (currentDir=="index"||currentDir=="projectsPage")? "./" : "../"
     
-    var mitProjectsDropdownButton = `<path class="nav-link" id="mitProjectsDropdownButton" d="M50,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#mitProjectsLinkGradient)"  pointer-events="all"/>
-        <text x="58" y="30" fill="white" stroke="white" pointer-events="none">MIT Projects</text> 
-        <image href="${rootDir}icons/arrow_drop_down_white_24dp.svg" x="170" y="10" height="30" width="30" pointer-events="none">
+    var mitProjectsDropdownButton = `<path class="nav-link" id="mitProjectsDropdownButton" d="M200,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#mitProjectsLinkGradient)"  pointer-events="all"/>
+        <text x="208" y="30" fill="white" stroke="white" pointer-events="none">MIT Projects</text> 
+        <image href="${rootDir}icons/arrow_drop_down_white_24dp.svg" x="320" y="10" height="30" width="30" pointer-events="none">
     </path>`
     
     var mitProjectsLinkGradientHTML =  ` <linearGradient id="mitProjectsLinkGradient"   x1="0" y1=".9" x2="1.8" y2=".9" spreadMethod="reflect" gradientTransform="rotate(90) skewY(20)">
@@ -396,17 +396,17 @@ function createDropdown(currentDir,replace=false) {
     }
 
     mitProjectsDropdownBox = `
-    <path class="nav-link" id="mitProjectsDropdownBox" d="M50,50 l150,0 l0,0 l-150,0 l0,0" fill="url(#mitProjectsLinkGradient)"  pointer-events="all" />`
+    <path class="nav-link" id="mitProjectsDropdownBox" d="M200,50 l150,0 l0,0 l-150,0 l0,0" fill="url(#mitProjectsLinkGradient)"  pointer-events="all" />`
     var fwdAnimation = `<animate id="forwardDropdownAnimation" attributeType="XML" attributeName="d" dur="100ms"  begin="indefinite" fill="freeze"
-    values="M50,50 l150,0 l0,0 l-150,0 l0,0;
-            M50,50 l150,0 l0,50 l-150,0 l0,0;
-            M50,50 l150,0 l0,100 l-150,0 l0,-100; 
-            M50,50 l150,0 l0,150 l-150,0 l0,-150" ></animate>`
+    values="M200,50 l150,0 l0,0 l-150,0 l0,0;
+        M200,50 l150,0 l0,50 l-150,0 l0,0;
+        M200,50 l150,0 l0,100 l-150,0 l0,-100; 
+        M200,50 l150,0 l0,150 l-150,0 l0,-150" ></animate>`
     var bkwdAnimation = `<animate id="reverseDropdownAnimation" attributeType="XML" attributeName="d" dur="100ms"  begin="indefinite" fill="freeze"
-        values="M50,50 l150,0 l0,150 l-150,0 l0,-150;
-                M50,50 l150,0 l0,100 l-150,0 l0,-100;
-                M50,50 l150,0 l0,50 l-150,0 l0,0;
-                M50,50 l150,0 l0,0 l-150,0 l0,0" ></animate>`
+        values="M200,50 l150,0 l0,150 l-150,0 l0,-150;
+            M200,50 l150,0 l0,100 l-150,0 l0,-100;
+            M200,50 l150,0 l0,50 l-150,0 l0,0;
+            M200,50 l150,0 l0,0 l-150,0 l0,0" ></animate>`
     
     navBar.insertAdjacentHTML('beforeend', mitProjectsDropdownBox);
     document.getElementById("mitProjectsDropdownBox").insertAdjacentHTML('beforeend',fwdAnimation)
@@ -472,17 +472,28 @@ function generateNewAnimation() {
 
 function insertNavLinks(insertInto, currentDir, replace=false) {
     var homeHref = "./index.html";
+    var projectsPageHref = "./projectsPage.html";
     var pacmenHref = "./pacmen/pacmen.html"
     var eyesHref = "./eyes/eyes.html"
    
     var busStopsHref = "./busStops/busStops.html"
     var imageGalleryHref = "./imageGallery/imageGallery.html"
     var meshGenHref = "./meshGenerate/meshGenerate.html"
+   
 
-    var rootDir = (currentDir=="index")? "./" : "../"
-    if(currentDir=="index") homeHref="#";
+
+    var rootDir =  "../";
+    if(currentDir=="index" || currentDir=="projectsPage") {
+        rootDir = "./";
+    }
+    if(currentDir=="index") {homeHref="#";}
+    else if(currentDir=="projectsPage"){ 
+        projectsPageHref = "#";
+
+    }
     else if(currentDir=="pacmen"){ 
         pacmenHref="#";
+        projectsPageHref = "."+projectsPageHref;
         homeHref = "."+homeHref;
         eyesHref = "."+eyesHref;
         busStopsHref = "."+busStopsHref;
@@ -491,6 +502,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     }
     else if(currentDir=="eyes") {
         eyesHref = "#";
+        projectsPageHref = "."+projectsPageHref;
         homeHref = "."+homeHref;
         pacmenHref = "."+pacmenHref;
         busStopsHref = "."+busStopsHref;
@@ -499,6 +511,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     }
     else if(currentDir=="busStops") {
         busStopsHref = "#";
+        projectsPageHref = "."+projectsPageHref;
         homeHref = "."+homeHref;
         pacmenHref = "."+pacmenHref;
         eyesHref = "."+eyesHref;
@@ -508,6 +521,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     
     else if(currentDir=="imageGallery") {
         busStopsHref = "."+busStopsHref;
+        projectsPageHref = "."+projectsPageHref;
         homeHref = "."+homeHref;
         pacmenHref = "."+pacmenHref;
         eyesHref = "."+eyesHref;
@@ -516,21 +530,23 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     }
     else if(currentDir=="meshGenerate") {
         busStopsHref = "."+busStopsHref;
+        projectsPageHref = "."+projectsPageHref;
         homeHref = "."+homeHref;
         pacmenHref = "."+pacmenHref;
         eyesHref = "."+eyesHref;
         meshGenHref = "#";
         imageGalleryHref = "."+imageGalleryHref
     }
-    var subLinkPos = [[50,50], [50,100], [50,150]];            //excludes Home link; ordered as => Pacmen, Eyes, BusStops
+    var subLinkPos = [[200,50], [200,100], [200,150]];            //excludes Home link; ordered as => Pacmen, Eyes, BusStops
     //var linkPos = [0,];
-    pacmenLinkHTML_head = `<a id="pacmenNavLink" href="${pacmenHref}" x="200" y="30" pointer-events="all" display="none">`
-    eyesLinkHTML_head = `<a id="eyesNavLink" href="${eyesHref}" x="200" y="80" pointer-events="all" display="none">`
-    busStopsLink_head = `<a id="busStopsNavLink" href="${busStopsHref}" x="200" y="130" pointer-events="all" display="none">`
+    projectsPageHTML_head = `<a id="projectsPageNavLink" href="${projectsPageHref}" x="50" y="30" pointer-events="all">`
+    pacmenLinkHTML_head = `<a id="pacmenNavLink" href="${pacmenHref}" x="350" y="30" pointer-events="all" display="none">`
+    eyesLinkHTML_head = `<a id="eyesNavLink" href="${eyesHref}" x="350" y="80" pointer-events="all" display="none">`
+    busStopsLink_head = `<a id="busStopsNavLink" href="${busStopsHref}" x="350" y="130" pointer-events="all" display="none">`
    
     var homeLinkHTML = `<a id="homeNavLink" href="${homeHref}" x="0" y="30" pointer-events="all">
         <path class="nav-link" id="homeNavButton" d="M0,0 l50,0 l0,50 l-50,0 l0,-50" fill="url(#homeNavLinkGradient)" /></a>`
-    var homeIcon = `<image id="homeIcon" href="${homeHref=="#"? "./":"../"}icons/house_door_filled.svg" x="12.5" y="12.5" height="25" width="25" pointer-events="none">`
+    var homeIcon = `<image id="homeIcon" href="${rootDir}icons/house_door_filled.svg" x="12.5" y="12.5" height="25" width="25" pointer-events="none">`
     var homeLinkGradientHTML =  `<linearGradient id="homeNavLinkGradient" x1="0" y1=".9" x2="1.8" y2=".9" spreadMethod="reflect" gradientTransform="rotate(90) skewY(20)">
     <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="5%"/>
     <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="100%"/>
@@ -538,7 +554,18 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
             <animate id="homeNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
             </linearGradient>`
 
-    var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M600,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all"></path>`
+    var projectsPageLinkHTML = projectsPageHTML_head+`<path class="nav-link" id="projectsPageButton" d="M50,0 l150,0 l0,50 l-150,0 l0,-50" fill="url(#projectsPageLinkGradient)"  pointer-events="all"/>
+    <text x="58" y="30" fill="white" stroke="white" pointer-events="none">Projects Page</text> 
+</path></a>`
+    var projectsPageLinkGradientHTML =  ` <linearGradient id="projectsPageLinkGradient"   x1="0" y1=".9" x2="1.8" y2=".9" spreadMethod="reflect" gradientTransform="rotate(90) skewY(20)">
+    <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="5%"/>
+    <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+20}%)" offset="100%"/>
+    <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+5}%)" offset="25%"/>
+
+    <animate id="projectsPageButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite"/>
+    </linearGradient>`
+
+    var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M750,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all"></path>`
     
     var ballGameLinkGradientHTML =  `<radialGradient id="ballGameNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="repeat">
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="10%"/>
@@ -549,7 +576,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     
     var pacmenLinkHTML = pacmenLinkHTML_head+ `
         <path class="nav-link" id="pacmenNavButton" d="M${subLinkPos[0][0]},${subLinkPos[0][1]} l150,0 l0,50 l-150,0 l0,-50" fill="url(#pacmenNavLinkGradient)"  pointer-events="all"/>
-        <text x="100" y="80" fill="white" stroke="white" pointer-events="none">Pacmen</text>
+        <text x="250" y="80" fill="white" stroke="white" pointer-events="none">Pacmen</text>
             <animate id="fadeInAnimation1" attributeType="XML" attributeName="opacity" dur="500ms"  begin="indefinite" fill="freeze"
                 from="0.0" to="1.0"  begin="indefinite"></animate> 
             <animate id="fadeOutAnimation1" attributeType="XML" attributeName="opacity" dur="100ms"  begin="indefinite" fill="freeze"
@@ -564,7 +591,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
 
     var eyesLinkHTML = eyesLinkHTML_head+ `
     <path class="nav-link" id="eyesNavButton" d="M${subLinkPos[1][0]},${subLinkPos[1][1]} l150,0 l0,50 l-150,0 l0,-50" fill="url(#eyesNavLinkGradient)"  pointer-events="all"/>
-    <text x="100" y="130" fill="white" stroke="white" pointer-events="none">Eyes</text> 
+    <text x="250" y="130" fill="white" stroke="white" pointer-events="none">Eyes</text> 
     <animate id="fadeInAnimation2" attributeType="XML" attributeName="opacity" dur="500ms"  begin="indefinite" fill="freeze" from="0.0" to="1.0"  begin="indefinite"></animate> 
     <animate id="fadeOutAnimation2" attributeType="XML" attributeName="opacity" dur="100ms"  begin="indefinite" fill="freeze" from="1.0" to="0.0" begin="indefinite"></animate></a>`
     
@@ -579,7 +606,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     
     var busStopsLinkHTML = busStopsLink_head+`
         <path class="nav-link" id="busStopsNavButton" d="M${subLinkPos[2][0]},${subLinkPos[2][1]} l150,0 l0,50 l-150,0 l0,-50" fill="url(#busStopsNavLinkGradient)"  pointer-events="all"/>
-        <text x="100" y="180" fill="white" dx="-25" stroke="white" pointer-events="none" class="mapNavLinkText">Map Animation</text> 
+        <text x="250" y="180" fill="white" dx="-25" stroke="white" pointer-events="none" class="mapNavLinkText">Map Animation</text> 
         <animate id="fadeInAnimation3" attributeType="XML" attributeName="opacity" dur="500ms"  begin="indefinite" fill="freeze"
             from="0.0" to="1.0"  begin="indefinite"></animate> 
         <animate id="fadeOutAnimation3" attributeType="XML" attributeName="opacity" dur="100ms"  begin="indefinite" fill="freeze"
@@ -594,10 +621,10 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
 
     //`<a id="imageGalleryNavLink" href="${imageGalleryHref}" x="50" y="30" pointer-events="all" display="none">
     var imageGalleryLinkHTML =  `<a id="imageGalleryNavLink" href="${imageGalleryHref}" x="350" y="30" pointer-events="all">
-        <path class="nav-link" fill="url(#imageGalleryNavLinkGradient)" id="imageGalleryNavButton" d="M200,0 l150,0 l0,50 l-150,0 l0,-50" pointer-events="all" />
-        <text x="250" y="30" fill="white" dx="-25" stroke="white" pointer-events="none" class="mapNavLinkText">Gallery </text> 
+        <path class="nav-link" fill="url(#imageGalleryNavLinkGradient)" id="imageGalleryNavButton" d="M350,0 l150,0 l0,50 l-150,0 l0,-50" pointer-events="all" />
+        <text x="400" y="30" fill="white" dx="-25" stroke="white" pointer-events="none" class="mapNavLinkText">Gallery </text> 
         
-        <image href="${rootDir}icons/imageIcon.svg" x="280" y="10" height="30" width="30" pointer-events="none">
+        <image href="${rootDir}icons/imageIcon.svg" x="430" y="10" height="30" width="30" pointer-events="none">
         </a>`
         
     var imageGalleryLinkGradientHTML =  `<linearGradient id="imageGalleryNavLinkGradient"   x1="0" y1=".9" x2="1.8" y2=".9" spreadMethod="reflect" gradientTransform="rotate(90) skewY(20)">
@@ -608,11 +635,9 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     <animate id="imageGalleryNavButtonAnimation" attributeType="XML" attributeName="x2" values="1.8; 1.7; .65; .35; 0;" dur=".75s"  begin="indefinite" repeatCount="indefinite" />
     </linearGradient>` 
 
-    var meshGenLinkHTML =  `<a id="imageGalleryNavLink" href="${meshGenHref}" x="500" y="30" pointer-events="all">
-        <path class="nav-link" fill="url(#meshGenNavLinkGradient)" id="meshGenNavButton" d="M350,0 l150,0 l0,50 l-150,0 l0,-50" pointer-events="all" />
-        <text x="400" y="30" fill="white" dx="-35" stroke="white" pointer-events="none" style="font-size:16px;">Mesh Generation </text> 
-        
-        
+    var meshGenLinkHTML =  `<a id="imageGalleryNavLink" href="${meshGenHref}" x="650" y="30" pointer-events="all">
+        <path class="nav-link" fill="url(#meshGenNavLinkGradient)" id="meshGenNavButton" d="M500,0 l150,0 l0,50 l-150,0 l0,-50" pointer-events="all" />
+        <text x="550" y="30" fill="white" dx="-35" stroke="white" pointer-events="none" style="font-size:16px;">Mesh Generation </text> 
         </a>`
         
     var meshGenLinkGradientHTML =  `<linearGradient id="meshGenNavLinkGradient"   x1="0" y1=".9" x2="1.8" y2=".9" spreadMethod="reflect" gradientTransform="rotate(90) skewY(20)">
@@ -624,7 +649,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     </linearGradient>` 
 
 
-    var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M500,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all"></path>`
+    var ballGameLinkHTML =  `<path class="nav-link" fill="url(#ballGameNavLinkGradient)" id="ballGameButton" d="M650,0 l50,0 l0,50 l-50,0 l0,-50"   pointer-events="all"></path>`
     
     var ballGameLinkGradientHTML =  `<radialGradient id="ballGameNavLinkGradient" cx=".5" cy="0.5" r="0.8" fx="0.5" fy="0.0" spreadMethod="reflect">
             <stop stop-color="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness}%)" offset="10%"/>
@@ -638,6 +663,10 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
         insertInto.insertAdjacentHTML('beforeend', homeLinkGradientHTML);
         insertInto.insertAdjacentHTML("beforeend",homeIcon);
 
+
+        insertInto.insertAdjacentHTML('beforeend', projectsPageLinkHTML);
+        insertInto.insertAdjacentHTML('beforeend', projectsPageLinkGradientHTML);
+        
         
 
         insertInto.insertAdjacentHTML('beforeend', ballGameLinkHTML);
@@ -677,8 +706,6 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
         insertInto.insertAdjacentHTML('beforeend', homeLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', homeLinkGradientHTML);
 
-        
-
         insertInto.insertAdjacentHTML('beforeend', imageGalleryLinkHTML);
         insertInto.insertAdjacentHTML('beforeend', imageGalleryLinkGradientHTML);
 
@@ -701,9 +728,9 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
 
     insertInto.insertAdjacentHTML("beforeend", `
     <g id="ballIcons">
-        <circle cx="${500+20}" cy="${30}" r="${10}" fill="hsl(40, 100%, 50%)" pointer-events="none"/>
-        <circle cx="${500+30}" cy="${12}" r="${7}" fill="hsl(10, 100%, 50%)" pointer-events="none"/>
-        <circle cx="${500+40}" cy="${35}" r="${5}" fill="hsl(90, 80%, 50%)" pointer-events="none"/>
+        <circle cx="${650+20}" cy="${30}" r="${10}" fill="hsl(40, 100%, 50%)" pointer-events="none"/>
+        <circle cx="${650+30}" cy="${12}" r="${7}" fill="hsl(10, 100%, 50%)" pointer-events="none"/>
+        <circle cx="${650+40}" cy="${35}" r="${5}" fill="hsl(90, 80%, 50%)" pointer-events="none"/>
     </g>
     <image id="ballGameEndIcon" href="${rootDir}icons/box-arrow-left.svg" x="507" y="10" height="30" width="30" pointer-events="none" style="display:none;">`);
    
@@ -720,12 +747,12 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     });
     
     setLinkAnimations("homeNavButton");
+    setLinkAnimations("projectsPageButton");
     setLinkAnimations("pacmenNavButton");
     setLinkAnimations("eyesNavButton");
     setLinkAnimations("busStopsNavButton");
     setLinkAnimations("imageGalleryNavButton")
     setLinkAnimations("meshGenNavButton")
-    
     
     makeBallGame();
     document.getElementById("ballGameButton").onclick = (e) => {
@@ -755,7 +782,6 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
                     ballGameInterval = setInterval(()=>{
                         let status = updateBallGame();
                         if(status==-1) {
-
                             clearBallGame();
 
                             document.body.insertAdjacentHTML("beforeend",`<div id="gameAlert" class="alert alert-danger" role="alert">
@@ -1015,7 +1041,7 @@ function addRemainingSegment(replace=false) {
     var rootDir = pathName.substr(pathName.lastIndexOf("/")+1)
     rootDir = rootDir.replace("#","");
     rootDir = rootDir.replace(".html","");
-    if(rootDir=="index") rootDir="";
+    if(rootDir=="index" || rootDir=="projectsPage") rootDir="";
     else rootDir="../"
 
     navBar.insertAdjacentHTML("beforeend", `<path class="nav-link"  id="searchButton" d="M${settingsPos-50},0 l50,0 l0,50 l-50,0 l0,-50" fill="hsl(${selectedNavHue},${selectedNavSat}%,${selectedNavBrightness+10}%)"  pointer-events="all"></path>`);

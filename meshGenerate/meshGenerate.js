@@ -16,6 +16,7 @@ function initSession() {
     maxNumOfNodes = 16;
     document.getElementById("numPointsLabel").innerHTML = `Number of nodes left: ${maxNumOfNodes}`;
     M = new Mesh();
+    
     meshSVG.addEventListener("click", mouseClickHandler, false);
 }
 
@@ -24,7 +25,7 @@ function resetMesh() {
     if(M==undefined || M==null) {
         return;
     }
-
+    document.getElementById("meshSVG").style.zIndex="98";
     
     if(meshAnimateInterval !=undefined) clearInterval(meshAnimateInterval);
     var meshRegions = document.querySelectorAll('.meshRegion');
@@ -77,6 +78,7 @@ function mouseClickHandler(e) {
         ++nodeCount
         document.getElementById("resetButton").classList.remove("disabled");
         document.getElementById("resetButton").onclick = resetMesh;
+        document.getElementById("meshSVG").style.zIndex="100";
         return;
     }
 

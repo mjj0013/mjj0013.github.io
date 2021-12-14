@@ -16,3 +16,5 @@ For this step, I followed a methodology using a Depth-First Search algorithm. Th
 ## Animating the Mesh
 To do this, each node's coordinates are expressed with trigonometric functions (x=cos(...), y=sin(...)). A variable was continuously incremented to serve as the time-variable. It was more visually appealing to have the nodes move in different phases from each other, and this was easily done by giving each node a randomly generated number for 'phase' and adding that inside their trigonometric functions.
 
+## Roadmap of future improvements
+Many improvements can be made to the cycle detection algorithm. 

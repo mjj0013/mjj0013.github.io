@@ -46,8 +46,12 @@ body {
 
 .galleryGrid {
 	z-index:90;
-	top:150px;
-	left:20%;
+	top:280px;
+	
+	
+	justify-content: center;
+	align-items: center;
+	text-align: center;
 	position:absolute;
 	display:grid;
 	margin: 50px 5% 50px 5%;
@@ -79,7 +83,7 @@ image {
 }
 .gallerySVG {
 	z-index:1;
-	box-shadow:3px 3px black;
+	box-shadow: 10px 5px 5px black;
 }
 /*row-start, column-start, row-finish, columm-finish*/
 .gallerySVG.img1{
@@ -171,8 +175,6 @@ textarea {
 	height: 125px;
 	border:1px solid black;
 	transform: translate3d(0);
-	
-	
 	z-index:2;
 }
 #coverCanvasContainer {
@@ -186,7 +188,6 @@ textarea {
 	filter: brightness(.4);
 }
 #introVidEmbed {
-	
 	z-index:99;
 	position:relative;
 	top:5vh;
@@ -214,6 +215,44 @@ textarea {
 	top:23%;
 	left:30%;
 }
+#galleryInfoCard {
+	z-index:98;
+	box-shadow: 10px 5px 5px black;
+	background-color:hsla(0, 0%, 20%);
+	position:absolute;
+	height:60px;
+	/* width:800px; */
+	top:200px;
+	width:800px;
+	left:25px;
+	
+}
+
+.projectCard {
+	z-index:99;
+	box-shadow: 10px 5px 5px black;
+	background-color:hsla(0, 0%, 20%, .8);
+	position:absolute;
+	height:75px;
+	
+	width:800px;
+	overflow:hidden;
+	transition:all .5s;
+}
+
+
+
+
+#meshInfoCard {
+	z-index:99;
+	box-shadow: 10px 5px 5px black;
+	background-color:hsla(0, 0%, 20%);
+	position:fixed;
+	height:500px;
+	width:300px;
+	top:25%;
+	left:25px;
+}
 
 #bioCard {
 	background-color:hsla(220, 40%, 20%, 0.3);
@@ -236,9 +275,7 @@ textarea {
 #bioCard > p {
 	opacity:1;
 }
-/* .card > * {
-	z-index:100;
-} */
+
 
 
 
@@ -310,12 +347,13 @@ li {
 	background-color: rgba(52, 73, 94, 0.75);
 }
 #playButton{
-	z-index:99;
+	z-index:100;
 	position:absolute;
 	top:25%;
 	width:50px;
 	height:50px;
 	left:25%;
+	
 
 }
 #resetButton {
@@ -334,12 +372,16 @@ button.disabled {
 
 #numPointsLabel {
 	position:absolute;
-	top:25%;
+	bottom:5%;
 	left:5%;
 	z-index:88;
 }
 #resetButton:hover {
 	cursor:pointer;
+}
+
+#resetButton{
+	z-index:100;
 }
 #startMeshButton:hover {
 	cursor:pointer;
@@ -347,7 +389,7 @@ button.disabled {
 
 #meshSVG {
 	position:absolute;
-	
+	/* pointer-events:all; */
 	
 	top:25%;
 	left:25%;

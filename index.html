@@ -26,10 +26,21 @@
 	</head>
 	
 	<body>
-		
-		<!-- <img id="hideBioCardButton" src="./icons/eye-slash.svg" /> -->
-		
+	<div class="homeGrid">
+		<div class="meshEx">
+			<img src="./meshExample.png" width="300" height="300"/>
+		</div>
+		<div class="mapEx">
+			<img src="./mapExample.png" width="300" height="300"/>
+		</div>
+		<div class="eyeEx">
+			<img src="./eyesExample.png" width="300" height="100"/>
+		</div>
+		<div class="pacmanEx">
+			<img src="./pacmen/images/PacMan3.png" width="300" height="300"/>
+		</div>
 		<div id="bioCard" class="card text-white mb-3">
+
 			<!-- <div id="bioCard"> -->
 			<iframe id="introVidEmbed" width="560" height="315" src="https://www.youtube.com/embed/OvXkzOi3F8c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 			<div class="accordion accordion-flush" id="bioAccordion">
@@ -44,6 +55,7 @@
 					  <div class="accordion-body">
 						Hello, my name is Matthew Jett. I graduated from The University of Alabama in Huntsville in 2020 with a Bachelor's Degree in Computer Engineering. As an undergrad, all of our programming assignments were in Python and C++/C, and ranged from complex GUI applications to embedded systems. I first started learning Javascript/HTML in September 2021, but already having extensive experience in programming made it easier for me to quickly learn Javascript. 
 					  </div>
+					  <img src="./picOfSelf.jpg"  style="position:relative;left:0%;bottom:15px;"width="350" height="200"/>
 					</div>
 				</div>
 				<div class="accordion-item" style="background-color:hsla(0, 0%, 20%);">
@@ -66,7 +78,7 @@
 					</h2>
 					<div id="collapseURLs" class="accordion-collapse collapse" aria-labelledby="headerURLs" data-bs-parent="#bioAccordion">
 					  <div class="accordion-body">
-						GitHub:    https://github.com/mjj0013<br> LinkedIn:    https://www.linkedin.com/in/matthew-jett-085783120/
+						<strong>GitHub:</strong>    https://github.com/mjj0013<br> <strong>LinkedIn:</strong>    https://www.linkedin.com/in/matthew-jett-085783120/
 					  </div>
 					</div>
 				</div>
@@ -78,7 +90,7 @@
 					</h2>
 					<div id="collapseContact" class="accordion-collapse collapse" aria-labelledby="headerURLs" data-bs-parent="#bioAccordion">
 					  <div class="accordion-body">
-						Email:    mjj0013@uah.edu
+						<strong>Email:</strong>    mjj0013@uah.edu
 					  </div>
 					</div>
 				</div>
@@ -86,7 +98,7 @@
 			
 		
 		</div>
-		
+	</div>
 		<svg id="ballContainer" class="bgSVG" xmlns="http://www.w3.org/2000/svg">
 			<rect x="0" y="0" width="100%" height="100%"" fill="grey" />
 			<image id="infoButton" x="0" y="0" href="./icons/infoIcon.svg" onclick="toggleBallGameInfo()"/>

@@ -732,7 +732,7 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
         <circle cx="${650+30}" cy="${12}" r="${7}" fill="hsl(10, 100%, 50%)" pointer-events="none"/>
         <circle cx="${650+40}" cy="${35}" r="${5}" fill="hsl(90, 80%, 50%)" pointer-events="none"/>
     </g>
-    <image id="ballGameEndIcon" href="${rootDir}icons/box-arrow-left.svg" x="507" y="10" height="30" width="30" pointer-events="none" style="display:none;">`);
+    <image id="ballGameEndIcon" href="${rootDir}icons/box-arrow-left.svg" x="657" y="10" height="30" width="30" pointer-events="none" style="display:none;">`);
    
     
     document.getElementById("forwardDropdownAnimation").addEventListener("endEvent", (e)=>{
@@ -758,6 +758,8 @@ function insertNavLinks(insertInto, currentDir, replace=false) {
     document.getElementById("ballGameButton").onclick = (e) => {
         if(ballGameStarted==0){
             ballGameStarted = 1;
+            ++numberBallPresses;
+            if(numberBallPresses>3) return;
             document.getElementById("ballIcons").style.display="none";
             document.getElementById("ballGameEndIcon").style.display="block";
             document.getElementById("fwdPipeAnimation").beginElement();
@@ -833,19 +835,19 @@ function makeBallGame() {
         </radialGradient>`
 
     var pipeHTML = `
-    <path class="nav-link" fill="url(#pipeGradient)" id="ballGamePipe" d="M500,50 l50,0 l0,0 l-50,0 l0,0"   pointer-events="all">
+    <path class="nav-link" fill="url(#pipeGradient)" id="ballGamePipe" d="M650,50 l50,0 l0,0 l-50,0 l0,0"   pointer-events="all">
         <animate id="fwdPipeAnimation" attributeType="XML" attributeName="d" dur="50ms"  begin="indefinite" fill="freeze"
-        values="M500,50 l50,0 l0,0 l-50,0 l0,0;
-                M500,50 l50,0 l0,50 l-50,0 l0,0;
-                M500,50 l50,0 l0,100 l-50,0 l0,-100;
-                M500,50 l50,0 l0,150 l-50,0 l0,-150" 
+        values="M650,50 l50,0 l0,0 l-50,0 l0,0;
+                M650,50 l50,0 l0,50 l-50,0 l0,0;
+                M650,50 l50,0 l0,100 l-50,0 l0,-100;
+                M650,50 l50,0 l0,150 l-50,0 l0,-150" 
             >
         </animate>
         <animate id="bkwdPipeAnimation" attributeType="XML" attributeName="d" dur="50ms"  begin="indefinite" fill="freeze"
-        values="M500,50 l50,0 l0,150 l-50,0 l0,-150;
-            M500,50 l50,0 l0,100 l-50,0 l0,-100;
-            M500,50 l50,0 l0,50 l-50,0 l0,-50;
-            M500,50 l50,0 l0,0 l-50,0 l0,0" 
+        values="M650,50 l50,0 l0,150 l-50,0 l0,-150;
+            M650,50 l50,0 l0,100 l-50,0 l0,-100;
+            M650,50 l50,0 l0,50 l-50,0 l0,-50;
+            M650,50 l50,0 l0,0 l-50,0 l0,0" 
             >
         </animate>
     </path>`

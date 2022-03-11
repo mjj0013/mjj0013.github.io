@@ -333,8 +333,6 @@ function iconElement() {
             <animate attributeType="XML"  id="toWithdrawCeiling" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to={withdraw.ceiling} fill="freeze" />
             <animate attributeType="XML"  id="toDepositCeiling" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to={deposit.ceiling} fill="freeze" />
         </path>
-        
-        
   </svg>
   )
 }

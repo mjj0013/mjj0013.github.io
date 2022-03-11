@@ -3,6 +3,7 @@ myHeaders.set("Access-Control-Allow-Origin", "*");
 myHeaders.set("Access-Control-Request-Headers", "*");
 
 function homeOnHover() {
+  console.log("here")
   document.getElementById("roofToFill").beginElement()
   document.getElementById("toHomeFoundation").beginElement();
   document.getElementById("toHomeCol1").beginElement();

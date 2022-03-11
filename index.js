@@ -74,7 +74,7 @@ window.onload = () => {
     }
     if(currentLocation=="projectsPage") {
         initNavBar();
-        initBackground();    
+        // initBackground();    
         SymbolDecomp();
         adjustBackground(currentLocation);
     }

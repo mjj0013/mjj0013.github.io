@@ -1,6 +1,88 @@
 var myHeaders = new Headers();
 myHeaders.set("Access-Control-Allow-Origin", "*");
 myHeaders.set("Access-Control-Request-Headers", "*");
+
+function homeOnHover() {
+  document.getElementById("roofToFill").beginElement()
+  document.getElementById("toHomeFoundation").beginElement();
+  document.getElementById("toHomeCol1").beginElement();
+  document.getElementById("toHomeCol2").beginElement();
+  document.getElementById("toHomeCol3").beginElement();
+  document.getElementById("toHomeCol4").beginElement();
+  document.getElementById("toHomeFloor").beginElement();
+  document.getElementById("toHomeCeiling").beginElement();
+  document.getElementById("toHomeRoof").beginElement();
+  
+}
+
+function createAccountOnHover() {
+  document.getElementById("roofToFill").beginElement()
+  document.getElementById("toCreateAccountFoundation").beginElement();
+  document.getElementById("toCreateAccountCol1").beginElement();
+  document.getElementById("toCreateAccountCol2").beginElement();
+  document.getElementById("toCreateAccountCol3").beginElement();
+  document.getElementById("toCreateAccountCol4").beginElement();
+  document.getElementById("toCreateAccountFloor").beginElement();
+  document.getElementById("toCreateAccountCeiling").beginElement();
+  document.getElementById("toCreateAccountRoof").beginElement();
+  
+}
+
+function loginOnHover() {
+  document.getElementById("roofToFill").beginElement()
+  document.getElementById("toLoginFoundation").beginElement();
+  document.getElementById("toLoginCol1").beginElement();
+  document.getElementById("toLoginCol2").beginElement();
+  document.getElementById("toLoginCol3").beginElement();
+  document.getElementById("toLoginCol4").beginElement();
+  document.getElementById("toLoginFloor").beginElement();
+  document.getElementById("toLoginCeiling").beginElement();
+  document.getElementById("toLoginRoof").beginElement();
+  
+  
+}
+
+
+
+function withdrawOnHover() {
+  document.getElementById("roofToClear").beginElement()
+  document.getElementById("toWithdrawFoundation").beginElement();
+  document.getElementById("toWithdrawCol1").beginElement();
+  document.getElementById("toWithdrawCol2").beginElement();
+  document.getElementById("toWithdrawCol3").beginElement();
+  document.getElementById("toWithdrawCol4").beginElement();
+  document.getElementById("toWithdrawFloor").beginElement();
+  document.getElementById("toWithdrawCeiling").beginElement();
+  document.getElementById("toWithdrawRoof").beginElement();
+  
+}
+
+function depositOnHover() {
+
+  document.getElementById("roofToClear").beginElement()
+  document.getElementById("toDepositFoundation").beginElement();
+  document.getElementById("toDepositCol1").beginElement();
+  document.getElementById("toDepositCol2").beginElement();
+  document.getElementById("toDepositCol3").beginElement();
+  document.getElementById("toDepositCol4").beginElement();
+  document.getElementById("toDepositFloor").beginElement();
+  document.getElementById("toDepositCeiling").beginElement();
+  document.getElementById("toDepositRoof").beginElement();
+  
+  
+}
+
+
+function returnToCurrent(e) {
+  if(currentSymbol=="login" && e.target.id!="loginLink") loginOnHover();
+  if(currentSymbol=="balance" && e.target.id!="balanceLink") balanceOnHover();
+  if(currentSymbol=="withdraw" && e.target.id!="withdrawLink") withdrawOnHover();
+  if(currentSymbol=="createAccount"  && e.target.id!="createAccountLink") createAccountOnHover();
+  if(currentSymbol=="bank" && e.target.id!="homeLink") homeOnHover();
+
+}
+
+
 const bank = {
   column1: "M -9.31 6.728 c 0.05 -8.034 0.076 -11.694 0.06 -12.761 c -0.935 0 -1.87 0 -2.805 0 c 0 4.254 0 8.51 0 12.782 c 0.473 -0.006 0.991 0 1.281 0 c 0.421 0 0.78 0 1.464 0",
   column2: "M -5.078 -6 c 0 4.254 0 8.51 0 12.762 c 0.9427 0 1.8853 0 2.828 0 c 0 -4.254 0 -8.51 0 -12.762 c -0.9427 0 -1.8853 0 -2.828 0",

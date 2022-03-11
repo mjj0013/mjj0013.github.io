@@ -12,7 +12,7 @@ function homeOnHover() {
   document.getElementById("toHomeFloor").beginElement();
   document.getElementById("toHomeCeiling").beginElement();
   document.getElementById("toHomeRoof").beginElement();
-  
+  console.log("done");
 }
 
 function createAccountOnHover() {
@@ -246,6 +246,7 @@ function SymbolDecomp() {
             <animate attributeType="XML"  id="toDepositCeiling" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${deposit.ceiling}' fill="freeze" />
         </path>`
   );
+  document.getElementById("toHomeIcon").onclick=homeOnHover;
 
 
 

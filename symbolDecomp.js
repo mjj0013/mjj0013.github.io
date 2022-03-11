@@ -170,7 +170,6 @@ function SymbolDecomp() {
             
             <animate attributeType="XML"  id="toWithdrawRoof" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.roof} fill="freeze" />
             <animate attributeType="XML"  id="toDepositRoof" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.roof} fill="freeze" />
-            
             <animate id="roofToFill" fill="freeze" begin="indefinite" attributeName="fill" dur=".5s" to="rgba(0,0,0,1.0)" />
             <animate id="roofToClear" fill="freeze" begin="indefinite" attributeName="fill" dur=".5s" to="rgba(0,0,0,0)" />
         </path>`

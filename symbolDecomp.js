@@ -86,8 +86,8 @@ function SymbolDecomp() {
             <animate attributeType="XML"  id="toCreateAccountRoof" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to={${createAccount.roof}fill="freeze" />
             <animate attributeType="XML"  id="toLoginRoof" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.roof}fill="freeze" />
             
-            <animate attributeType="XML"  id="toWithdrawRoof" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.roof}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositRoof" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.roof}' fill="freeze" />
+            <animate attributeType="XML"  id="toWithdrawRoof" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.roof} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositRoof" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.roof} fill="freeze" />
             
             <animate id="roofToFill" fill="freeze" begin="indefinite" attributeName="fill" dur=".5s" to="rgba(0,0,0,1.0)" />
             <animate id="roofToClear" fill="freeze" begin="indefinite" attributeName="fill" dur=".5s" to="rgba(0,0,0,0)" />
@@ -99,8 +99,8 @@ function SymbolDecomp() {
             <animate attributeType="XML"  id="toCreateAccountFoundation" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${createAccount.foundation}fill="freeze" />
             <animate attributeType="XML"  id="toLoginFoundation" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.foundation}fill="freeze" />
 
-            <animate attributeType="XML"  id="toWithdrawFoundation" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.foundation}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositFoundation" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.foundation}' fill="freeze" />
+            <animate attributeType="XML"  id="toWithdrawFoundation" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.foundation} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositFoundation" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.foundation} fill="freeze" />
         </path>`
   );
   bankDemo.insertAdjacentHTML("beforeend",
@@ -109,8 +109,8 @@ function SymbolDecomp() {
             <animate attributeType="XML"  id="toCreateAccountCol1" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${createAccount.column1}fill="freeze" />
             <animate attributeType="XML"  id="toLoginCol1" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.column1}fill="freeze" />
 
-            <animate attributeType="XML"  id="toWithdrawCol1" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.column1}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositCol1" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.column1}' fill="freeze" />
+            <animate attributeType="XML"  id="toWithdrawCol1" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.column1} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositCol1" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.column1} fill="freeze" />
            
         </path>`
   );
@@ -119,8 +119,8 @@ function SymbolDecomp() {
             <animate attributeType="XML"  id="toCreateAccountCol2" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${createAccount.column2}fill="freeze" />
             <animate attributeType="XML"  id="toLoginCol2" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.column2}fill="freeze" />
 
-            <animate attributeType="XML"  id="toWithdrawCol2" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.column2}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositCol2" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.column2}' fill="freeze" />
+            <animate attributeType="XML"  id="toWithdrawCol2" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.column2} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositCol2" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.column2} fill="freeze" />
           
         </path>`
   bankDemo.insertAdjacentHTML("beforeend",
@@ -129,8 +129,8 @@ function SymbolDecomp() {
             <animate attributeType="XML"  id="toCreateAccountCol3" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${createAccount.column3}fill="freeze" />
             <animate attributeType="XML"  id="toLoginCol3" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.column3}fill="freeze" />
 
-            <animate attributeType="XML"  id="toWithdrawCol3" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.column3}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositCol3" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.column3}' fill="freeze" />
+            <animate attributeType="XML"  id="toWithdrawCol3" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.column3} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositCol3" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.column3} fill="freeze" />
         </path>`
   );
         `<path id="column4"  d='${pageSymbols[currentPage].column4}'  fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".1px"> 
@@ -138,8 +138,8 @@ function SymbolDecomp() {
             <animate attributeType="XML"  id="toCreateAccountCol4" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${createAccount.column4}fill="freeze" />
             <animate attributeType="XML"  id="toLoginCol4" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.column4}fill="freeze" />
 
-            <animate attributeType="XML"  id="toWithdrawCol4" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.column4}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositCol4" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.column4}' fill="freeze" />
+            <animate attributeType="XML"  id="toWithdrawCol4" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.column4} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositCol4" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.column4} fill="freeze" />
         </path>`
   bankDemo.insertAdjacentHTML("beforeend",
         `<path id="floor"  d='${pageSymbols[currentPage].floor}'  fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".1px"> 
@@ -147,8 +147,8 @@ function SymbolDecomp() {
             <animate attributeType="XML"  id="toCreateAccountFloor" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${createAccount.floor}fill="freeze" />
             <animate attributeType="XML"  id="toLoginFloor" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.floor}fill="freeze" />
           
-            <animate attributeType="XML"  id="toWithdrawFloor" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.floor}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositFloor" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.floor}' fill="freeze" />
+            <animate attributeType="XML"  id="toWithdrawFloor" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.floor} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositFloor" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.floor} fill="freeze" />
         </path>`
   );
   bankDemo.insertAdjacentHTML("beforeend",
@@ -157,8 +157,8 @@ function SymbolDecomp() {
             <animate attributeType="XML"  id="toCreateAccountCeiling" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${createAccount.ceiling}fill="freeze" />
             <animate attributeType="XML"  id="toLoginCeiling" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.ceiling}fill="freeze" />
 
-            <animate attributeType="XML"  id="toWithdrawCeiling" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.ceiling}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositCeiling" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.ceiling}' fill="freeze" />
+            <animate attributeType="XML"  id="toWithdrawCeiling" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.ceiling} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositCeiling" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.ceiling} fill="freeze" />
         </path>`
   );
 

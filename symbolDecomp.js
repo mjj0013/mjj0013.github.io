@@ -259,7 +259,7 @@ function iconElement() {
 
   return (
   <svg id="bankDemo" xmlns="https://www.w3.org/2000/svg" viewBox="-20 -20 40 40" style="top:70%; bottom:70%;z-index:999;height:500px;width:500px; display:block;position:absolute;">
-        <path id="roof"    d='${bank.roof}' fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".5px">
+        <path id="roof"    d={bank.roof} fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".5px">
             <animate attributeType="XML"  id="toHomeRoof" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to={bank.roof} fill="freeze"/>
             <animate attributeType="XML"  id="toCreateAccountRoof" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to={createAccount.roof} fill="freeze" />
             <animate attributeType="XML"  id="toLoginRoof" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to={login.roof} fill="freeze" />

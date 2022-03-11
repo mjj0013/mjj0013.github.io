@@ -7,6 +7,7 @@
 		
 		<script type="text/javascript" src="ballObject.js"></script>
 		<script type="text/javascript" src="settings.js"></script>
+        <script type="text/javascript" src="symbolDecomp.js"></script>
 		
 		<title>Home | Portfolio Page</title>
 
@@ -168,13 +169,12 @@
 				<feBlend mode="overlay" in="comp" in2="SourceGraphic"/> -->
 			</filter>
 		</svg>
-        <script type="text/javascript" src="symbolDecomp.js"></script>
+        
         <svg id="bankDemo" xmlns="https://www.w3.org/2000/svg" viewBox="-20 -20 40 40" style="top:70%; bottom:70%;z-index:999;height:500px;width:500px; display:block;position:absolute;">
             <path id="roof"    d={bank.roof} fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".5px">
                 <animate attributeType="XML"  id="toHomeRoof" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to={bank.roof} fill="freeze"/>
                 <animate attributeType="XML"  id="toCreateAccountRoof" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to={createAccount.roof} fill="freeze" />
                 <animate attributeType="XML"  id="toLoginRoof" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to={login.roof} fill="freeze" />
-                
                 <animate attributeType="XML"  id="toWithdrawRoof" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to={withdraw.roof} fill="freeze" />
                 <animate attributeType="XML"  id="toDepositRoof" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to={deposit.roof} fill="freeze" />
                 <animate id="roofToFill" fill="freeze" begin="indefinite" attributeName="fill" dur=".5s" to="rgba(0,0,0,1.0)" />

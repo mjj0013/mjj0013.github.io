@@ -172,9 +172,10 @@
         
 
         
-        <button id="toHomeIcon" style="display:block;position:absolute; top:55%; left:0px; z-index:999;" onclick="homeOnHover()">Home</button>
-        <button id="toCreateAccountIcon" style="display:block;position:absolute; top:55%; left:25px; z-index:999;" onclick="createAccountOnHover()">Create Account</button>
-        <svg id="bankDemo" xmlns="https://www.w3.org/2000/svg" viewBox="-20 -20 40 40" style="top:60%; left:5%;z-index:999;height:200px;width:200px; display:block;position:absolute;">
+        <button id="toHomeIcon" style="display:block;position:absolute; top:45%; left:0px; z-index:999;" onmouseenter="homeOnHover()">Home</button>
+        <button id="toCreateAccountIcon" style="display:block;position:absolute; top:55%; left:0px; z-index:999;" onmouseenter="createAccountOnHover()">Create Account</button>
+        <button id="toLoginIcon" style="display:block;position:absolute; top:60%; left:0px; z-index:999;" onmouseenter="loginOnHover()">Login</button>
+        <svg id="bankDemo" xmlns="https://www.w3.org/2000/svg" viewBox="-20 -20 40 40" style="top:60%; left:0%;z-index:999;height:300px;width:300px; display:block;position:absolute;">
         </svg>
         <script type="text/javascript" src="symbolDecomp.js"></script>
         
@@ -216,7 +217,18 @@
             document.getElementById("toCreateAccountFloor").beginElement();
             document.getElementById("toCreateAccountCeiling").beginElement();
             document.getElementById("toCreateAccountRoof").beginElement();
-            
+        }
+
+        function loginOnHover() {
+            document.getElementById("roofToFill").beginElement()
+            document.getElementById("toLoginFoundation").beginElement();
+            document.getElementById("toLoginCol1").beginElement();
+            document.getElementById("toLoginCol2").beginElement();
+            document.getElementById("toLoginCol3").beginElement();
+            document.getElementById("toLoginCol4").beginElement();
+            document.getElementById("toLoginFloor").beginElement();
+            document.getElementById("toLoginCeiling").beginElement();
+            document.getElementById("toLoginRoof").beginElement();
         }
         
 

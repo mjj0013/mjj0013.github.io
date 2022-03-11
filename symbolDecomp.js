@@ -1,6 +1,88 @@
 var myHeaders = new Headers();
 myHeaders.set("Access-Control-Allow-Origin", "*");
 myHeaders.set("Access-Control-Request-Headers", "*");
+
+function homeOnHover() {
+  document.getElementById("roofToFill").beginElement()
+  document.getElementById("toHomeFoundation").beginElement();
+  document.getElementById("toHomeCol1").beginElement();
+  document.getElementById("toHomeCol2").beginElement();
+  document.getElementById("toHomeCol3").beginElement();
+  document.getElementById("toHomeCol4").beginElement();
+  document.getElementById("toHomeFloor").beginElement();
+  document.getElementById("toHomeCeiling").beginElement();
+  document.getElementById("toHomeRoof").beginElement();
+  
+}
+
+function createAccountOnHover() {
+  document.getElementById("roofToFill").beginElement()
+  document.getElementById("toCreateAccountFoundation").beginElement();
+  document.getElementById("toCreateAccountCol1").beginElement();
+  document.getElementById("toCreateAccountCol2").beginElement();
+  document.getElementById("toCreateAccountCol3").beginElement();
+  document.getElementById("toCreateAccountCol4").beginElement();
+  document.getElementById("toCreateAccountFloor").beginElement();
+  document.getElementById("toCreateAccountCeiling").beginElement();
+  document.getElementById("toCreateAccountRoof").beginElement();
+  
+}
+
+function loginOnHover() {
+  document.getElementById("roofToFill").beginElement()
+  document.getElementById("toLoginFoundation").beginElement();
+  document.getElementById("toLoginCol1").beginElement();
+  document.getElementById("toLoginCol2").beginElement();
+  document.getElementById("toLoginCol3").beginElement();
+  document.getElementById("toLoginCol4").beginElement();
+  document.getElementById("toLoginFloor").beginElement();
+  document.getElementById("toLoginCeiling").beginElement();
+  document.getElementById("toLoginRoof").beginElement();
+  
+  
+}
+
+
+
+function withdrawOnHover() {
+  document.getElementById("roofToClear").beginElement()
+  document.getElementById("toWithdrawFoundation").beginElement();
+  document.getElementById("toWithdrawCol1").beginElement();
+  document.getElementById("toWithdrawCol2").beginElement();
+  document.getElementById("toWithdrawCol3").beginElement();
+  document.getElementById("toWithdrawCol4").beginElement();
+  document.getElementById("toWithdrawFloor").beginElement();
+  document.getElementById("toWithdrawCeiling").beginElement();
+  document.getElementById("toWithdrawRoof").beginElement();
+  
+}
+
+function depositOnHover() {
+
+  document.getElementById("roofToClear").beginElement()
+  document.getElementById("toDepositFoundation").beginElement();
+  document.getElementById("toDepositCol1").beginElement();
+  document.getElementById("toDepositCol2").beginElement();
+  document.getElementById("toDepositCol3").beginElement();
+  document.getElementById("toDepositCol4").beginElement();
+  document.getElementById("toDepositFloor").beginElement();
+  document.getElementById("toDepositCeiling").beginElement();
+  document.getElementById("toDepositRoof").beginElement();
+  
+  
+}
+
+
+function returnToCurrent(e) {
+  if(currentSymbol=="login" && e.target.id!="loginLink") loginOnHover();
+  if(currentSymbol=="balance" && e.target.id!="balanceLink") balanceOnHover();
+  if(currentSymbol=="withdraw" && e.target.id!="withdrawLink") withdrawOnHover();
+  if(currentSymbol=="createAccount"  && e.target.id!="createAccountLink") createAccountOnHover();
+  if(currentSymbol=="bank" && e.target.id!="homeLink") homeOnHover();
+
+}
+
+
 const bank = {
   column1: "M -9.31 6.728 c 0.05 -8.034 0.076 -11.694 0.06 -12.761 c -0.935 0 -1.87 0 -2.805 0 c 0 4.254 0 8.51 0 12.782 c 0.473 -0.006 0.991 0 1.281 0 c 0.421 0 0.78 0 1.464 0",
   column2: "M -5.078 -6 c 0 4.254 0 8.51 0 12.762 c 0.9427 0 1.8853 0 2.828 0 c 0 -4.254 0 -8.51 0 -12.762 c -0.9427 0 -1.8853 0 -2.828 0",
@@ -30,23 +112,6 @@ const withdraw = {
 }
 
 
-//balance symbol
-//foundation & column4  <=> left bucket & right bucket
-//column2  <=> rod
-//roof <=> base of balanceW
-//ceiling <=> arm/fulcrum of balance
-const balance = {
-  ceiling:"M 0 -15 c -2.72 0 -2.72 4 0 4 c 2.72 0 2.72 -4 0 -4 c 0 -0.657 0 -1.184 0 -2 c 5 0 5 7.99 0 8 c -5 0 -5 -7.975 0 -8 c 0 0.418 0 1.507 0 2",
-  column1:"M -11.296 -9.44 c -1.496 -0.447 -7.548 7.833 -7.4464 12.1272 c 0 2.5856 3.3544 4.6876 7.5 4.6876 c 0 -1.8816 0 -3.7632 0 -5.6448 c -1.433 0 -2.866 0 -4.299 0 c 2.7284 -5.678 5.1144 -8 4.2644 -11.14",
-  column2:"M -11.337 7.365 c 14.495 -1.432 1.717 -17.125 0 -16.809 c -0.4 2.374 1.33 5.099 4 11.194 c -1.3579 0 -2.7159 0 -4 0 c 0 1.8673 -0.0213 3.7347 0 5.6",
-  column3:"M 11.296 -9.44 c -13.287 12.365 -4.092 16.8148 0 16.8148 c 0 -1.8816 0 -3.7632 0 -5.6448 c -1.433 0 -2.866 0 -4.299 0 c 2.9464 -5.786 5.1144 -8 4.2644 -11.144",
-  column4:"M 11.337 7.365 c 15.42 -0.413 1.717 -17.125 0 -16.809 c -0.405 2.374 1.254 5.744 4 11.194 c -1.3579 0 -2.7159 0 -4 0 c 0 1.8673 -0.0213 3.7347 0 5.602",
-  foundation:"M -1.911 9.251 c -2.7941 0 -5.5881 0 -8.3822 0 c -5.2868 2 -2.3928 3.75 -1.8752 3.75 c 8.1251 0 16.2501 0 24.3752 0 c 3.9832 -0.82 -0.322 -3.751 -1.9558 -3.761 c -4 0 -8 0 -12.157 0",
-  floor:"M -1.963 -15.471 c 0 8.24 0 16.48 0 24.72 c 0.2213 0 0.4427 0 0.66 0 c 0.66 0 1.9269 0 3.1938 0 c 0 -8.2383 0 -16.4767 0 -24.715 c -1.2859 0 -2.5719 0 -3.8578 0",
-  roof:"M 9.296 -15.116 c -2.943 0 -4.587 0 -9.36 0 c 0 0 0 0 0 0 c -6.205 0 -8.379 0 -11.11 0 c 0 0 0 0 0 0 a 1 1 0 0 0 0 3.659 c 7.5307 0 15 0 22.592 0 a 1 1 0 0 0 0 -3.738 c -0.663 0 -1.326 0 -2 0",
-}
-
-
 
 //create account symbol: Windows user logo with plus sign
 const createAccount = {
@@ -62,7 +127,6 @@ const createAccount = {
 
 //deposit symbol: safe with dial/lock
 const deposit = {
-
 
   ceiling:"M 0 -1.5 c -2 0 -2 3 0 3 c 2 0 2 -3 0 -3 c 0 -.5 0 -0.888 0 -1.5 c 3.7643 0 3.747 6 0 6 c -3.7403 0 -3.7755 -6 0 -6 c 0 0.31 0 1.13 0 1.5 ",
   column1:"M -2 -0.35 c -1.673 0 -3.346 0 -4 0 c 0 0.163 0 0.4 0 0.75 c 3.4 0 4.606 0 3 0 c 0.67 0 1.3407 0 1 0 c 0 -0.266 0 -0.475 0 -0.746 ",
@@ -88,8 +152,6 @@ const login = {
   
   foundation:"M -2.4 3.6 c 0.4667 0.4667 0.93 0.93 1.4 1.4 c 1.6653 -1.6693 3.3307 -3.3387 2.245 -2.255 c 0.9183 -0.9153 1.8367 -1.8307 2.755 -2.745 c -0.88 0.223 -2.5307 0.6487 -3.796 0.976 c -0.878 0.878 -1.736 1.7513 -2.6 2.624",
   column3: "M -2.4 -3.6 c 0.8667 0.8667 1.73 1.73 2.6 2.6 c 1.2667 0.33 2.5333 0.6627 3.8 1 c -1.6693 -1.67 -3.3387 -3.33 -5 -4.998 c -0.464 0.468 -0.928 0.936 -1.392 1.404"
-  
-
 }
 
 
@@ -101,13 +163,13 @@ function SymbolDecomp() {
   var currentPage="bank"
   var bankDemo = document.getElementById("bankDemo");
   bankDemo.insertAdjacentHTML("beforeend",
-       ` <path id="roof"    d='${pageSymbols[currentPage].roof}' fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".5px">
-            <animate attributeType="XML"  id="toHomeRoof" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.roof}'fill="freeze"/>
-            <animate attributeType="XML"  id="toCreateAccountRoof" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to={${createAccount.roof}'fill="freeze" />
+       ` <path id="roof"    d='${bank.roof}' fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".5px">
+            <animate attributeType="XML"  id="toHomeRoof" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to=${bank.roof}fill="freeze"/>
+            <animate attributeType="XML"  id="toCreateAccountRoof" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to={${createAccount.roof}fill="freeze" />
             <animate attributeType="XML"  id="toLoginRoof" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.roof}fill="freeze" />
-            <animate attributeType="XML"  id="toBalanceRoof" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to={${balance.roof} fill="freeze" />
-            <animate attributeType="XML"  id="toWithdrawRoof" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${withdraw.roof}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositRoof" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${deposit.roof}' fill="freeze" />
+            
+            <animate attributeType="XML"  id="toWithdrawRoof" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.roof} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositRoof" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.roof} fill="freeze" />
             
             <animate id="roofToFill" fill="freeze" begin="indefinite" attributeName="fill" dur=".5s" to="rgba(0,0,0,1.0)" />
             <animate id="roofToClear" fill="freeze" begin="indefinite" attributeName="fill" dur=".5s" to="rgba(0,0,0,0)" />
@@ -115,70 +177,70 @@ function SymbolDecomp() {
   );
   bankDemo.insertAdjacentHTML("beforeend",
         `<path id="foundation"   d='${pageSymbols[currentPage].foundation}'  fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round"  strokeWidth=".1px">
-            <animate attributeType="XML"  id="toHomeFoundation" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.foundation}'fill="freeze"/>
-            <animate attributeType="XML"  id="toCreateAccountFoundation" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${createAccount.foundation}'fill="freeze" />
-            <animate attributeType="XML"  id="toLoginFoundation" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${login.foundation}'fill="freeze" />
-            <animate attributeType="XML"  id="toBalanceFoundation" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${balance.foundation}' fill="freeze" />
-            <animate attributeType="XML"  id="toWithdrawFoundation" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${withdraw.foundation}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositFoundation" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${deposit.foundation}' fill="freeze" />
+            <animate attributeType="XML"  id="toHomeFoundation" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to=${bank.foundation}fill="freeze"/>
+            <animate attributeType="XML"  id="toCreateAccountFoundation" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${createAccount.foundation}fill="freeze" />
+            <animate attributeType="XML"  id="toLoginFoundation" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.foundation}fill="freeze" />
+
+            <animate attributeType="XML"  id="toWithdrawFoundation" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.foundation} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositFoundation" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.foundation} fill="freeze" />
         </path>`
   );
   bankDemo.insertAdjacentHTML("beforeend",
         `<path id="column1"  d='${pageSymbols[currentPage].column1}'  fill="rgba(0,0,0,1.0)" stroke="black"  strokeWidth=".1px"> 
-            <animate attributeType="XML"  id="toHomeCol1" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.column1}'fill="freeze"/>
-            <animate attributeType="XML"  id="toCreateAccountCol1" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${createAccount.column1}'fill="freeze" />
-            <animate attributeType="XML"  id="toLoginCol1" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${login.column1}'fill="freeze" />
-            <animate attributeType="XML"  id="toBalanceCol1" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${balance.column1}' fill="freeze" />
-            <animate attributeType="XML"  id="toWithdrawCol1" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${withdraw.column1}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositCol1" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${deposit.column1}' fill="freeze" />
+            <animate attributeType="XML"  id="toHomeCol1" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to=${bank.column1}fill="freeze"/>
+            <animate attributeType="XML"  id="toCreateAccountCol1" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${createAccount.column1}fill="freeze" />
+            <animate attributeType="XML"  id="toLoginCol1" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.column1}fill="freeze" />
+
+            <animate attributeType="XML"  id="toWithdrawCol1" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.column1} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositCol1" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.column1} fill="freeze" />
            
         </path>`
   );
         `<path id="column2" d='${pageSymbols[currentPage].column2}'  fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".1px" > 
-            <animate attributeType="XML"  id="toHomeCol2" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.column2}'fill="freeze"/>
-            <animate attributeType="XML"  id="toCreateAccountCol2" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${createAccount.column2}'fill="freeze" />
-            <animate attributeType="XML"  id="toLoginCol2" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${login.column2}'fill="freeze" />
-            <animate attributeType="XML"  id="toBalanceCol2" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${balance.column2}' fill="freeze" />
-            <animate attributeType="XML"  id="toWithdrawCol2" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${withdraw.column2}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositCol2" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${deposit.column2}' fill="freeze" />
+            <animate attributeType="XML"  id="toHomeCol2" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to=${bank.column2}fill="freeze"/>
+            <animate attributeType="XML"  id="toCreateAccountCol2" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${createAccount.column2}fill="freeze" />
+            <animate attributeType="XML"  id="toLoginCol2" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.column2}fill="freeze" />
+
+            <animate attributeType="XML"  id="toWithdrawCol2" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.column2} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositCol2" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.column2} fill="freeze" />
           
         </path>`
   bankDemo.insertAdjacentHTML("beforeend",
         `<path id="column3" d='${pageSymbols[currentPage].column3}' fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".1px" > 
-            <animate attributeType="XML"  id="toHomeCol3" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.column3}'fill="freeze"/>
-            <animate attributeType="XML"  id="toCreateAccountCol3" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${createAccount.column3}'fill="freeze" />
-            <animate attributeType="XML"  id="toLoginCol3" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${login.column3}'fill="freeze" />
-            <animate attributeType="XML"  id="toBalanceCol3" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${balance.column3}' fill="freeze" />
-            <animate attributeType="XML"  id="toWithdrawCol3" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${withdraw.column3}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositCol3" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${deposit.column3}' fill="freeze" />
+            <animate attributeType="XML"  id="toHomeCol3" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to=${bank.column3}fill="freeze"/>
+            <animate attributeType="XML"  id="toCreateAccountCol3" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${createAccount.column3}fill="freeze" />
+            <animate attributeType="XML"  id="toLoginCol3" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.column3}fill="freeze" />
+
+            <animate attributeType="XML"  id="toWithdrawCol3" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.column3} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositCol3" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.column3} fill="freeze" />
         </path>`
   );
         `<path id="column4"  d='${pageSymbols[currentPage].column4}'  fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".1px"> 
-            <animate attributeType="XML"  id="toHomeCol4" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.column4}'fill="freeze"/>
-            <animate attributeType="XML"  id="toCreateAccountCol4" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${createAccount.column4}'fill="freeze" />
-            <animate attributeType="XML"  id="toLoginCol4" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${login.column4}'fill="freeze" />
-            <animate attributeType="XML"  id="toBalanceCol4" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${balance.column4}' fill="freeze" />
-            <animate attributeType="XML"  id="toWithdrawCol4" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${withdraw.column4}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositCol4" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${deposit.column4}' fill="freeze" />
+            <animate attributeType="XML"  id="toHomeCol4" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to=${bank.column4}fill="freeze"/>
+            <animate attributeType="XML"  id="toCreateAccountCol4" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${createAccount.column4}fill="freeze" />
+            <animate attributeType="XML"  id="toLoginCol4" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.column4}fill="freeze" />
+
+            <animate attributeType="XML"  id="toWithdrawCol4" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.column4} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositCol4" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.column4} fill="freeze" />
         </path>`
   bankDemo.insertAdjacentHTML("beforeend",
         `<path id="floor"  d='${pageSymbols[currentPage].floor}'  fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".1px"> 
-            <animate attributeType="XML"  id="toHomeFloor" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.floor}'fill="freeze"/>
-            <animate attributeType="XML"  id="toCreateAccountFloor" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${createAccount.floor}'fill="freeze" />
-            <animate attributeType="XML"  id="toLoginFloor" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${login.floor}'fill="freeze" />
-            <animate attributeType="XML"  id="toBalanceFloor" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${balance.floor}' fill="freeze" />
-            <animate attributeType="XML"  id="toWithdrawFloor" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${withdraw.floor}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositFloor" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${deposit.floor}' fill="freeze" />
+            <animate attributeType="XML"  id="toHomeFloor" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to=${bank.floor}fill="freeze"/>
+            <animate attributeType="XML"  id="toCreateAccountFloor" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${createAccount.floor}fill="freeze" />
+            <animate attributeType="XML"  id="toLoginFloor" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.floor}fill="freeze" />
+          
+            <animate attributeType="XML"  id="toWithdrawFloor" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.floor} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositFloor" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.floor} fill="freeze" />
         </path>`
   );
   bankDemo.insertAdjacentHTML("beforeend",
         `<path id="ceiling" d='${pageSymbols[currentPage].ceiling}'  fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".1px">
-            <animate attributeType="XML"  id="toHomeCeiling" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.ceiling}'fill="freeze"/>
-            <animate attributeType="XML"  id="toCreateAccountCeiling" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${createAccount.ceiling}'fill="freeze" />
-            <animate attributeType="XML"  id="toLoginCeiling" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${login.ceiling}'fill="freeze" />
-            <animate attributeType="XML"  id="toBalanceCeiling" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${balance.ceiling}' fill="freeze" />
-            <animate attributeType="XML"  id="toWithdrawCeiling" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${withdraw.ceiling}' fill="freeze" />
-            <animate attributeType="XML"  id="toDepositCeiling" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${deposit.ceiling}' fill="freeze" />
+            <animate attributeType="XML"  id="toHomeCeiling" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to=${bank.ceiling}fill="freeze"/>
+            <animate attributeType="XML"  id="toCreateAccountCeiling" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${createAccount.ceiling}fill="freeze" />
+            <animate attributeType="XML"  id="toLoginCeiling" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to=${login.ceiling}fill="freeze" />
+
+            <animate attributeType="XML"  id="toWithdrawCeiling" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${withdraw.ceiling} fill="freeze" />
+            <animate attributeType="XML"  id="toDepositCeiling" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to=${deposit.ceiling} fill="freeze" />
         </path>`
   );
 

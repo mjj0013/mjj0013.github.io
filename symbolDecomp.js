@@ -152,7 +152,7 @@ function SymbolDecomp() {
   var currentPage="bank"
   var bankDemo = document.getElementById("bankDemo");
   bankDemo.insertAdjacentHTML("beforeend",
-       ` <path id="roof"    d='${bank.roof}' fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".5px">
+       ` <path id="roof"    d='${bank.roof}' fill="rgba(0,0,0,1.0)" stroke="black" stroke-linejoin="round" stroke-width=".5px">
             <animate id="toHomeRoof" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.roof}' fill="freeze"/>
             <animate id="toCreateAccountRoof" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${createAccount.roof}'fill="freeze" />
             <animate id="toLoginRoof" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${login.roof}'' fill="freeze" />
@@ -164,7 +164,7 @@ function SymbolDecomp() {
         </path>`
   );
   bankDemo.insertAdjacentHTML("beforeend",
-        `<path id="foundation"   d='${bank.foundation}'  fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round"  strokeWidth=".1px">
+        `<path id="foundation"   d='${bank.foundation}'  fill="rgba(0,0,0,1.0)" stroke="black" stroke-linejoin="round"  stroke-width=".1px">
             <animate id="toHomeFoundation" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.foundation}' fill="freeze"/>
             <animate id="toCreateAccountFoundation" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${createAccount.foundation}'fill="freeze" />
             <animate id="toLoginFoundation" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${login.foundation}' fill="freeze" />
@@ -174,7 +174,7 @@ function SymbolDecomp() {
         </path>`
   );
   bankDemo.insertAdjacentHTML("beforeend",
-        `<path id="column1"  d='${bank.column1}'  fill="rgba(0,0,0,1.0)" stroke="black"  strokeWidth=".1px"> 
+        `<path id="column1"  d='${bank.column1}'  fill="rgba(0,0,0,1.0)" stroke="black"  stroke-width=".1px"> 
             <animate id="toHomeCol1" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.column1}'fill="freeze"/>
             <animate id="toCreateAccountCol1" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${createAccount.column1}'fill="freeze" />
             <animate id="toLoginCol1" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${login.column1}'fill="freeze" />
@@ -185,7 +185,7 @@ function SymbolDecomp() {
         </path>`
   );
   bankDemo.insertAdjacentHTML("beforeend",
-        `<path id="column2" d='${bank.column2}'  fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".1px" > 
+        `<path id="column2" d='${bank.column2}'  fill="rgba(0,0,0,1.0)" stroke="black" stroke-linejoin="round" stroke-width=".1px" > 
             <animate id="toHomeCol2" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.column2}'fill="freeze"/>
             <animate id="toCreateAccountCol2" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${createAccount.column2}'fill="freeze" />
             <animate id="toLoginCol2" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${login.column2}'fill="freeze" />
@@ -196,7 +196,7 @@ function SymbolDecomp() {
         </path>`
   );
   bankDemo.insertAdjacentHTML("beforeend",
-        `<path id="column3" d='${bank.column3}' fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".1px" > 
+        `<path id="column3" d='${bank.column3}' fill="rgba(0,0,0,1.0)" stroke="black" stroke-linejoin="round" stroke-width=".1px" > 
             <animate id="toHomeCol3" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.column3}'fill="freeze"/>
             <animate id="toCreateAccountCol3" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${createAccount.column3}'fill="freeze" />
             <animate id="toLoginCol3" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${login.column3}'fill="freeze" />
@@ -206,7 +206,7 @@ function SymbolDecomp() {
         </path>`
   );
   bankDemo.insertAdjacentHTML("beforeend",
-        `<path id="column4"  d='${bank.column4}'  fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".1px"> 
+        `<path id="column4"  d='${bank.column4}'  fill="rgba(0,0,0,1.0)" stroke="black" stroke-linejoin="round" stroke-width=".1px"> 
             <animate id="toHomeCol4" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.column4}'fill="freeze"/>
             <animate id="toCreateAccountCol4" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${createAccount.column4}'fill="freeze" />
             <animate id="toLoginCol4" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${login.column4}'fill="freeze" />
@@ -216,7 +216,7 @@ function SymbolDecomp() {
         </path>`
   );
   bankDemo.insertAdjacentHTML("beforeend",
-        `<path id="floor"  d='${bank.floor}' fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".1px"> 
+        `<path id="floor"  d='${bank.floor}' fill="rgba(0,0,0,1.0)" stroke="black" stroke-linejoin="round" stroke-width=".1px"> 
             <animate id="toHomeFloor" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.floor}'fill="freeze"/>
             <animate id="toCreateAccountFloor" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${createAccount.floor}'fill="freeze" />
             <animate id="toLoginFloor" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${login.floor}'fill="freeze" />
@@ -226,7 +226,7 @@ function SymbolDecomp() {
         </path>`
   );
   bankDemo.insertAdjacentHTML("beforeend",
-        `<path id="ceiling" d='${bank.ceiling}'  fill="rgba(0,0,0,1.0)" stroke="black" strokeLinejoin="round" strokeWidth=".1px">
+        `<path id="ceiling" d='${bank.ceiling}'  fill="rgba(0,0,0,1.0)" stroke="black" stroke-linejoin="round" stroke-width=".1px">
             <animate id="toHomeCeiling" attributeName="d" begin="indefinite" dur=".5s" repeatCount="1" to='${bank.ceiling}'fill="freeze"/>
             <animate id="toCreateAccountCeiling" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${createAccount.ceiling}'fill="freeze" />
             <animate id="toLoginCeiling" attributeName="d"  begin="indefinite"  dur=".5s" repeatCount="1" to='${login.ceiling}'fill="freeze" />

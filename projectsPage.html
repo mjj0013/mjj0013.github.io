@@ -172,7 +172,7 @@
         <script type="text/javascript" src="symbolDecomp.js"></script>
 
         
-        <button id="toHomeIcon" style="display:block;position:absolute; top:55%; left:5%; z-index:999;" >Home</button>
+        <button id="toHomeIcon" style="display:block;position:absolute; top:55%; left:5%; z-index:999;" onclick="homeOnHover()">Home</button>
         <svg id="bankDemo" xmlns="https://www.w3.org/2000/svg" viewBox="-20 -20 40 40" style="top:60%; left:5%;z-index:999;height:500px;width:500px; display:block;position:absolute;">
         </svg>
         
@@ -187,6 +187,26 @@
 			<label for="secondaryColor">Secondary Hue: </label>
 			<input id="secondaryColor" type="range" min="0" max="360" value="220" onchange="secondaryColorChanged()">
 		</div>
+
+
+        <script>
+        function homeOnHover() {
+
+            console.log("here")
+            document.getElementById("roofToFill").beginElement()
+            document.getElementById("toHomeFoundation").beginElement();
+            document.getElementById("toHomeCol1").beginElement();
+            document.getElementById("toHomeCol2").beginElement();
+            document.getElementById("toHomeCol3").beginElement();
+            document.getElementById("toHomeCol4").beginElement();
+            document.getElementById("toHomeFloor").beginElement();
+            document.getElementById("toHomeCeiling").beginElement();
+            document.getElementById("toHomeRoof").beginElement();
+            console.log("done");
+        }
+        
+
+        </script>
 		
 
 	</body>

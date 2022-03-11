@@ -2,19 +2,7 @@ var myHeaders = new Headers();
 myHeaders.set("Access-Control-Allow-Origin", "*");
 myHeaders.set("Access-Control-Request-Headers", "*");
 
-function homeOnHover() {
-  console.log("here")
-  document.getElementById("roofToFill").beginElement()
-  document.getElementById("toHomeFoundation").beginElement();
-  document.getElementById("toHomeCol1").beginElement();
-  document.getElementById("toHomeCol2").beginElement();
-  document.getElementById("toHomeCol3").beginElement();
-  document.getElementById("toHomeCol4").beginElement();
-  document.getElementById("toHomeFloor").beginElement();
-  document.getElementById("toHomeCeiling").beginElement();
-  document.getElementById("toHomeRoof").beginElement();
-  console.log("done");
-}
+
 
 function createAccountOnHover() {
   document.getElementById("roofToFill").beginElement()
@@ -247,7 +235,7 @@ function SymbolDecomp() {
             <animate attributeType="XML"  id="toDepositCeiling" attributeName="d" begin="indefinite"  dur=".5s" repeatCount="1" to='${deposit.ceiling}' fill="freeze" />
         </path>`
   );
-  document.getElementById("toHomeIcon").onclick=homeOnHover;
+  
 
 
 

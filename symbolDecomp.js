@@ -158,7 +158,7 @@ const login = {
 // https://yqnn.github.io/svg-path-editor/
 
 var currentSymbol = "bank";
-const pageSymbols = {"bank":bank, "withdraw":withdraw, "balance":balance, "login":login, "createAccount":createAccount}
+const pageSymbols = {"bank":bank, "withdraw":withdraw, "login":login, "createAccount":createAccount}
 function SymbolDecomp() {
   var currentPage="bank"
   var bankDemo = document.getElementById("bankDemo");
